@@ -37,7 +37,7 @@ include('conecction.php');
             <th>ID</th>
             <th>Usuario</th>
             <th>Correo</th>
-            <th>Action</th>
+            <th>Acciones</th>
           </tr>
         </thead>
         <tbody>
