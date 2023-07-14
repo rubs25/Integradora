@@ -12,7 +12,7 @@
 <body>
     <div class="container-fluid bg-light" id="Login-form" >
         <div class="container text-center">
-            <form action="sesion/inicio_usuario.php"method="POST" >
+            <form action="inicio_usuario.php"method="POST" >
                 <div class="col-12 col-md-4">
                     <h2 class="text-center">Iniciar sesión</h2>
                     <div class="mb-3">
@@ -24,7 +24,7 @@
                         <input type="password" class="form-control" id="contrasena" name="contrasena" required>
                     </div>
                     <div class="d-grid">
-                        <button type="submit" name = "inicio_usuario" class="btn btn-primary">Ingresar</button>
+                        <button type="submit" name = "inicio_usuario.php" class="btn btn-primary">Ingresar</button>
                     </div>  
                     <div class="text-center mt-3">
                         <p>¿No tienes una cuenta? <a href="../sesion/registro.php" target="_blank">Regístrate aquí</a></p>

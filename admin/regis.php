@@ -35,7 +35,7 @@ function Footer()
 
 require 'conecction.php';
 $consulta = "SELECT * FROM t_user";
-
+$mysqli = new mysqli('localhost', 'root', 'Rubas2509', 'prointegradora');
 $resultado = $mysqli->query($consulta);
 
 
@@ -46,17 +46,16 @@ $pdf->AliasNbPages();
 $pdf->AddPage();
 
 $pdf->SetFont('Arial','',16);
+ while ($row = $resultado->fetch_assoc()) {
 
-//while ($row = $resultado->fetch_assoc()) {
+    $pdf->Cell(90,10,$row['nombre'],1,0,'C',0);
 
-    //$pdf->Cell(90,10,$row['nombre'],1,0,'C',0);
+    $pdf->Cell(40,10,$row['gmail'],1,0,'C',0);
 
-    //$pdf->Cell(40,10,$row['gmail'],1,0,'C',0);
+    $pdf->Cell(40,10,$row['contrasena'],1,0,'C',0);
 
-    //$pdf->Cell(40,10,$row['contraseña'],1,0,'C',0);
+ }
 
-
-//}
 
 
 
