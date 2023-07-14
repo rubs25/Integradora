@@ -4,8 +4,8 @@ session_start();
 if (!isset($_SESSION['usuario'])) {
     echo '
       <script>
-        alert("Inicia sesion");
-        window.location = "index.php";
+        alert("Debes de iniciar sesion");
+        window.location = "inicio.php";
       </script>
     ';
 
@@ -21,10 +21,10 @@ if (!isset($_SESSION['usuario'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bienvenida</title>
+    <title>PAGINA DE INICIO</title>
 </head>
 <body>
-    <h1>Bienvenida</h1>
-    <a href="/cerrar_sesion.php"> Cerrar Sesion</a>
+    <h1>Bienvenido a mi sitio</h1>
+    <a href="/sesion/cerrar_sesion.php"> Cerrar Sesion</a>
 </body>
 </html>

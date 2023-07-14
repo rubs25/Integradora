@@ -18,6 +18,7 @@ if (!$ejecutar ) {
     die ('Error en query');
 }
 
+
 header ('Location: usuario.php');
 
 }

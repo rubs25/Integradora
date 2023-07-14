@@ -58,6 +58,9 @@ include('conecction.php');
               <a href="delete.php?id=<?php echo $row['id']?>" class="btn btn-danger">
                 Eliminar
               </a>
+              <a href="regis.php?id=<?php echo $row['id']?>" class="btn btn-danger">
+                Generar Reporte
+              </a>
             </td>
       </tr>
         <?php }?>

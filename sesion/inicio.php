@@ -12,7 +12,7 @@
 <body>
     <div class="container-fluid bg-light" id="Login-form" >
         <div class="container text-center">
-            <form action="inicio_usuario.php"method="POST" >
+            <form action="sesion/inicio_usuario.php"method="POST" >
                 <div class="col-12 col-md-4">
                     <h2 class="text-center">Iniciar sesión</h2>
                     <div class="mb-3">

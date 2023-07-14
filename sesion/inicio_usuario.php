@@ -1,5 +1,5 @@
 <?php
-//session_start();
+session_start();
 include("../basedatos/conexion.php");
 
 
@@ -13,6 +13,8 @@ if (isset($_POST['inicio_usuario']))
     if (mysqli_num_rows($validar_login)>0) {
 
         $_SESSION['usuario']=$nombre;
+        /* header("location:../bienvenida.php");
+        exit(); */
         echo ' 
             <script>
                 alert ("Iniciaste sesion correctamente");

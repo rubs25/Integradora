@@ -47,11 +47,11 @@ include('conecction.php');
     <table class="table table-bordered">
         <thead>
           <tr>
-            <th>ID</th>
+            <th>ID</th> 
             <th>Nombre</th>
             <th>Apellido Paterno</th>
             <th>Apellido Materno</th>
-            <th>DNI</th>
+            <!-- <th>DNI</th>  -->
             <th>Numero de telefono</th>
             <th>Correo</th>
             <th>Direccion</th>
@@ -65,20 +65,18 @@ include('conecction.php');
     while ($row = mysqli_fetch_assoc($result_clientes)){ ?> 
       
         <tr>
-        <td><?php echo $row['id']; ?></td>
+        <td><?php echo $row['idt_clientes']; ?></td>
         <td><?php echo $row['nombre']; ?></td>
         <td><?php echo $row['apellido_paterno']; ?></td>
         <td><?php echo $row['apellido_materno']; ?></td>
-        <td><?php echo $row['dni']; ?></td>
+        <!-- <td><?php echo $row['dni']; ?></td> -->
         <td><?php echo $row['telefono']; ?></td>
         <td><?php echo $row['correo']; ?></td>
         <td><?php echo $row['direccion']; ?></td>
         <td>
-              <a href="edit.php?id=<?php echo $row['id']?>" class="btn btn-secondary">
-                Editar
+              <a href="editar.php?id=<?php echo $row['nombre']?>" class="btn btn-secondary">Editar
               </a>
-              <a href="delete.php?id=<?php echo $row['id']?>" class="btn btn-danger">
-                Eliminar
+              <a href="eliminar.php?id=<?php echo $row['nombre']?>" class="btn btn-secondary">Eliminar
               </a>
             </td>
       </tr>

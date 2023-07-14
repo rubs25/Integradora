@@ -21,7 +21,7 @@ include('conecction.php');
     
 
     <h2>Agregar Producto</h2>
-    <form class="formulario">
+    <form action="agregar.php" method="POST" class="formulario">
       <label for="nombre">Nombre:</label>
       <input type="text" id="nombre" name="nombre" required>
 
@@ -58,8 +58,7 @@ include('conecction.php');
       <label for="costo-envio">Costo de Envío:</label>
       <input type="number" id="costo-envio" name="costo-envio" min="0" step="0.01" required>
 
-      <input type="submit" value="Agregar Producto">
-    </form>
+      <input type="submit" name="agregar.php" value="Agregar Producto">
     </form>
     <table class="table table-bordered">
         <thead>
@@ -82,25 +81,33 @@ include('conecction.php');
         <tbody>
           
     <?php 
-    $query = "SELECT * FROM t_clientes";
+    $query = "SELECT * FROM t_productos";
     $result_clientes = mysqli_query($conexion, $query); //= $conexion->query($sql);
     while ($row = mysqli_fetch_assoc($result_clientes)){ ?> 
       
         <tr>
         <td><?php echo $row['id']; ?></td>
         <td><?php echo $row['nombre']; ?></td>
-        <td><?php echo $row['apellido-paterno']; ?></td>
-        <td><?php echo $row['apellido-materno']; ?></td>
-        <td><?php echo $row['dni']; ?></td>
-        <td><?php echo $row['telefono']; ?></td>
-        <td><?php echo $row['correo']; ?></td>
-        <td><?php echo $row['direccion']; ?></td>
+        <td><?php echo $row['categoria']; ?></td>
+        <td><?php echo $row['color']; ?></td>
+        <td><?php echo $row['marca']; ?></td>
+        <td><?php echo $row['codigo']; ?></td>
+        <td><?php echo $row['precioc']; ?></td>
+        <td><?php echo $row['preciov']; ?></td>
+        <td><?php echo $row['medida']; ?></td>
+        <td><?php echo $row['empaque']; ?></td>
+        <td><?php echo $row['garantia']; ?></td>
+        <td><?php echo $row['cantd']; ?></td>
+        <td><?php echo $row['costo']; ?></td>
         <td>
-              <a href="edit.php?id=<?php echo $row['id']?>" class="btn btn-secondary">
+              <a href="#.php?id=<?php echo $row['id']?>" class="btn btn-secondary">
                 Editar
               </a>
-              <a href="delete.php?id=<?php echo $row['id']?>" class="btn btn-danger">
+              <a href="#.php?id=<?php echo $row['id']?>" class="btn btn-danger">
                 Eliminar
+              </a>
+              <a href="#.php?id=<?php echo $row['id']?>" class="btn btn-danger">
+                Generar Reporte
               </a>
             </td>
       </tr>

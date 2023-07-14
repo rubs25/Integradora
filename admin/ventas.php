@@ -20,7 +20,7 @@ include('conecction.php');
 
   <div class="container">
     <h2>Agregar Venta</h2>
-    <form action="registrar.php" method="POST" class="formulario">
+    <form action="add.php" method="POST" class="formulario">
       <label for="fecha">Fecha de Venta:</label>
       <input type="date" id="fecha" name="fecha" required>
 
@@ -28,7 +28,7 @@ include('conecction.php');
       <input type="time" id="hora" name="hora" required>
 
       <label for="cliente">Cliente:</label>
-      <select id="cliente" name="cliente">
+      <input id="cliente" name="cliente">
         <!-- Opciones de clientes -->
       </select>
 
@@ -42,7 +42,7 @@ include('conecction.php');
       <input type="number" id="subtotal" name="subtotal" step="0.01" min="0" required>
 
       <label for="metodo_pago">Método de Pago:</label>
-      <select id="metodo_pago" name="metodo_pago">
+      <input id="metodo_pago" name="metodo_pago">
         <!-- Opciones de métodos de pago -->
       </select>
 
@@ -52,43 +52,47 @@ include('conecction.php');
       <label for="total">Total:</label>
       <input type="number" id="total" name="total" step="0.01" min="0" required>
 
-      <input type="submit" name="registrar.php" value="Agregar Venta">
+      <input type="submit" name="add.php" value="Agregar Venta">
     </form>
 
     <table class="table table-bordered">
         <thead>
           <tr>
             <th>ID</th>
-            <th>Nombre</th>
-            <th>Apellido Paterno</th>
-            <th>Apellido Materno</th>
-            <th>DNI</th>
-            <th>Numero de telefono</th>
-            <th>Correo</th>
-            <th>Direccion</th>
+            <th>Fecha</th>
+            <th>Hora</th>
+            <th>Cliente</th>
+            <th>Cantidad</th>
+            <th>Iva</th>
+            <th>Subtotal</th>
+            <th>Metodo de Pago</th>
+            <th>Descuento</th>
+            <th>Total</th>
           </tr>
         </thead>
         <tbody>
           
     <?php 
-    $query = "SELECT * FROM t_clientes";
+    $query = "SELECT * FROM t_ventas";
     $result_clientes = mysqli_query($conexion, $query); //= $conexion->query($sql);
     while ($row = mysqli_fetch_assoc($result_clientes)){ ?> 
       
         <tr>
         <td><?php echo $row['id']; ?></td>
-        <td><?php echo $row['nombre']; ?></td>
-        <td><?php echo $row['apellido-paterno']; ?></td>
-        <td><?php echo $row['apellido-materno']; ?></td>
-        <td><?php echo $row['dni']; ?></td>
-        <td><?php echo $row['telefono']; ?></td>
-        <td><?php echo $row['correo']; ?></td>
-        <td><?php echo $row['direccion']; ?></td>
+        <td><?php echo $row['fecha']; ?></td>
+        <td><?php echo $row['horaventa']; ?></td>
+        <td><?php echo $row['cliente']; ?></td>
+        <td><?php echo $row['cantpro']; ?></td>
+        <td><?php echo $row['iva']; ?></td>
+        <td><?php echo $row['subtotal']; ?></td>
+        <td><?php echo $row['metpago']; ?></td>
+        <td><?php echo $row['descapli']; ?></td>
+        <td><?php echo $row['total']; ?></td>
         <td>
-              <a href="edit.php?id=<?php echo $row['id']?>" class="btn btn-secondary">
+              <a href="#?id=<?php echo $row['id']?>" class="btn btn-secondary">
                 Editar
               </a>
-              <a href="delete.php?id=<?php echo $row['id']?>" class="btn btn-danger">
+              <a href="#?id=<?php echo $row['id']?>" class="btn btn-danger">
                 Eliminar
               </a>
             </td>

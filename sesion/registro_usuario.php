@@ -18,14 +18,14 @@ if ($ejecutar ) {
     echo '
      <script>
          alert("Usuario registrado exitosamente");
-         window.location = "../index.php";
+         window.location = "inicio.php";
          </script>
         ';
 } else {
     echo '
      <script>
          alert("Error Usuario no registrado");
-         window.location = "../index.php";
+         window.location = "registro.php";
          </script>
         ';
 }
