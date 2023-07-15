@@ -52,7 +52,7 @@ include('conecction.php');
       <label for="total">Total:</label>
       <input type="number" id="total" name="total" step="0.01" min="0" required>
 
-      <input type="submit" name="add.php" value="Agregar Venta">
+      <input type="submit" name="add" value="Agregar Venta">
     </form>
 
     <table class="table table-bordered">

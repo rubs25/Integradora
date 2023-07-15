@@ -35,13 +35,13 @@ include('conecction.php');
       <input type="text" id="marca" name="marca" required>
 
       <label for="codigo-barras">Código de Barras:</label>
-      <input type="text" id="codigo-barras" name="codigo-barras" required>
+      <input type="text" id="codigo-barras" name="codigo" required>
 
       <label for="precio-compra">Precio Compra:</label>
-      <input type="number" id="precio-compra" name="precio-compra" min="0" step="0.01" required>
+      <input type="number" id="precio-compra" name="precioc" min="0" step="0.01" required>
 
       <label for="precio-venta">Precio Venta:</label>
-      <input type="number" id="precio-venta" name="precio-venta" min="0" step="0.01" required>
+      <input type="number" id="precio-venta" name="preciov" min="0" step="0.01" required>
 
       <label for="medida">Medida:</label>
       <input type="text" id="medida" name="medida" required>
@@ -53,12 +53,12 @@ include('conecction.php');
       <input type="text" id="garantia" name="garantia" required>
 
       <label for="cantidad-disponible">Cantidad Disponible:</label>
-      <input type="number" id="cantidad-disponible" name="cantidad-disponible" min="0" required>
+      <input type="number" id="cantidad-disponible" name="cantd" min="0" required>
 
       <label for="costo-envio">Costo de Envío:</label>
-      <input type="number" id="costo-envio" name="costo-envio" min="0" step="0.01" required>
+      <input type="number" id="costo-envio" name="costo" min="0" step="0.01" required>
 
-      <input type="submit" name="agregar.php" value="Agregar Producto">
+      <input type="submit" name="agregar" value="Agregar Producto">
     </form>
     <table class="table table-bordered">
         <thead>
