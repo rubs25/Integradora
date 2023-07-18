@@ -65,7 +65,7 @@ include('conecction.php');
     while ($row = mysqli_fetch_assoc($result_clientes)){ ?> 
       
         <tr>
-        <td><?php echo $row['idt_clientes']; ?></td>
+        <td><?php echo $row['id']; ?></td>
         <td><?php echo $row['nombre']; ?></td>
         <td><?php echo $row['apellido_paterno']; ?></td>
         <td><?php echo $row['apellido_materno']; ?></td>

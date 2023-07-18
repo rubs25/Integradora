@@ -1,30 +1,31 @@
 <?php 
 include('conecction.php');
-if  (isset($_GET['idt_clientes'])) {
-    $idt_clientes = $_GET['idt_clientes'];
-    $query = "SELECT * FROM t_clientes WHERE idt_clientes=$idt_clientes";
+if  (isset($_GET['id'])) {
+    $id = $_GET['id'];
+    $query = "SELECT * FROM t_clientes WHERE id=$id";
     $result = mysqli_query($conexion, $query);
-    if (mysqli_num_rows($result) == 1) {
+    if ($result) {
+      $num_rows = mysqli_num_rows($result);{
       $row = mysqli_fetch_array($result);
       $nombre = $row['nombre'];
-      $apellido_paterno = $row['apellido_paterno'];
-      $apellido_materno = $row['apellido_materno'];
+      $apellido_paterno = $row['apellido-paterno'];
+      $apellido_materno = $row['apellido-materno'];
       $tel = $row['telefono'];
       $correo = $row['correo'];
       $direccion = $row ['direccion'];
     }
   }
-  
+}
   if (isset($_POST['editar'])) {
-    $idt_clientes = $_GET['idt_clientes'];
+    $id = $_GET['id'];
       $nombre = $row['nombre'];
-      $apellido_paterno = $row['apellido_paterno'];
-      $apellido_materno = $row['apellido_materno'];
+      $apellido_paterno = $row['apellido-paterno'];
+      $apellido_materno = $row['apellido-materno'];
       $tel = $row['telefono'];
       $correo = $row['correo'];
       $direccion = $row ['direccion'];
   
-    $query = "UPDATE t_clientes set nombre = '$nombre', apellido_paterno = '$apellido_paterno', apellido_materno = '$apellido_materno, telefono = '$tel', correo = '$correo', direccion = '$direccion' WHERE idt_clientes=$idt_clientes";
+    $query = "UPDATE t_clientes set nombre = '$nombre', apellido-paterno = '$apellido_paterno', apellido-materno = '$apellido_materno, telefono = '$tel', correo = '$correo', direccion = '$direccion' WHERE id=$id";
     mysqli_query($conexion, $query);
     $_SESSION['message'] = 'Task Updated Successfully';
     $_SESSION['message_type'] = 'warning';
@@ -36,7 +37,7 @@ if  (isset($_GET['idt_clientes'])) {
   <div class="row">
     <div class="col-md-4 mx-auto">
       <div class="card card-body">
-      <form action="editar.php?id=<?php echo $_GET['idt_clientes']; ?>" method="POST">
+      <form action="editar.php?id=<?php echo $_GET['id']; ?>" method="POST">
       <label for="nombre">Nombre:</label>
       <input type="text" name="nombre" value="<?php echo $nombre; ?>">
 

@@ -80,7 +80,7 @@ include('conecction.php');
         <tr>
         <td><?php echo $row['id']; ?></td>
         <td><?php echo $row['fecha']; ?></td>
-        <td><?php echo $row['horaventa']; ?></td>
+        <td><?php echo $row['hora']; ?></td>
         <td><?php echo $row['cliente']; ?></td>
         <td><?php echo $row['cantpro']; ?></td>
         <td><?php echo $row['iva']; ?></td>

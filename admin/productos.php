@@ -100,10 +100,10 @@ include('conecction.php');
         <td><?php echo $row['cantd']; ?></td>
         <td><?php echo $row['costo']; ?></td>
         <td>
-              <a href="#.php?id=<?php echo $row['id']?>" class="btn btn-secondary">
+              <a href="edi.php?id=<?php echo $row['id']?>" class="btn btn-secondary">
                 Editar
               </a>
-              <a href="#.php?id=<?php echo $row['id']?>" class="btn btn-danger">
+              <a href="dele.php?id=<?php echo $row['id']?>" class="btn btn-danger">
                 Eliminar
               </a>
               <a href="#.php?id=<?php echo $row['id']?>" class="btn btn-danger">

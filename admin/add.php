@@ -25,4 +25,5 @@ if (!$ejecutar ) {
 header ('Location: usuario.php');
 
 }
+
 ?>
