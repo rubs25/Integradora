@@ -13,8 +13,8 @@ if (isset($_POST['inicio_usuario']))
     if (mysqli_num_rows($validar_login)>0) {
 
         $_SESSION['usuario']=$nombre;
-        /* header("location:../bienvenida.php");
-        exit(); */
+        header("location:../bienvenida.php");
+        exit(); 
         echo ' 
             <script>
                 alert ("Iniciaste sesion correctamente");
@@ -22,7 +22,7 @@ if (isset($_POST['inicio_usuario']))
             </script>
         ';
         exit();
-    } else {
+     } else {
         echo ' 
             <script>
                 alert ("Usuario no existe");
@@ -30,5 +30,5 @@ if (isset($_POST['inicio_usuario']))
             </script>
         ';
         exit();
-    }  
+    }   
 ?>

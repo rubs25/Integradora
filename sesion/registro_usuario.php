@@ -32,6 +32,7 @@ if ($ejecutar ) {
     die ('Error en query');
 }
 
+
 //header ('Location:../index.php');
 
 ?>
