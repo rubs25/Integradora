@@ -1,5 +1,5 @@
 <?php
-   $conexion = mysqli_connect("localhost","root","Rubas2509","prointegradora");
+   $conexion = mysqli_connect("localhost","root","Rubas2509","respjug");
    
    if ($conexion) {
     echo "Conectado exitosamente la BD";

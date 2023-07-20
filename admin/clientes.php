@@ -20,26 +20,26 @@ include('conecction.php');
     
     <h2>Agregar Cliente</h2>
     <form action="alta.php" method="POST" class="formulario">
-      <label for="nombre">Nombre:</label>
-      <input type="text" id="nombre" name="nombre" required>
+      <label for="cl_nombre">Nombre:</label>
+      <input type="text" id="nombre" name="cl_nombre" required>
 
-      <label for="apellido-paterno">Apellido Paterno:</label>
-      <input type="text" id="apellido-paterno" name="apellido-paterno" required>
+      <label for="cl_apellidomat">Apellido Paterno:</label>
+      <input type="text" id="apellido-materno" name="cl_apellidomat" required>
 
-      <label for="apellido-materno">Apellido Materno:</label>
-      <input type="text" id="apellido-materno" name="apellido-materno" required>
+      <label for="cl_apellidopa">Apellido Materno:</label>
+      <input type="text" id="apellido-paterno" name="apellido-materno" required>
 
-      <label for="dni">DNI:</label>
-      <input type="text" id="dni" name="dni" required>
+     <!--  <label for="cl_dni">DNI:</label>
+      <input type="text" id="dni" name="cl_dni" required> -->
 
-      <label for="telefono">Número de Teléfono:</label>
-      <input type="tel" id="telefono" name="telefono">
+      <label for="cl_numtelefono">Número de Teléfono:</label>
+      <input type="tel" id="telefono" name="cl_numtelefono">
 
-      <label for="correo">Correo:</label>
-      <input type="email" id="correo" name="correo" required>
+      <label for="cl_correo">Correo:</label>
+      <input type="email" id="correo" name="cl_correo" required>
 
-      <label for="direccion">Dirección:</label>
-      <textarea id="direccion" name="direccion"></textarea>
+      <label for="cl_direccion">Dirección:</label>
+      <textarea id="direccion" name="cl_direccion"></textarea>
 
       <input type="submit" name="alta" class="btn btn-primary"></input>
     
@@ -47,11 +47,11 @@ include('conecction.php');
     <table class="table table-bordered">
         <thead>
           <tr>
-            <th>ID</th> 
+            <!-- <th>ID</th>  -->
             <th>Nombre</th>
             <th>Apellido Paterno</th>
             <th>Apellido Materno</th>
-            <!-- <th>DNI</th>  -->
+            <th>DNI</th> 
             <th>Numero de telefono</th>
             <th>Correo</th>
             <th>Direccion</th>
@@ -60,23 +60,23 @@ include('conecction.php');
         <tbody>
           
     <?php 
-    $query = "SELECT * FROM t_clientes";
+    $query = "SELECT * FROM clientes";
     $result_clientes = mysqli_query($conexion, $query); //= $conexion->query($sql);
     while ($row = mysqli_fetch_assoc($result_clientes)){ ?> 
       
         <tr>
-        <td><?php echo $row['id']; ?></td>
-        <td><?php echo $row['nombre']; ?></td>
-        <td><?php echo $row['apellido_paterno']; ?></td>
-        <td><?php echo $row['apellido_materno']; ?></td>
-        <!-- <td><?php echo $row['dni']; ?></td> -->
-        <td><?php echo $row['telefono']; ?></td>
-        <td><?php echo $row['correo']; ?></td>
-        <td><?php echo $row['direccion']; ?></td>
+        <!-- <td><?php echo $row['id']; ?></td> -->
+        <td><?php echo $row['cl_nombre']; ?></td>
+        <td><?php echo $row['cl_apellidomat']; ?></td>
+        <td><?php echo $row['cl_apellidopa']; ?></td>
+         <td><?php echo $row['cl_dni']; ?></td> 
+        <td><?php echo $row['cl_numtelefono']; ?></td>
+        <td><?php echo $row['cl_correo']; ?></td>
+        <td><?php echo $row['cl_direccion']; ?></td>
         <td>
-              <a href="editar.php?id=<?php echo $row['nombre']?>" class="btn btn-secondary">Editar
+              <a href="editar.php?id=<?php echo $row['cl_nombre']?>" class="btn btn-secondary">Editar
               </a>
-              <a href="eliminar.php?id=<?php echo $row['nombre']?>" class="btn btn-secondary">Eliminar
+              <a href="eliminar.php?id=<?php echo $row['cl_nombre']?>" class="btn btn-secondary">Eliminar
               </a>
             </td>
       </tr>

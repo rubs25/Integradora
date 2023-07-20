@@ -24,7 +24,7 @@ if ($ejecutar ) {
 } else {
     echo '
      <script>
-         alert("Error Usuario no registrado");
+         alert("Usuario no registrado");
          window.location = "registro.php";
          </script>
         ';
