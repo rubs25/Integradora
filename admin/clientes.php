@@ -78,6 +78,8 @@ include('conecction.php');
               </a>
               <a href="eliminar.php?id=<?php echo $row['cl_nombre']?>" class="btn btn-secondary">Eliminar
               </a>
+              <a href="fpdf/PruebaC.php?id=<?php echo $row['cl_nombre']?>" class="btn btn-secondary">Generar Reporte
+              </a>
             </td>
       </tr>
         <?php }?>

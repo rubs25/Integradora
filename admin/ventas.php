@@ -21,36 +21,29 @@ include('conecction.php');
   <div class="container">
     <h2>Agregar Venta</h2>
     <form action="add.php" method="POST" class="formulario">
-      <label for="fecha">Fecha de Venta:</label>
-      <input type="date" id="fecha" name="fecha" required>
+      <label for="ve_fechaventa">Fecha de Venta:</label>
+      <input type="date" id="fecha" name="ve_fechaventa" required>
 
-      <label for="hora">Hora de Venta:</label>
-      <input type="time" id="hora" name="hora" required>
+      <label for="ve_horaventa">Hora de Venta:</label>
+      <input type="time" id="hora" name="ve_horaventa" required>
 
-      <label for="cliente">Cliente:</label>
-      <input id="cliente" name="cliente">
-        <!-- Opciones de clientes -->
-      </select>
 
-      <label for="cantidad">Cantidad de Productos:</label>
-      <input type="number" id="cantidad" name="cantidad" min="0" required>
+      <label for="ve_cantidadprod">Cantidad de Productos:</label>
+      <input type="number" id="cantidad" name="ve_cantidadprod" min="0" required>
 
-      <label for="iva">IVA:</label>
-      <input type="number" id="iva" name="iva" step="0.01" min="0" required>
+      <label for="ve_iva">IVA:</label>
+      <input type="number" id="iva" name="ve_iva" step="0.01" min="0" required>
 
-      <label for="subtotal">Subtotal:</label>
-      <input type="number" id="subtotal" name="subtotal" step="0.01" min="0" required>
+      <label for="ve_subtotal">Subtotal:</label>
+      <input type="number" id="subtotal" name="ve_subtotal" step="0.01" min="0" required>
 
-      <label for="metodo_pago">Método de Pago:</label>
-      <input id="metodo_pago" name="metodo_pago">
+      <label for="ve_metodopago">Método de Pago:</label>
+      <input id="metodo_pago" name="ve_metodopago">
         <!-- Opciones de métodos de pago -->
       </select>
 
-      <label for="descuento">Descuento Aplicado:</label>
-      <input type="number" id="descuento" name="descuento" step="0.01" min="0" required>
-
-      <label for="total">Total:</label>
-      <input type="number" id="total" name="total" step="0.01" min="0" required>
+      <label for="descuent_aplicado">Descuento Aplicado:</label>
+      <input type="number" id="descuento" name="descuent_aplicado" step="0.01" min="0" required>
 
       <input type="submit" name="add" value="Agregar Venta">
     </form>
@@ -61,40 +54,39 @@ include('conecction.php');
             <th>ID</th>
             <th>Fecha</th>
             <th>Hora</th>
-            <th>Cliente</th>
             <th>Cantidad</th>
             <th>Iva</th>
             <th>Subtotal</th>
             <th>Metodo de Pago</th>
             <th>Descuento</th>
-            <th>Total</th>
           </tr>
         </thead>
         <tbody>
           
     <?php 
-    $query = "SELECT * FROM t_ventas";
+    $query = "SELECT * FROM ventas";
     $result_clientes = mysqli_query($conexion, $query); //= $conexion->query($sql);
     while ($row = mysqli_fetch_assoc($result_clientes)){ ?> 
       
         <tr>
         <td><?php echo $row['id']; ?></td>
-        <td><?php echo $row['fecha']; ?></td>
-        <td><?php echo $row['hora']; ?></td>
-        <td><?php echo $row['cliente']; ?></td>
-        <td><?php echo $row['cantpro']; ?></td>
-        <td><?php echo $row['iva']; ?></td>
-        <td><?php echo $row['subtotal']; ?></td>
-        <td><?php echo $row['metpago']; ?></td>
-        <td><?php echo $row['descapli']; ?></td>
-        <td><?php echo $row['total']; ?></td>
+        <td><?php echo $row['ve_fechaventa']; ?></td>
+        <td><?php echo $row['ve_horaventa']; ?></td>
+        <td><?php echo $row['ve_cantidadprod']; ?></td>
+        <td><?php echo $row['ve_iva']; ?></td>
+        <td><?php echo $row['ve_subtotal']; ?></td>
+        <td><?php echo $row['ve_metodopago']; ?></td>
+        <td><?php echo $row['descuento_aplicado']; ?></td>
         <td>
-              <a href="#?id=<?php echo $row['id']?>" class="btn btn-secondary">
+              <a href="editar2.php?id=<?php echo $row['id']?>" class="btn btn-secondary">
                 Editar
               </a>
-              <a href="#?id=<?php echo $row['id']?>" class="btn btn-danger">
+              <a href="delete2.php?id=<?php echo $row['id']?>" class="btn btn-danger">
                 Eliminar
               </a>
+              <div class="text-right">
+                <a href="fpdf/PruebaH.php?id=<?php echo $row['id']?>" target="_blank" class="btn btn-success"><i class="fas fa-file-pdf"></i> Generar Reporte</a>
+              </div>
             </td>
       </tr>
         <?php }?>
