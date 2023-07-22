@@ -8,9 +8,7 @@ if (!isset($_SESSION['usuario'])) {
         window.location = "inicio.php";
       </script>
     ';
-
     session_destroy();
-
     die();
 }
 
@@ -24,7 +22,7 @@ if (!isset($_SESSION['usuario'])) {
     <title>PAGINA DE INICIO</title>
 </head>
 <body>
-    <h1>Bienvenido a mi sitio</h1>
+    <h1>Bienvenido a mi sitio <?= $_SESSION['usuario']; ?></h1>
     <a href="/sesion/cerrar_sesion.php"> Cerrar Sesion</a>
 </body>
 </html>

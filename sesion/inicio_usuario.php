@@ -2,28 +2,27 @@
 session_start();
 include("../basedatos/conexion.php");
 
+global $usuario;
 
 if (isset($_POST['inicio_usuario']))
-    $nombre =  $_POST['nombre'];
+    $usuario =  $_POST['usuario'];
     $contrasena =$_POST['contrasena'];
 
-   $query = "SELECT * FROM t_user WHERE nombre = '$nombre' AND contrasena = '$contrasena'";
+   $query = "SELECT * FROM t_user WHERE usuario = '$usuario' AND contrasena = '$contrasena'";
    $validar_login = mysqli_query($conexion,$query);
 
-    
     if (mysqli_num_rows($validar_login)>0) {
-
-        $_SESSION['id']=$nombre;
-        header("location:../bienvenida.php");
-        exit(); 
+        $_SESSION['usuario']=$usuario;
         echo ' 
             <script>
                 alert ("Iniciaste sesion correctamente");
-                window.location = "../index.php";
+                window.location = "bienvenida.php";
             </script>
         ';
+        // header("location:./bienvenida.php");
         exit();
      } else {
+        
         echo ' 
             <script>
                 alert ("Usuario no existe");
@@ -31,5 +30,6 @@ if (isset($_POST['inicio_usuario']))
             </script>
         ';
         exit();
+        
     }   
 ?> 
