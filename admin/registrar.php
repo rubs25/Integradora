@@ -3,14 +3,14 @@ include("conecction.php");
 
 
 if (isset($_POST['registrar'])){
-    $nombre =  $_POST['nombre'];
-    $gmail = $_POST['gmail'];
+    $usuario =  $_POST['usuario'];
+    $tipo = $_POST['tipo'];
     $contrasena =$_POST['contrasena'];
 
 
     
-    $query = "INSERT INTO t_user (nombre, gmail, contrasena, rol)
-          VALUES ('$nombre', '$gmail', '$contrasena', 'USER')";
+    $query = "INSERT INTO t_user (usuario, tipo_usuario, contrasena)
+          VALUES ('$usuario', '$tipo', '$contrasena')";
 
 $ejecutar = mysqli_query($conexion, $query);
 

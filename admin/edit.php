@@ -2,23 +2,23 @@
 include('conecction.php');
 if  (isset($_GET['id'])) {
     $id = $_GET['id'];
-    $query = "SELECT * FROM t_user WHERE id=$id";
+    $query = "SELECT * FROM t_user WHERE id_user=$id";
     $result = mysqli_query($conexion, $query);
     if (mysqli_num_rows($result) == 1) {
       $row = mysqli_fetch_array($result);
-      $nombre = $row['nombre'];
-      $gmail = $row['gmail'];
+      $usuario = $row['usuario'];
+      $tipo = $row['tipo_usuario'];
       $contrasena = $row['contrasena'];
     }
   }
   
   if (isset($_POST['edit'])) {
     $id = $_GET['id'];
-    $nombre =  $_POST['nombre'];
-    $gmail = $_POST['gmail'];
+    $usuario =  $_POST['usuario'];
+    $tipo = $_POST['tipo'];
     $contrasena =$_POST['contrasena'];
   
-    $query = "UPDATE t_user set nombre = '$nombre', gmail = '$gmail', contrasena = '$contrasena' WHERE id=$id";
+    $query = "UPDATE t_user set usuario = '$usuario', tipo_usuario = '$tipo', contrasena = '$contrasena' WHERE id_user=$id";
     mysqli_query($conexion, $query);
     $_SESSION['message'] = 'Task Updated Successfully';
     $_SESSION['message_type'] = 'warning';
@@ -31,11 +31,15 @@ if  (isset($_GET['id'])) {
     <div class="col-md-4 mx-auto">
       <div class="card card-body">
       <form action="edit.php?id=<?php echo $_GET['id']; ?>" method="POST">
-      <label for="nombre">Usuario:</label>
-      <input type="text" name="nombre" value="<?php echo $nombre; ?>">
-
-      <label for="gmail">Gmail:</label>
-      <input type="email" name="gmail" value="<?php echo $gmail; ?>">
+      <label for="usuario">Usuario:</label>
+      <input type="text" name="usuario" value="<?php echo $usuario; ?>"> 
+      <label for="tipo">Tipo de usuario:</label>
+      <!-- <input type="number" name="tipo" value="<?php echo $tipo; ?>"> -->
+      <select name="tipo" id="tipo">
+        <option value="1">Administrador</option>
+        <option value="2">Cliente</option>
+        <option value="3">Empleado</option>
+      </select>
 
       <label for="contrasena">Contraseña:</label>
       <input type="contrasena" name="contrasena" value="<?php echo $contrasena; ?>">

@@ -18,11 +18,15 @@ include('conecction.php');
   <div class="container">
     <h2>Agregar Usuario</h2>
     <form action="registrar.php" method="POST" class="users-form">
-      <label for="nombre">Usuario:</label>
-      <input type="text" name="nombre">
+      <label for="usuario">Usuario:</label>
+      <input type="text" name="usuario">
 
-      <label for="gmail">Gmail:</label>
-      <input type="email" name="gmail">
+      <label for="tipo">Tipo de usuario :</label>
+      <select name="tipo" id="tipo">
+        <option value="1">Administrador</option>
+        <option value="2">Cliente</option>
+        <option value="3">Empleado</option>
+      </select>
 
       <label for="contrasena">Contraseña:</label>
       <input type="contrasena" name="contrasena">
@@ -36,30 +40,30 @@ include('conecction.php');
           <tr>
             <th>ID</th>
             <th>Usuario</th>
-            <th>Correo</th>
+            <th>Tipo de usuario</th>
             <th>Acciones</th>
           </tr>
         </thead>
         <tbody>
           
     <?php 
-    $query = "SELECT * FROM t_user WHERE rol = 'USER'";
+    $query = "SELECT * FROM t_user WHERE tipo_usuario > 1";
     $result_users = mysqli_query($conexion, $query); //= $conexion->query($sql);
     while ($row = mysqli_fetch_assoc($result_users)){ ?> 
       
         <tr>
-        <td><?php echo $row['id']; ?></td>
-        <td><?php echo $row['nombre']; ?></td>
-        <td><?php echo $row['gmail']; ?></td>
+        <td><?php echo $row['id_user']; ?></td>
+        <td><?php echo $row['usuario']; ?></td>
+        <td><?php echo $row['tipo_usuario']; ?></td>
         <td>
-              <a href="edit.php?id=<?php echo $row['id']?>" class="btn btn-secondary">
+              <a href="edit.php?id=<?php echo $row['id_user']?>" class="btn btn-secondary">
                 Editar
               </a>
-              <a href="delete.php?id=<?php echo $row['id']?>" class="btn btn-danger">
+              <a href="delete.php?id=<?php echo $row['id_user']?>" class="btn btn-danger">
                 Eliminar
               </a>
               <div class="text-right">
-                <a href="fpdf/PruebaV.php?id=<?php echo $row['id']?>" target="_blank" class="btn btn-success"><i class="fas fa-file-pdf"></i> Generar Reporte</a>
+                <a href="fpdf/PruebaV.php?id=<?php echo $row['id_user']?>" target="_blank" class="btn btn-success"><i class="fas fa-file-pdf"></i> Generar Reporte</a>
               </div>
             </td>
       </tr>
