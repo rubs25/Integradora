@@ -22,7 +22,7 @@ if (!isset($_SESSION['usuario'])) {
     <title>PAGINA DE INICIO</title>
 </head>
 <body>
-    <h1>Bienvenido a mi sitio <?= $_SESSION['usuario']; ?></h1>
-    <a href="/sesion/cerrar_sesion.php"> Cerrar Sesion</a>
+    <h1>Bienvenido <?= $_SESSION['usuario']; ?></h1>
+    <a href="inicio.php"> Cerrar Sesion</a>
 </body>
 </html>

@@ -134,7 +134,7 @@ if (isset($_SESSION['usuario'])) {
                         <div class="title-area">
                             <h2>Nuestros juguetes mas vendidos:</h2>
                             <div class="separator separator-danger">✻</div>
-                            <p class="description">Estos son nuestros juguetes mas vendidos</p>
+                            <p class="description">Te mostramos nuestros juguetes mas vendidos:</p>
                         </div>
                     </div>
 
@@ -191,7 +191,7 @@ if (isset($_SESSION['usuario'])) {
                                     </div>
                                     <ul>
 
-                                        <a class="btn btn-primary"  href="catalogo.php" role="button">Catalogo</a>
+                                        <a class="btn btn-primary"  href="/compra/catalogo.php" role="button">Catalogo</a>
                                     
                                    
                                     <ul>

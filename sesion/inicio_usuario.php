@@ -25,7 +25,7 @@ if (isset($_POST['inicio_usuario']))
         
         echo ' 
             <script>
-                alert ("Usuario no existe");
+                alert ("Usuario no correcto");
                 window.location = "inicio.php";
             </script>
         ';

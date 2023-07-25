@@ -62,15 +62,15 @@ include('conecction.php');
               <a href="delete.php?id=<?php echo $row['id_user']?>" class="btn btn-danger">
                 Eliminar
               </a>
-              <div class="text-right">
-                <a href="fpdf/PruebaV.php?id=<?php echo $row['id_user']?>" target="_blank" class="btn btn-success"><i class="fas fa-file-pdf"></i> Generar Reporte</a>
-              </div>
             </td>
       </tr>
         <?php }?>
         </tbody>
       </table>
     <div class="mensaje">
+    <div class="text-right">
+                <a href="fpdf/PruebaV.php?id=<?php echo $row['id_user']?>" target="_blank" class="btn btn-success"><i class="fas fa-file-pdf"></i> Generar Reporte</a>
+              </div>
     </div>
   </div>
 </body>

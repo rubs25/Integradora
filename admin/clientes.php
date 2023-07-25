@@ -77,9 +77,6 @@ include('conecction.php');
               <a href="editar.php?id=<?php echo $row['cl_nombre']?>" class="btn btn-secondary">Editar
               </a>
               <a href="eliminar.php?id=<?php echo $row['cl_nombre']?>" class="btn btn-secondary">Eliminar
-              </a>
-              <a href="fpdf/PruebaC.php?id=<?php echo $row['cl_nombre']?>" class="btn btn-secondary">Generar Reporte
-              </a>
             </td>
       </tr>
         <?php }?>
@@ -87,6 +84,9 @@ include('conecction.php');
       </table>
     <div class="mensaje">
       <!-- Aquí puedes mostrar mensajes de éxito o error -->
+      </a>
+              <a href="fpdf/PruebaC.php?id=<?php echo $row['cl_nombre']?>" class="btn btn-secondary">Generar Reporte
+              </a>
     </div>
   </div>
 </body>

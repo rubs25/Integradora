@@ -84,9 +84,7 @@ include('conecction.php');
               <a href="delete2.php?id=<?php echo $row['id']?>" class="btn btn-danger">
                 Eliminar
               </a>
-              <div class="text-right">
-                <a href="fpdf/PruebaH.php?id=<?php echo $row['id']?>" target="_blank" class="btn btn-success"><i class="fas fa-file-pdf"></i> Generar Reporte</a>
-              </div>
+             
             </td>
       </tr>
         <?php }?>
@@ -94,6 +92,9 @@ include('conecction.php');
       </table>
     <div class="mensaje">
       <!-- Aquí puedes mostrar mensajes de éxito o error -->
+      <div class="text-right">
+                <a href="fpdf/PruebaH.php?id=<?php echo $row['id']?>" target="_blank" class="btn btn-success"><i class="fas fa-file-pdf"></i> Generar Reporte</a>
+              </div>
     </div>
   </div>
 </body>

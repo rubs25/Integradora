@@ -1,0 +1,149 @@
+<style>
+/* Estilos CSS para el carrito de compras */
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f5f5f5;
+}
+
+.header {
+  background-color: #333;
+  padding: 20px;
+  color: #fff;
+  text-align: center;
+}
+
+.titulo {
+  font-size: 36px;
+  text-transform: uppercase;
+  margin: 0;
+}
+
+.subtitulo {
+  font-size: 18px;
+  margin-top: 10px;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #fff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.carrito {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 20px;
+}
+
+.carrito-items {
+  background-color: #f9f9f9;
+  padding: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.carrito-resumen {
+  background-color: #f9f9f9;
+  padding: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.carrito-item {
+  margin-bottom: 20px;
+  border-bottom: 1px solid #ccc;
+  padding-bottom: 10px;
+}
+
+.carrito-item:last-child {
+  border-bottom: none;
+  margin-bottom: 0;
+}
+
+.carrito-imagen {
+  display: inline-block;
+  vertical-align: middle;
+  margin-right: 10px;
+}
+
+.carrito-imagen img {
+  max-width: 80px;
+  max-height: 80px;
+}
+
+.carrito-detalle {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.carrito-nombre {
+  font-size: 18px;
+  color: #333;
+  margin: 0;
+}
+
+.carrito-precio {
+  font-size: 16px;
+  color: #777;
+}
+
+.carrito-cantidad {
+  font-size: 14px;
+  color: #999;
+  margin-top: 5px;
+}
+
+.carrito-total {
+  font-size: 24px;
+  color: #f00;
+  text-align: right;
+  margin: 0;
+}
+
+.btn-vaciar {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #f00;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
+}
+
+.btn-vaciar:hover {
+  background-color: #c00;
+}
+
+.btn-comprar {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #0f0;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
+}
+
+.btn-comprar:hover {
+  background-color: #0c0;
+}
+
+.footer {
+  background-color: #333;
+  padding: 20px;
+  color: #fff;
+  text-align: center;
+  font-size: 14px;
+}
+.btn-catalogo {
+  display: inline-block;
+  padding: 5px 5px; 
+  background-color: #f00;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 10px;
+  transition: background-color 0.3s ease;
+}
+</style>
