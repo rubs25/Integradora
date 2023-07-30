@@ -2,7 +2,8 @@
 session_start();
 
 if (isset($_SESSION['usuario'])) {
-    header("location:bienvenida.php");
+    //header("location:index.php");
+    $user = $_SESSION['usuario'];
 }
 
 ?>
@@ -44,7 +45,16 @@ if (isset($_SESSION['usuario'])) {
                 <a href="#Servicios" class="navbar-brand"><small>SERVICIOS</small></a>
                 <a href="#Equipos" class="navbar-brand"><small>JUGUETES</small> </a>
                 <a href="#Contacto" class="navbar-brand"><small>CONTACTANOS</small></a>
-                <a href="../integradora/sesion/inicio.php" class="navbar-brand"><small>INICIAR DE SESION</small></a>
+                <!-- <a href="../integradora/sesion/inicio.php" class="navbar-brand"><small>INICIAR DE SESION</small></a> -->
+                <?php if(!empty($user)): ?>
+                    <!-- <br> Welcome. <?= $user; ?> -->
+                    <a class="navbar-brand" href="./sesion/logout.php">
+                        Cerrar sesion
+                    </a>
+                    <?php else: ?>
+                    <!-- <h1>Login</h1> -->
+                    <a class="navbar-brand" href="../integradora/sesion/inicio.php">Iniciar sesion</a>
+                    <?php endif; ?>
             </div>
             <div class="collapse navbar-collapse">
                 <ul class="nav navbar-nav navbar-right navbar-uppercase">

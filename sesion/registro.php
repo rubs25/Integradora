@@ -14,16 +14,18 @@
     <div id="registration-form" class="container-fluid bg-light">
         <div class="container">
             <form action="registro_usuario.php" method="POST" class="formulario_registro">
-                <div class="col-12 col-md-4">
+                <div class="row">
+                <div class="col-4"></div>
+                <div class="col-4">
                     <h1 class="text-center">Registro</h1>
                     <div class="mb-3">
-                        <label for="nombre" class="form-label">Nombre</label>
-                        <input type="text" class="form-control" id="nombre" name="nombre" required>
+                        <label for="usuario" class="form-label">Usuario</label>
+                        <input type="text" class="form-control" id="usuario" name="usuario" required>
                     </div>
-                    <div class="mb-3">
+                    <!-- <div class="mb-3">
                         <label for="gmail" class="form-label">Gmail</label>
                         <input type="text" class="form-control" id="gmail" name="gmail" required>
-                    </div>
+                    </div> -->
                     <div class="mb-3">
                         <label for="contrasena" class="form-label">Contraseña</label>
                         <input type="password" class="form-control" id="contrasena" name="contrasena" required>
@@ -41,6 +43,9 @@
                         <p>Eres administrador <a href="../admin/administrador.php" target="_blank">Inicia sesion</a></p>
                     </div>
                 </div>
+                <div class="col-4"></div>
+                </div>
+               
             </form>
         </div>
     </div>

@@ -21,6 +21,8 @@ include('conecction.php');
   <div class="container">
     <h2>Agregar un Producto</h2>
     <form action="adp.php" method="POST" class="formulario">
+    <label for="pr_id">id:</label>
+      <input type="number"  name="pr_id" required>
       <label for="pr_Nombre">Nombre:</label>
       <input type="text"  name="pr_Nombre" required>
 
@@ -41,7 +43,7 @@ include('conecction.php');
       <input type= "number"  name="pr_Costo_envio">
 
 
-      <input type="submit" name="adp" value="Agregar Venta">
+      <input type="submit" name="adp" value="Agregar producto">
 
     </form>
 

@@ -3,22 +3,23 @@ include("../basedatos/conexion.php");
 
 
 if (isset($_POST['registro_usuario'])){
-    $nombre =  $_POST['nombre'];
-    $gmail = $_POST['gmail'];
+    $usuario =  $_POST['usuario'];
     $contrasena =$_POST['contrasena'];
     $confcontrasena =$_POST['confcontrasena'];
+    $tipo = 2; //usuario de tipo
 
+    $query = "INSERT INTO t_user (usuario, tipo_usuario, contrasena)
+    VALUES ('$usuario', '$tipo', '$contrasena')";
 
-    $query = "INSERT INTO t_user (nombre, gmail, contrasena, rol)
-          VALUES ('$nombre', '$gmail', '$contrasena', 'USER')";
 
 $ejecutar = mysqli_query($conexion, $query);
 
 if ($ejecutar ) {
+    $_SESSION['usuario']=$usuario;
     echo '
      <script>
          alert("Usuario registrado exitosamente");
-         window.location = "inicio.php";
+         window.location = "../index.php";
          </script>
         ';
 } else {
@@ -31,9 +32,6 @@ if ($ejecutar ) {
 }
     die ('Error en query');
 }
-
-
-//header ('Location:../index.php');
 
 ?>
 

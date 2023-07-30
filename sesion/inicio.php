@@ -13,24 +13,29 @@
     <div class="container-fluid bg-light" id="Login-form" >
         <div class="container text-center">
             <form action="inicio_usuario.php" method="POST" >
-                <div class="col-12 col-md-4">
-                    <h2 class="text-center">Iniciar sesión</h2>
-                    <div class="mb-3">
-                        <label for="usuario" class="form-label">Usuario</label>
-                        <input type="text" class="form-control" id="usuario" name="usuario" required>
+                <div class="row">
+                    <div class="col-4"></div>
+                    <div class="col-4">
+                        <h2 class="text-center">Iniciar sesión</h2>
+                        <div class="mb-3">
+                            <label for="usuario" class="form-label">Usuario</label>
+                            <input type="text" class="form-control" id="usuario" name="usuario" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="password" class="form-label">Contraseña</label>
+                            <input type="password" class="form-control" id="contrasena" name="contrasena" required>
+                        </div>
+                        <div class="d-grid">
+                            <button type="submit" name = "inicio_usuario" class="btn btn-primary">Ingresar</button>
+                        </div>  
+                        <div class="text-center mt-3">
+                            <p>¿No tienes una cuenta? <a href="../sesion/registro.php" target="_blank">Regístrate aquí</a></p>
+                            <p>Eres administrador <a href="../admin/administrador.php" target="_blank">Entra aqui</a></p>
+                        </div>
                     </div>
-                    <div class="mb-3">
-                        <label for="password" class="form-label">Contraseña</label>
-                        <input type="password" class="form-control" id="contrasena" name="contrasena" required>
-                    </div>
-                    <div class="d-grid">
-                        <button type="submit" name = "inicio_usuario" class="btn btn-primary">Ingresar</button>
-                    </div>  
-                    <div class="text-center mt-3">
-                        <p>¿No tienes una cuenta? <a href="../sesion/registro.php" target="_blank">Regístrate aquí</a></p>
-                        <p>Eres administrador <a href="../admin/administrador.php" target="_blank">Entra aqui</a></p>
-                    </div>
+                    <div class="col-4"></div>
                 </div>
+                
             </form>
         </div>
     </div>
