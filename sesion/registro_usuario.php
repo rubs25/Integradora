@@ -6,7 +6,7 @@ if (isset($_POST['registro_usuario'])){
     $usuario =  $_POST['usuario'];
     $contrasena =$_POST['contrasena'];
     $confcontrasena =$_POST['confcontrasena'];
-    $tipo = 2; //usuario de tipo
+    $tipo = 2; //usuario de tipo cliente
 
     $query = "INSERT INTO t_user (usuario, tipo_usuario, contrasena)
     VALUES ('$usuario', '$tipo', '$contrasena')";

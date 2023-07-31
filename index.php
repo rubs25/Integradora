@@ -158,7 +158,7 @@ if (isset($_SESSION['usuario'])) {
                                             <div class="content">
                                                 <div class="AvatarCuadrado">
                                                     <img alt="..." class="card-img-top"
-                                                        src="assets/img/carro1.jpg" />
+                                                        src="assets/img/c1.jpeg"/>
                                                 </div>
                                                 <div class="description">
                                                     <h3 class="title">Doodge Charger</h3>
@@ -173,7 +173,7 @@ if (isset($_SESSION['usuario'])) {
                                         <div class="card card-member">
                                             <div class="content">
                                                 <div class="AvatarCuadrado ">
-                                                    <img alt="..." class="" src="assets/img/carro2.jpg" />
+                                                    <img alt="..." class="card-img-top" src="assets/img/c2.jpeg" />
                                                 </div>
                                                 <div class="description">
                                                     <h3 class="title">Doodge Challenger Turbo</h3>
@@ -188,7 +188,7 @@ if (isset($_SESSION['usuario'])) {
                                         <div class="card card-member">
                                             <div class="content">
                                                 <div class="AvatarCuadrado">
-                                                    <img alt="..." class="" src="assets/img/carro3.jpg" />
+                                                    <img alt="..." class="" src="assets/img/c3.jpeg" />
                                                 </div>
                                                 <div class="description">
                                                     <h3 class="title">Lamborghini Terzo Millenio</h3> 
@@ -201,7 +201,7 @@ if (isset($_SESSION['usuario'])) {
                                     </div>
                                     <ul>
 
-                                        <a class="btn btn-primary"  href="/compra/catalogo.php" role="button">Catalogo</a>
+                                        <a class="btn btn-primary"  href="compra/catalogo.php" role="button">Catalogo</a>
                                     
                                    
                                     <ul>

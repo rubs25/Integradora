@@ -13,14 +13,27 @@ if (isset($_POST['inicio_usuario']))
 
     if (mysqli_num_rows($validar_login)>0) {
         $_SESSION['usuario']=$usuario;
+        $row = mysqli_fetch_assoc($validar_login);
+        $tipo_usuario=$row['tipo_usuario'];
+    if ($tipo_usuario==1) {
         echo ' 
             <script>
-                alert ("Iniciaste sesion correctamente");
-                window.location = "bienvenida.php";
+                alert ("Iniciaste sesion ADMINISTRADOR");
+                window.location = "../admin/administrador.php";
             </script>
         ';
         // header("location:./bienvenida.php");
         exit();
+    } else {
+        echo ' 
+            <script>
+                alert ("Iniciaste sesion correctamente");
+                window.location = "../index.php";
+            </script>
+        ';
+        // header("location:./bienvenida.php");
+        exit();
+    }
      } else {
         
         echo ' 

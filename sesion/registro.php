@@ -40,7 +40,6 @@
                     </div>  
                     <div class="text-center mt-3">
                         <p>¿Ya tienes una cuenta? <a href="../sesion/inicio.php">Inicia sesión aquí</a></p>
-                        <p>Eres administrador <a href="../admin/administrador.php" target="_blank">Inicia sesion</a></p>
                     </div>
                 </div>
                 <div class="col-4"></div>

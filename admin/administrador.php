@@ -115,6 +115,8 @@
       <a href="../admin/usuario.php">Usuarios</a>
 
       <a href="../admin/ventas.php">Ventas</a>
+
+      <a class="navbar-brand" href="../sesion/logout.php">Cerrar sesion</a>
     </div>
 
     <div class="contenido" id="productos">
