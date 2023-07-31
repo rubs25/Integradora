@@ -21,8 +21,7 @@ include('conecction.php');
   <div class="container">
     <h2>Agregar un Producto</h2>
     <form action="adp.php" method="POST" class="formulario">
-    <label for="pr_id">id:</label>
-      <input type="number"  name="pr_id" required>
+    
       <label for="pr_Nombre">Nombre:</label>
       <input type="text"  name="pr_Nombre" required>
 
@@ -78,7 +77,7 @@ include('conecction.php');
               <a href="edip.php?id=<?php echo $row['id_producto']?>" class="btn btn-secondary">
                 Editar
               </a>
-              <a href="#?id=<?php echo $row['id_producto']?>" class="btn btn-danger">
+              <a href="ed.php?id=<?php echo $row['id_producto']?>" class="btn btn-danger">
                 Eliminar
               </a>
             </td>

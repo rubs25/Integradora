@@ -13,8 +13,8 @@ if (isset($_SESSION['usuario'])) {
 
 <head>
     <meta charset="utf-8" />
-    <link rel="apple-touch-icon" sizes="76x76" href="assets/img/logo2.png">
-    <link rel="icon" type="image/png" sizes="96x96" href="assets/img/logo2.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="assets/img/logos2.jpg">
+    <link rel="icon" type="image/png" sizes="96x96" href="assets/img/logos2.jpg">
 
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <title>Motors Toys</title>
@@ -162,7 +162,7 @@ if (isset($_SESSION['usuario'])) {
                                                 </div>
                                                 <div class="description">
                                                     <h3 class="title">Doodge Charger</h3>
-                                                    <p class="small-text">$2,000</p>
+                                                    <p class="small-text">$1,500</p>
                                                     <p class="description">Descripción...</p>
                                                 
                                                 </div>
@@ -176,7 +176,7 @@ if (isset($_SESSION['usuario'])) {
                                                     <img alt="..." class="card-img-top" src="assets/img/c2.jpeg" />
                                                 </div>
                                                 <div class="description">
-                                                    <h3 class="title">Doodge Challenger Turbo</h3>
+                                                    <h3 class="title">Doodge Turbo</h3>
                                                     <p class="small-text">$2,000</p>
                                                     <p class="description">Descripción...</p>
                                                     
@@ -191,8 +191,8 @@ if (isset($_SESSION['usuario'])) {
                                                     <img alt="..." class="" src="assets/img/c3.jpeg" />
                                                 </div>
                                                 <div class="description">
-                                                    <h3 class="title">Lamborghini Terzo Millenio</h3> 
-                                                    <p class="small-text">$2,000</p>
+                                                    <h3 class="title">Lamborghini Millenio</h3> 
+                                                    <p class="small-text">$1,000</p>
                                                     <p class="description">Descripción...</p>
                                                     
                                                 </div>

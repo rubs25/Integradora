@@ -69,7 +69,7 @@ include('conecction.php');
     while ($row = mysqli_fetch_assoc($result_clientes)){ ?> 
       
         <tr>
-        <td><?php echo $row['id']; ?></td>
+        <td><?php echo $row['id_venta']; ?></td>
         <td><?php echo $row['ve_fechaventa']; ?></td>
         <td><?php echo $row['ve_horaventa']; ?></td>
         <td><?php echo $row['ve_cantidadprod']; ?></td>
@@ -78,10 +78,10 @@ include('conecction.php');
         <td><?php echo $row['ve_metodopago']; ?></td>
         <td><?php echo $row['descuento_aplicado']; ?></td>
         <td>
-              <a href="editar2.php?id=<?php echo $row['id']?>" class="btn btn-secondary">
+              <a href="editar2.php?id=<?php echo $row['id_venta']?>" class="btn btn-secondary">
                 Editar
               </a>
-              <a href="delete2.php?id=<?php echo $row['id']?>" class="btn btn-danger">
+              <a href="delete2.php?id=<?php echo $row['id_venta']?>" class="btn btn-danger">
                 Eliminar
               </a>
              

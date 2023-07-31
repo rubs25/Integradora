@@ -3,9 +3,9 @@ include('conecction.php');
 
 if  (isset($_GET['id'])) {
     $id = $_GET['id'];
-    $query = "SELECT * FROM ventas WHERE id=$id";
+    $query = "SELECT * FROM ventas WHERE id_venta=$id";
     $result = mysqli_query($conexion, $query);
-    if (mysqli_num_rows($result) == 1) {
+    if (mysqli_num_rows($result) == 0) {
       $row = mysqli_fetch_array($result);
       $fecha =  $row['ve_fechaventa'];
       $hora = $row['ve_horaventa'];
@@ -18,13 +18,13 @@ if  (isset($_GET['id'])) {
   }
   
   if (isset($_POST['editar2'])) {
-    $id = $_GET['id'];
+    $id = $_GET['id_venta'];
     $fecha =  $_POST['ve_fechaventa'];
     $hora = $_POST['ve_horaventa'];
     $cantidad =$_POST['ve_cantidadprod'];
     $iva =$_POST['ve_iva'];
     $sub =$_POST['ve_subtotal'];
-    $metpago =$_POST['ve_metodopago'];
+    $metodopago =$_POST['ve_metodopago'];
     $descapli =$_POST['descuento_aplicado'];
 
 
@@ -58,7 +58,7 @@ if  (isset($_GET['id'])) {
       <input type="number" id="subtotal" name="ve_subtotal" step="0.01" min="0" value="<?php echo $sub; ?>">
 
       <label for="ve_metodopago">Método de Pago:</label>
-      <input id="metodo_pago" name="ve_metodopago" value="<?php echo $metpago; ?>">
+      <input id="metodo_pago" name="ve_metodopago" value="<?php echo $metodopago; ?>">
         <!-- Opciones de métodos de pago -->
       </select>
 
