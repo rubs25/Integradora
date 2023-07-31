@@ -47,7 +47,7 @@ include('conecction.php');
         <tbody>
           
     <?php 
-    $query = "SELECT * FROM t_user WHERE tipo_usuario > 1";
+    $query = "SELECT * FROM t_user ";
     $result_users = mysqli_query($conexion, $query); //= $conexion->query($sql);
     while ($row = mysqli_fetch_assoc($result_users)){ ?> 
       
