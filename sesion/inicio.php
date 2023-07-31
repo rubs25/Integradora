@@ -30,7 +30,7 @@
                         </div>  
                         <div class="text-center mt-3">
                             <p>¿No tienes una cuenta? <a href="../sesion/registro.php" target="_blank">Regístrate aquí</a></p>
-                            <p>Eres administrador <a href="../admin/administrador.php" target="_blank">Entra aqui</a></p>
+                        
                         </div>
                     </div>
                     <div class="col-4"></div>
