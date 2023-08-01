@@ -103,36 +103,6 @@ if (isset($_SESSION['usuario'])) {
     </div>
     </div>
 
-
-    <div class="section" id="Servicios">
-        <div class="container">
-            <div class="row">
-                <div class="title-area">
-                    <h2>Cotiza tus juguetes</h2>
-                    <div class="separator separator-black">✻</div>
-                    <p class="description">Mandanos un mensaje para saber que juguete necesitas.</p>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-4.5">
-                    <div class="info-icon">
-                        <div class="icon text-black">
-                            <i class="pe-7s-note2"></i>
-                        </div>
-                        <h2>Cotizaciones</h2>
-                        <a class="description">Comunicate con nosotros para cotizar algun juguete.</p>
-                        <ul>
-                            <a class="btn btn-primary" href="https://wa.me/524422390155" role="button">CLICK</a>
-                        <ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    </div>
-    </div>
-
-
     <div class="section section-our-team-freebie" id="Equipos">
         <div class="parallax filter filter-color-black">
             <div class="image" style="background-image:url('assets/img/Amarillo.webp')">
@@ -214,6 +184,37 @@ if (isset($_SESSION['usuario'])) {
             </div>
         </div>
     </div>
+
+    <div class="section" id="Servicios">
+        <div class="container">
+            <div class="row">
+                <div class="title-area">
+                    <h2>Cotiza tus juguetes</h2>
+                    <div class="separator separator-black">✻</div>
+                    <p class="description">Mandanos un mensaje para saber que juguete necesitas.</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4.5">
+                    <div class="info-icon">
+                        <div class="icon text-black">
+                            <i class="pe-7s-note2"></i>
+                        </div>
+                        <h2>Cotizaciones</h2>
+                        <a class="description">Comunicate con nosotros para cotizar algun juguete.</p>
+                        <ul>
+                            <a class="btn btn-primary" href="https://wa.me/524422390155" role="button">CLICK</a>
+                        <ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+    </div>
+
+
+    
 
     <div class="section section-small section-get-started" id="Contacto">
         <div class="parallax filter">
