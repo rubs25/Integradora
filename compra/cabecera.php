@@ -22,8 +22,11 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav">
-        <li class="nav-item">
+      <li class="nav-item">
           <a class="nav-link" href="../index.php">Inicio</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="catalogo.php">Catalogo</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="mostrarCarrito.php">Carrito(<?php
@@ -32,6 +35,12 @@
         </li>
       </ul>
     </div>
+    <label for="tipo">Eliga la sucursal: </label>
+      <select name="tipo" id="tipo">
+        <option value="101"> Queretaro</option>
+        <option value="102"> Sinaloa</option>
+        <option value="103"> Monterrey</option>
+      </select>
   </div>
 </nav>
 <div class="container">

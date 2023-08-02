@@ -6,11 +6,12 @@ include 'cabecera.php';
 
 ?>
   <br>
-
+  <?php if($mensaje!=""){?>
   <div class="alert alert-success">
-  <?php echo ($mensaje); ?>
-    <a href="#" class="badge badge-success"> Ver carrito</a>
+  <?php echo $mensaje; ?>
+    <a href="mostrarCarrito.php" class="badge badge-success"> Ver carrito</a>
     </div>
+  <?php } ?>
 </div>
 <div class="row">
   <?php
@@ -20,7 +21,7 @@ include 'cabecera.php';
   //print_r($listaProductos);
   ?>
   <?php foreach( $listaProductos as $producto){ ?>
-    <div class="col-3">
+    <div class="col-4">
     <div class="card">
       <img 
       title="<?php echo $producto['pr_Nombre'];?>"

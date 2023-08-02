@@ -39,8 +39,16 @@ if(isset($_POST['btnAccion'])){
                 'PRECIO'=>$PRECIO
               );
               $_SESSION['CARRITO'][0]=$producto;
+              $mensaje="Producto agregado al carrito";
 
             }else{
+              $idProductos=array_column($_SESSION['CARRITO'],"ID");
+
+              if(in_array($ID,$idProductos)){
+                echo "<script>alert('El producto ya ha sido seleccionado..');</script";
+                $mensaje="";
+
+              }else{
               $NumeroProductos=count($_SESSION['CARRITO']);
               $producto=array(
                 'ID'=>$ID,
@@ -49,11 +57,31 @@ if(isset($_POST['btnAccion'])){
                 'PRECIO'=>$PRECIO
               );
               $_SESSION['CARRITO'][$NumeroProductos]=$producto;
+              $mensaje="Producto agregado al carrito";
             }
-            $mensaje=print_r($_SESSION,true);
+          }
+            //$mensaje=print_r($_SESSION,true);
+            
 
 
           break;
+          case "Eliminar":
+                if (is_numeric( openssl_decrypt ($_POST['id_producto'],COD,KEY))) {
+                  $ID=openssl_decrypt ($_POST['id_producto'],COD,KEY);
+                  foreach ($_SESSION['CARRITO']as $indice=>$producto){
+                    if ($producto['ID']==$ID) {
+                      unset($_SESSION['CARRITO'][$indice]);
+                      echo "<script>alert('Elemento borrado...');</script>";
+                    }
+                  }
+                 
+                 } else{
+     
+                   $mensaje.="UPS.... ID incorrecto".$ID."<br/>";
+                 }{
+
+                 }
+            break;
         
 
 
