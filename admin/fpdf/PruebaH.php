@@ -12,7 +12,7 @@ class PDF extends FPDF
 
       //$consulta_info = $conexion->query(" select *from hotel ");//traemos datos de la empresa desde BD
       //$dato_info = $consulta_info->fetch_object();
-      $this->Image('logo.png', 270, 5, 20); //logo de la empresa,moverDerecha,moverAbajo,tamañoIMG
+      $this->Image('logos2.jpg',240,10, 50); //logo de la empresa,moverDerecha,moverAbajo,tamañoIMG
       $this->SetFont('Arial', 'B', 19); //tipo fuente, negrita(B-I-U-BIU), tamañoTexto
       $this->Cell(95); // Movernos a la derecha
       $this->SetTextColor(0, 0, 0); //color
