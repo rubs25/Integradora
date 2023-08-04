@@ -14,29 +14,36 @@ include 'cabecera.php';
   <?php } ?>
 </div>
 <div class="row">
+
   <?php
-  $sentencia=$pdo->prepare("SELECT * FROM productos ");
+
+  if (isset($_GET['sucursal']) && is_numeric($_GET['sucursal'])) {
+    $sentencia=$pdo->prepare("SELECT * FROM inventario where id_sucursal = ".$_GET['sucursal']);
+  } else {
+    $sentencia=$pdo->prepare("SELECT * FROM inventario ");
+  }
   $sentencia->execute();
   $listaProductos = $sentencia->fetchAll(PDO::FETCH_ASSOC);
   //print_r($listaProductos);
   ?>
+
   <?php foreach( $listaProductos as $producto){ ?>
     <div class="col-4">
     <div class="card">
       <img 
-      title="<?php echo $producto['pr_Nombre'];?>"
-      alt="<?php echo $producto['pr_Nombre'];?>"
+      title="<?php echo $producto['pr_nombre'];?>"
+      alt="<?php echo $producto['pr_nombre'];?>"
       class= "card-img-top"
-      src="<?php echo $producto['imagen'];?>">
+      src="<?php echo $producto['img'];?>">
     <div class="card-body">
-      <span><?php echo $producto['pr_Nombre'];?></span>
-      <h5 class="card-title">$<?php echo $producto['pr_Costo_envio'];?></h5>
-      <p class="card-text"><?php echo $producto['pr_Marca'];?></p>
+      <span><?php echo $producto['pr_nombre'];?></span>
+      <h5 class="card-title">$<?php echo $producto['pr_CantidadExistentes'];?></h5>
+      <p class="card-text"><?php echo $producto['pr_Precio_U_Venta'];?></p>
 
     <form action="" method="post">
-      <input type="hidden" name="id_producto" id="id_producto" value="<?php echo openssl_encrypt($producto['id_producto'],COD,KEY);?>">
-      <input type="hidden" name="nombre" id="nombre" value="<?php echo openssl_encrypt($producto['pr_Nombre'],COD,KEY);?>">
-      <input type="hidden" name="precio" id="precio" value="<?php echo openssl_encrypt($producto['pr_Costo_envio'],COD,KEY);?>">
+      <input type="hidden" name="id_inventario" id="id_inventario" value="<?php echo openssl_encrypt($producto['id_inventario'],COD,KEY);?>">
+      <input type="hidden" name="nombre" id="nombre" value="<?php echo openssl_encrypt($producto['pr_nombre'],COD,KEY);?>">
+      <input type="hidden" name="precio" id="precio" value="<?php echo openssl_encrypt($producto['pr_CantidadExistentes'],COD,KEY);?>">
       <input type="hidden" name="cantidad" id="cantidad" value="<?php echo openssl_encrypt(1,COD,KEY);?>">
     <button class="btn btn-primary"
       name="btnAccion"

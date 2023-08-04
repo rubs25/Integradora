@@ -37,10 +37,23 @@
     </div>
     <label for="tipo">Eliga la sucursal: </label>
       <select name="tipo" id="tipo">
+      <option value="">Selecionar</option>
         <option value="101"> Queretaro</option>
         <option value="102"> Sinaloa</option>
         <option value="103"> Monterrey</option>
       </select>
+
+
   </div>
 </nav>
 <div class="container">
+<script>
+  const select = document.getElementById('tipo');
+
+select.addEventListener('change', function handleChange(event) {
+  console.log(event.target.value); // 👉️ get selected VALUE
+  var URLactual = window.location.origin + window.location.pathname;
+  window.location.replace(URLactual + "?sucursal=" + event.target.value);
+});
+
+</script>
