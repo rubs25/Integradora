@@ -53,7 +53,7 @@ include 'cabecera.php';
 
                 </div>
                 <button class="btn btn-primary btn-lg btn-block" type="submit" name="btnAccion" value="proceder">
-                    Proceder a pagar >>
+                    Proceder al pago >>
                 </button>
             </form>
 

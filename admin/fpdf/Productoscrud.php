@@ -8,10 +8,10 @@ class PDF extends FPDF
    // Cabecera de página
    function Header()
    {
-      //include '../../recursos/Recurso_conexion_bd.php';//llamamos a la conexion BD
+      include '../conecction.php';//llamamos a la conexion BD
 
-      //$consulta_info = $conexion->query(" select *from hotel ");//traemos datos de la empresa desde BD
-      //$dato_info = $consulta_info->fetch_object();
+      $consulta_info = $conexion->query(" SELECT * FROM inventario ");//traemos datos de la empresa desde BD
+      $dato_info = $consulta_info->fetch_object();
       $this->Image('logos2.jpg',168,6, 40); //logo de la empresa,moverDerecha,moverAbajo,tamañoIMG
       $this->SetFont('Arial', 'B', 19); //tipo fuente, negrita(B-I-U-BIU), tamañoTexto
       $this->Cell(45); // Movernos a la derecha
@@ -59,10 +59,10 @@ class PDF extends FPDF
       $this->SetTextColor(255, 255, 255); //colorTexto
       $this->SetDrawColor(150, 150, 150); //colorBorde
       $this->SetFont('Arial', 'B', 10);
-      $this->Cell(18, 10, utf8_decode('ID'), 1, 0, 'C', 1);
-      $this->Cell(20, 10, utf8_decode('NOMBRE'), 1, 0, 'C', 1);
-      $this->Cell(30, 10, utf8_decode('CANTIDAD'), 1, 0, 'C', 1);
-      $this->Cell(20, 10, utf8_decode('PRECIO'), 1, 0, 'C', 1);
+      $this->Cell(18, 10, utf8_decode('id_inventario'), 1, 0, 'C', 1);
+      $this->Cell(20, 10, utf8_decode('pr_nombre'), 1, 0, 'C', 1);
+      $this->Cell(30, 10, utf8_decode('pr_nombre'), 1, 0, 'C', 1);
+      $this->Cell(20, 10, utf8_decode('pr_nombre'), 1, 0, 'C', 1);
    }
 
    // Pie de página
@@ -79,10 +79,10 @@ class PDF extends FPDF
    }
 }
 
-//include '../../recursos/Recurso_conexion_bd.php';
+include '../conecction.php';
 /* CONSULTA INFORMACION DEL HOSPEDAJE */
-//$consulta_info = $conexion->query(" select *from hotel ");
-//$dato_info = $consulta_info->fetch_object();
+$consulta_info = $conexion->query(" SELECT * FROM inventario ");
+$dato_info = $consulta_info->fetch_object();
 
 $pdf = new PDF();
 $pdf->AddPage(); /* aqui entran dos para parametros (horientazion,tamaño)V->portrait H->landscape tamaño (A3.A4.A5.letter.legal) */
@@ -98,10 +98,10 @@ $pdf->SetDrawColor(163, 163, 163); //colorBorde
    }*/
 $i = $i + 1;
 /* TABLA */
-$pdf->Cell(18, 10, utf8_decode("ID"), 1, 0, 'C', 0);
-$pdf->Cell(20, 10, utf8_decode("NOMBRE"), 1, 0, 'C', 0);
-$pdf->Cell(30, 10, utf8_decode("CANTIDAD"), 1, 0, 'C', 0);
-$pdf->Cell(20, 10, utf8_decode("PRECIO"), 1, 0, 'C', 0);
+$pdf->Cell(18, 10, utf8_decode("id_inventario"), 1, 0, 'C', 0);
+$pdf->Cell(20, 10, utf8_decode("pr_nombre"), 1, 0, 'C', 0);
+$pdf->Cell(30, 10, utf8_decode("pr_nombre"), 1, 0, 'C', 0);
+$pdf->Cell(20, 10, utf8_decode("pr_nombre"), 1, 0, 'C', 0);
 
 
 

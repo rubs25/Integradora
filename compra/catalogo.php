@@ -38,7 +38,7 @@ include 'cabecera.php';
     <div class="card-body">
       <span><?php echo $producto['pr_nombre'];?></span>
       <h5 class="card-title">$<?php echo $producto['pr_CantidadExistentes'];?></h5>
-      <p class="card-text"><?php echo $producto['pr_Precio_U_Venta'];?></p>
+      <p class="card-text"><?php echo $producto['descripcion'];?></p>
 
     <form action="" method="post">
       <input type="hidden" name="id_inventario" id="id_inventario" value="<?php echo openssl_encrypt($producto['id_inventario'],COD,KEY);?>">
