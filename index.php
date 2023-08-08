@@ -172,7 +172,7 @@ if (isset($_SESSION['usuario'])) {
                                     <ul>
 
                                         <a class="btn btn-primary"  href="compra/catalogo.php" role="button">Catalogo</a>
-                                    
+                                        
                                    
                                     <ul>
 

@@ -36,51 +36,53 @@ if ($_POST) {
 }
 ?>
 
-<script src="https://www.paypal.com/sdk/js?client-id=test&currency=USD"></script>
-
+<script src="https://www.paypal.com/sdk/js?client-id=AVEkyraA4M6-d7zKyMzMe7jzgc3r0AtdiY8gOlEHw8nAYqAmO8cOo5JMMafxuSYrw5SQ3DSSLoc4nFoT&currency=MXN"></script>
 <div class="jumbotron text-center">
     <h1 class="display-4"> ¡Paso Final! </h1>
     <hr class="my-4">
     <p class="lead"> Estas a punto de pagar con Pay Pal la cantidad de: 
         <h4>$<?php echo number_format($total,2);  ?> </h4>
         
-<div id="paypal-button-container"></div>
+        <div id="paypal-button-container"></div>
     </p>
         <p>Su factura estara disponible despues del pago si es que asi lo desea<br/>
         <strong> (Para aclaraciones :motortoys@gmail.com) </strong>
         </p>
 </div>
 
-    <!-- Replace "test" with your own sandbox Business account app client ID -->
-    <!-- Set up a container element for the button -->
-    <script>
-      paypal.Buttons({
-        
-        client:{
-            sandbox: 'AczIlYIWFj03wjqCgfJgDXhNxpuu0-Qp3Tn_0ucuhbRGbyLJuktHBinhEELqJiR6hpQba4QQEDceVOP4',
-            productions: 'AczIlYIWFj03wjqCgfJgDXhNxpuu0-Qp3Tn_0ucuhbRGbyLJuktHBinhEELqJiR6hpQba4QQEDceVOP4'
-        },
-        createOrder() {
-          return fetch("/my-server/create-paypal-order", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              cart: [
-                {
-                  sku: "YOUR_PRODUCT_STOCK_KEEPING_UNIT",
-                  quantity: "YOUR_PRODUCT_QUANTITY",
-                },
-              ]
-            })
-          })
-          .then((response) => response.json())
-          .then((order) => order.id);
-        }
-      }).render('#paypal-button-container');
-    </script>
+<script>
+  paypal.Buttons({
+    style:{
+      color: 'blue',
+      shape: 'pill',
+      label: 'pay'
+    },
+
+    createOrder:function(data,actions){
+      return actions.order.create({
+        purchase_units:[{
+          amount:{
+            value:100
+          }
+        }]
+      })
+    },
+
+    onApprove:function(data,action){
+      action.order.capture(function(detalles){
+      console.log(detalles);
+    });
+
+  },
+
+  onCancel: function(data){
+    alert("Su pago a sido cancelado");
+    console.log(data);
+  }
   
-      
+  }).render('#paypal-button-container');
+</script>
+
+  
 
 <?php include 'pie.php';?>

@@ -46,7 +46,7 @@ if(isset($_POST['btnAccion'])){
 
               if(in_array($ID,$idProductos)){
                 echo "<script>alert('El producto ya ha sido seleccionado..');</script";
-                $mensaje="";
+                $mensaje="Seleccione mas productos dentro del carrito";
 
               }else{
               $NumeroProductos=count($_SESSION['CARRITO']);
@@ -71,7 +71,7 @@ if(isset($_POST['btnAccion'])){
                   foreach ($_SESSION['CARRITO']as $indice=>$producto){
                     if ($producto['ID']==$ID) {
                       unset($_SESSION['CARRITO'][$indice]);
-                      echo "<script>alert('Elemento borrado...');</script>";
+                      echo "<script>alert('Producto eliminado');</script>";
                     } else {
                       $mensaje.="ID incorrecto".$ID."<br/>";
                     }

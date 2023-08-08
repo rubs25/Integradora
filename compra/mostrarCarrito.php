@@ -26,7 +26,9 @@ include 'cabecera.php';
 
             <form action="" method="post">   
                 <input type="hidden" name="id_inventario" id="id_inventario" value="<?php echo openssl_encrypt($producto['ID'],COD,KEY);?>">
-            <button class="btn btn-danger" type="submit" name="btnAccion" value="Eliminar">Eliminar</button>
+                <button class="btn btn-outline-success" type="submit" name="btnAccion" value="Incrementar">Aumentar</button>
+                <button class="btn btn-outline-danger" type="submit" name="btnAccion" value="Eliminar">Eliminar</button>
+            
             </form>
         
         </td>
