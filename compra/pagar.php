@@ -42,8 +42,7 @@ if ($_POST) {
     <hr class="my-4">
     <p class="lead"> Estas a punto de pagar con Pay Pal la cantidad de: 
         <h4>$<?php echo number_format($total,2);  ?> </h4>
-        
-        <div id="paypal-button-container"></div>
+         <div id="paypal-button-container"></div>
     </p>
         <p>Su factura estara disponible despues del pago si es que asi lo desea<br/>
         <strong> (Para aclaraciones :motortoys@gmail.com) </strong>
@@ -51,38 +50,46 @@ if ($_POST) {
 </div>
 
 <script>
-  paypal.Buttons({
-    style:{
-      color: 'blue',
-      shape: 'pill',
-      label: 'pay'
-    },
+        paypal.Buttons({
+            style: {
+                color: 'blue',
+                shape: 'pill',
+                label: 'pay'
+            },
 
-    createOrder:function(data,actions){
-      return actions.order.create({
-        purchase_units:[{
-          amount:{
-            value:100
-          }
-        }]
-      })
-    },
+            createOrder: function(data, actions) {
+                // Obtener el total de la venta desde la URL
+                var urlParams = new URLSearchParams(window.location.search);
+                var totalVenta = urlParams.get('total_venta');
 
-    onApprove:function(data,action){
-      action.order.capture(function(detalles){
-      console.log(detalles);
-    });
+                return actions.order.create({
+                    purchase_units: [{
+                        amount: {
+                            value: totalVenta
+                        }
+                    }]
+                });
+            },
 
-  },
+            onApprove: function(data, actions) {
+                console.log("Pago aprobado");
+                actions.order.capture().then(function(details) {
+                    // Mostrar mensaje de "Compra exitosa"
+                    alert("Su compra fue exitosa");
+                    // Redirigir al usuario al archivo "index.php"
+                    window.location.href = "catalogo.php";
+                });
+            },
 
-  onCancel: function(data){
-    alert("Su pago a sido cancelado");
-    console.log(data);
-  }
-  
-  }).render('#paypal-button-container');
-</script>
+            onCancel: function(data, actions) {
+                alert("Su pago a sido cancelado");
+                console.log(data);
+            }
+        }).render('#paypal-button-container');
+    </script>
+    <div class="flex">
+        <a href="catalogo.php" class="btn">Salir</a>
+    </div>
 
-  
 
 <?php include 'pie.php';?>

@@ -37,13 +37,13 @@ include 'cabecera.php';
       src="<?php echo $producto['img'];?>">
     <div class="card-body">
       <span><?php echo $producto['pr_nombre'];?></span>
-      <h5 class="card-title">$<?php echo $producto['descripcion'];?></h5>
+      <h5 class="card-title">$<?php echo $producto['pr_Precio_U_Venta'];?></h5>
       <p class="card-text"><?php echo $producto['pr_CantidadExistentes'];?></p>
 
     <form action="" method="post">
       <input type="hidden" name="id_inventario" id="id_inventario" value="<?php echo openssl_encrypt($producto['id_inventario'],COD,KEY);?>">
       <input type="hidden" name="nombre" id="nombre" value="<?php echo openssl_encrypt($producto['pr_nombre'],COD,KEY);?>">
-      <input type="hidden" name="precio" id="precio" value="<?php echo openssl_encrypt($producto['pr_CantidadExistentes'],COD,KEY);?>">
+      <input type="hidden" name="precio" id="precio"  value="<?php echo openssl_encrypt($producto['pr_CantidadExistentes'],COD,KEY);?>">
       <input type="hidden" name="cantidad" id="cantidad" value="<?php echo openssl_encrypt(1,COD,KEY);?>">
     <button class="btn btn-primary"
       name="btnAccion"

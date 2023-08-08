@@ -24,7 +24,7 @@ class PDF extends FPDF
       /* UBICACION */
       $this->Cell(180);  // mover a la derecha
       $this->SetFont('Arial', 'B', 10);
-      $this->Cell(96, 10, utf8_decode("Ubicación: QUERETARO "), 0, 0, '', 0);
+      $this->Cell(96, 10, utf8_decode("Sucursal:"), 0, 0, '', 0);
       $this->Ln(5);
 
       /* TELEFONO */
@@ -39,11 +39,6 @@ class PDF extends FPDF
       $this->Cell(85, 10, utf8_decode("Correo: motortoys@uteq.edu.mx "), 0, 0, '', 0);
       $this->Ln(5);
 
-      /* TELEFONO */
-      $this->Cell(180);  // mover a la derecha
-      $this->SetFont('Arial', 'B', 10);
-      $this->Cell(85, 10, utf8_decode("Sucursal: QUERETARO "), 0, 0, '', 0);
-      $this->Ln(10);
 
       /* TITULO DE LA TABLA */
       //color
