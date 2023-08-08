@@ -11,7 +11,7 @@ if (isset($_POST['adp'])){
     $preioventa =$_POST['pr_Precio_U_Venta'];
    
 
-    $query = "INSERT INTO inventario (pr_nombre, id_producto,pr_CantidadExistentes, id_sucursal,pr_Precio_U_Venta)
+    $query = "INSERT INTO inventario (pr_nombre, id_producto, pr_CantidadExistentes, id_sucursal, pr_Precio_U_Venta)
           VALUES ('$nombre', '$producto',  '$cantexis', '$sucursal','$preioventa')";
 
 $ejecutar = mysqli_query($conexion, $query);

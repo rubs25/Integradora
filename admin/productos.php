@@ -67,7 +67,7 @@ include('conecction.php');
         <td><?php echo $row['id_producto']; ?></td>
         <td><?php echo $row['pr_CantidadExistentes']; ?></td>
         <td><?php echo $row['id_sucursal']; ?></td>
-        <td><?php echo $row['descripcion']; ?></td>
+        <td> $ <?php echo $row['pr_Precio_U_Venta']; ?></td>
         
         <td>
               <a href="edip.php?id=<?php echo $row['id_inventario']?>" class="btn btn-secondary">

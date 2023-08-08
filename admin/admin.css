@@ -67,6 +67,8 @@
     .formulario input[type="text"],
     .formulario input[type="email"],
     .formulario input[type="password"],
+    .formulario textarea, 
+
     .formulario select {
       padding: 8px;
       width: 100%;
@@ -97,3 +99,9 @@
       margin-bottom: 10px;
       border-radius: 4px;
     }
+
+  .btn-secondary{ 
+    background-color: #ccc !important;
+    color: #333;
+    border: 2px #333 solid;
+  }

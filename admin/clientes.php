@@ -74,9 +74,9 @@ include('conecction.php');
         <td><?php echo $row['cl_correo']; ?></td>
         <td><?php echo $row['cl_direccion']; ?></td>
         <td>
-              <a href="editar.php?id=<?php echo $row['cl_nombre']?>" class="btn btn-secondary">Editar
+              <a  href="editar.php?id=<?php echo $row['id_cliente']?>" class="btn-secondary">Editar
               </a>
-              <a href="eliminar.php?id=<?php echo $row['cl_nombre']?>" class="btn btn-secondary">Eliminar
+              <a href="eliminar.php?id=<?php echo $row['id_cliente']?>" class="btn btn-secondary">Eliminar
             </td>
       </tr>
         <?php }?>

@@ -15,8 +15,8 @@ if  (isset($_GET['id'])) {
     }
   }
   
-  if (isset($_POST['edip.php'])) {
-    $id = $_GET['id_inventario'];
+  if (isset($_POST['edip'])) {
+    $id = $_GET['id'];
     $nombre =  $_POST['pr_nombre'];
     $producto = $_POST['id_producto'];
     $cantexist =$_POST['pr_CantidadExistentes'];
@@ -24,19 +24,33 @@ if  (isset($_GET['id'])) {
     $preioventa =$_POST['pr_Precio_U_Venta'];
    
   
-    $query = "UPDATE inventario set pr_nombre = '$nombre', id_producto = '$producto', pr_CantidadExistentes = '$cantexist', id_sucursal = '$sucursal', pr_Precio_U_Venta = '$preioventa'WHERE id_inventario=$id";
-    mysqli_query($conexion, $query);
-    $_SESSION['message'] = 'Task Updated Successfully';
-    $_SESSION['message_type'] = 'warning';
+    $query = " UPDATE inventario set pr_nombre = '$nombre', id_producto = '$producto', pr_CantidadExistentes = '$cantexist', 
+              id_sucursal = '$sucursal', pr_Precio_U_Venta = '$preioventa' WHERE id_inventario=$id";
+    $ejecutar = mysqli_query($conexion, $query);
+    if (!$ejecutar ) {
+      die ('Error en query');
+  }
+    // $_SESSION['message'] = 'Task Updated Successfully';
+    // $_SESSION['message_type'] = 'warning';
     header('Location: productos.php');
   } 
 ?>
+
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="stylesheet" href="admin.css">
+  <link rel="apple-touch-icon" sizes="76x76" href="assets/img/logo2.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="assets/img/logo2.png">
+  <title>Editar Productos</title>
+  
+</head>
 
 <div class="container p-4">
   <div class="row">
     <div class="col-md-4 mx-auto">
       <div class="card card-body">
-      <form action="edip.php" method="POST" class="formulario">
+      <form action="edip.php?id=<?php echo $_GET['id']; ?>" method="POST" class="formulario">
     
       <label for="pr_nombre">Nombre:</label>
       <input type="text"  name="pr_nombre" value="<?php echo $nombre; ?>">
@@ -64,4 +78,6 @@ if  (isset($_GET['id'])) {
   </div>
 </div>
 
+</body>
+</html>
 
