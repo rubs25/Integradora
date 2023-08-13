@@ -36,12 +36,15 @@ if ($_POST) {
 }
 ?>
 
+
 <script src="https://www.paypal.com/sdk/js?client-id=AVEkyraA4M6-d7zKyMzMe7jzgc3r0AtdiY8gOlEHw8nAYqAmO8cOo5JMMafxuSYrw5SQ3DSSLoc4nFoT&currency=MXN"></script>
+
 <div class="jumbotron text-center">
     <h1 class="display-4"> ¡Paso Final! </h1>
     <hr class="my-4">
     <p class="lead"> Estas a punto de pagar con Pay Pal la cantidad de: 
         <h4>$<?php echo number_format($total,2);  ?> </h4>
+        
         <div id="paypal-button-container"></div>
     </p>
         <p>Su factura estara disponible despues del pago si es que asi lo desea<br/>
@@ -51,7 +54,7 @@ if ($_POST) {
 <script>
     paypal.Buttons({
         style: {
-            color: 'blue',
+            color: 'silver',
             shape: 'pill',
             label: 'pay'
         },
