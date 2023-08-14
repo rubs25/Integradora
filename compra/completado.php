@@ -1,3 +1,50 @@
+<?php
+// Comenzar la sesión si no ha sido iniciada
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
+
+// Verificar si el carrito está definido y no está vacío
+if (isset($_SESSION['CARRITO']) && count($_SESSION['CARRITO']) > 0) {
+    // Conexión a la base de datos
+    $conexion = new mysqli('localhost', 'root', 'Rubas2509', 'integradora2');
+
+    // Verificar la conexión
+    if ($conexion->connect_error) {
+        die("Conexión fallida: " . $conexion->connect_error);
+    }
+
+    // Recorrer todos los productos en el carrito
+    foreach ($_SESSION['CARRITO'] as $producto) {
+        // Obtener la cantidad existente del producto en el inventario
+        $stmt = $conexion->prepare("SELECT pr_CantidadExistentes FROM inventario WHERE id_producto = ?");
+        $stmt->bind_param("i", $producto['ID']);
+        $stmt->execute();
+        $stmt->bind_result($cantidadExistente);
+        $stmt->fetch();
+        $stmt->close();
+
+        // Calcular la nueva cantidad existente
+        $nuevaCantidadExistente = $cantidadExistente - $producto['CANTIDAD'];
+
+        // Actualizar la cantidad existente del producto en el inventario
+        $stmt = $conexion->prepare("UPDATE inventario SET pr_CantidadExistentes = ? WHERE id_producto = ?");
+        $stmt->bind_param("ii", $nuevaCantidadExistente, $producto['ID']);
+        $stmt->execute();
+        $stmt->close();
+    }
+
+    // Cerrar la conexión
+    $conexion->close();
+
+    // Destruir la sesión del carrito
+    unset($_SESSION['CARRITO']);
+}
+?>
+
+
+
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
