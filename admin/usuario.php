@@ -69,7 +69,7 @@ include('conecction.php');
       </table>
     <div class="mensaje">
     <div class="text-right">
-                <a href="fpdf/PruebaV.php?id=<?php echo $row['id_user']?>" 
+                <a href="../admin/Rusuarios.php?id=<?php echo $row['id_user']?>" 
                 target="_blank" class="btn btn-success"><i class="fas fa-file-pdf"></i> Generar Reporte</a>
               </div>
     </div>

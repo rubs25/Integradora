@@ -85,7 +85,7 @@ include('conecction.php');
     <div class="mensaje">
       <!-- Aquí puedes mostrar mensajes de éxito o error -->
       </a>
-              <a href="../admin/fpdf/PruebaC.php" class="btn btn-secondary">Generar Reporte
+              <a href="../admin/Rclientes.php" class="btn btn-secondary">Generar Reporte
               </a>
     </div>
   </div>

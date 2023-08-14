@@ -84,7 +84,7 @@ include('conecction.php');
     <div class="mensaje">
       <!-- Aquí puedes mostrar mensajes de éxito o error -->
       <div class="text-right">
-                <a href="../admin/fpdf/Productoscrud.php" class="btn btn-success"><i class="fas fa-file-pdf">
+                <a href="../admin/Rproductos.php" class="btn btn-success"><i class="fas fa-file-pdf">
                 </i> Generar Reporte</a>
               </div>
     </div>

@@ -63,7 +63,7 @@
         <h1>¡Gracias por tu compra!</h1>
         <p>Tu factura está lista para ser descargada.</p>
         <strong>Descarga tu factura:</strong>
-        <a class="btn btn-primary" href="../admin/fpdf/factura.php" role="button">¡Descargar Ahora!</a>
+        <a class="btn btn-primary" href="../admin/factura.php" role="button">¡Descargar Ahora!</a>
         <a class="btn btn-secondary" href="../compra/catalogo.php" role="button">Volver</a>
     </div>
 </body>

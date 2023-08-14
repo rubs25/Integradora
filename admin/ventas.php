@@ -93,7 +93,7 @@ include('conecction.php');
     <div class="mensaje">
       <!-- Aquí puedes mostrar mensajes de éxito o error -->
       <div class="text-right">
-                <a href="fpdf/PruebaH.php?id=<?php echo $row['id']?>" target="_blank" class="btn btn-success"><i class="fas fa-file-pdf"></i> Generar Reporte</a>
+                <a href="../admin/Rventas.php?id=<?php echo $row['id']?>" target="_blank" class="btn btn-success"><i class="fas fa-file-pdf"></i> Generar Reporte</a>
               </div>
     </div>
   </div>
