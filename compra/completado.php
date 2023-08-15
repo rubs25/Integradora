@@ -1,4 +1,5 @@
 <?php
+include("../basedatos/conexion.php");
 // Comenzar la sesión si no ha sido iniciada
 if (session_status() == PHP_SESSION_NONE) {
     session_start();
@@ -7,17 +8,25 @@ if (session_status() == PHP_SESSION_NONE) {
 // Verificar si el carrito está definido y no está vacío
 if (isset($_SESSION['CARRITO']) && count($_SESSION['CARRITO']) > 0) {
     // Conexión a la base de datos
-    $conexion = new mysqli('localhost', 'root', 'Rubas2509', 'integradora2');
+    // $conexion = new mysqli('localhost', 'root', 'Rubas2509', 'integradora2');
 
-    // Verificar la conexión
-    if ($conexion->connect_error) {
-        die("Conexión fallida: " . $conexion->connect_error);
-    }
+    // // Verificar la conexión
+    // if ($conexion->connect_error) {
+    //     die("Conexión fallida: " . $conexion->connect_error);
+    // }
+
 
     // Recorrer todos los productos en el carrito
     foreach ($_SESSION['CARRITO'] as $producto) {
+        
+        //registrar venta a la base de datos
+        //idproducto va ser igual a id_inventario
+        //los datos se deben volver a calcular
+        //por ahora el id de sucursal va ser fija
+        //despues agregar id_sucursal al carrito por producto/
+
         // Obtener la cantidad existente del producto en el inventario
-        $stmt = $conexion->prepare("SELECT pr_CantidadExistentes FROM inventario WHERE id_producto = ?");
+        $stmt = $conexion->prepare("SELECT pr_CantidadExistentes FROM inventario WHERE id_inventario = ?");
         $stmt->bind_param("i", $producto['ID']);
         $stmt->execute();
         $stmt->bind_result($cantidadExistente);
@@ -28,7 +37,7 @@ if (isset($_SESSION['CARRITO']) && count($_SESSION['CARRITO']) > 0) {
         $nuevaCantidadExistente = $cantidadExistente - $producto['CANTIDAD'];
 
         // Actualizar la cantidad existente del producto en el inventario
-        $stmt = $conexion->prepare("UPDATE inventario SET pr_CantidadExistentes = ? WHERE id_producto = ?");
+        $stmt = $conexion->prepare("UPDATE inventario SET pr_CantidadExistentes = ? WHERE id_inventario = ?");
         $stmt->bind_param("ii", $nuevaCantidadExistente, $producto['ID']);
         $stmt->execute();
         $stmt->close();
