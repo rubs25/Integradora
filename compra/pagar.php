@@ -14,9 +14,11 @@ if ($_POST) {
         $total += ($producto['PRECIO'] * $producto['CANTIDAD']);
     }
 
-    $sentencia = $pdo->prepare("INSERT INTO `ventas` 
-           (`id_producto`, `id_estatus`, `ve_fechaventa`, `ve_horaventa`, `ve_cantidadprod`, `ve_iva`, `ve_subtotal`, `ve_metodopago`, `descuento_aplicado`, `id_sucursal`) 
-    VALUES (NULL, NULL, NOW(), NOW(), :ve_cantidadprod, :ve_iva, :ve_subtotal, :ve_metodopago, :descuento_aplicado, NULL);");
+    $total=$total-($total*0.16);
+    $total=$total+($total*0.1);
+    //$sentencia = $pdo->prepare("INSERT INTO `ventas` 
+           //(`id_producto`, `id_estatus`, `ve_fechaventa`, `ve_horaventa`, `ve_cantidadprod`, `ve_iva`, `ve_subtotal`, `ve_metodopago`, `descuento_aplicado`, `id_sucursal`) 
+    //VALUES (NULL, NULL, NOW(), NOW(), :ve_cantidadprod, :ve_iva, :ve_subtotal, :ve_metodopago, :descuento_aplicado, NULL);");
 
     // Asigna los valores adecuados a las variables
     $cantidadDeProductos = count($_SESSION['CARRITO']);
@@ -25,13 +27,13 @@ if ($_POST) {
     $metodoPago = 'PayPal'; // Establece el método de pago
     $descuentoAplicado = 0; // Si tienes descuentos, asigna el valor correcto
 
-    $sentencia->bindParam(":ve_cantidadprod", $cantidadDeProductos);
+   /*  $sentencia->bindParam(":ve_cantidadprod", $cantidadDeProductos);
     $sentencia->bindParam(":ve_iva", $iva);
     $sentencia->bindParam(":ve_subtotal", $subtotal);
     $sentencia->bindParam(":ve_metodopago", $metodoPago);
     $sentencia->bindParam(":descuento_aplicado", $descuentoAplicado);
 
-    //$sentencia->execute();
+    $sentencia->execute(); */
     $idVenta = $pdo->lastInsertId();
 }
 ?>
