@@ -1,106 +1,65 @@
 <?php
-require('fpdf/fpdf.php');
+require ('fpdf/fpdf.php');
 
 class PDF extends FPDF
 {
-    // Variables para los datos de la venta
-    private $clientName;
-    private $invoiceDate;
-
-    // Setter para el nombre del cliente
-    public function SetClientName($clientName)
-    {
-        $this->clientName = $clientName;
-    }
-
-    // Setter para la fecha de la factura
-    public function SetInvoiceDate($invoiceDate)
-    {
-        $this->invoiceDate = $invoiceDate;
-    }
-
     function Header()
     {
-        // Agregar la imagen de la empresa
-        $this->Image('logos2.jpg', 175, 10, 50);
-
-        $this->SetFont('Arial', 'B', 15);
-        $this->Cell(0, 10, 'Factura', 0, 1, 'C');
-
-        $this->SetFont('Arial', '', 12);
-        $this->Cell(40, 10, 'Fecha:', 0);
-        $this->Cell(20, 10, $this->invoiceDate, 0, 1);
-
-        $this->Cell(40, 10, 'Cliente:', 0);
-        $this->Cell(0, 10, $this->clientName, 0, 1);
-
-        $this->Ln(10);
-
-        $this->SetFont('Arial', 'B', 12);
-        $this->Cell(100, 10, 'Descripcion', 1, 0, 'C');
-        $this->Cell(40, 10, 'Cantidad', 1, 0, 'C');
-        $this->Cell(50, 10, 'Precio', 1, 0, 'C');
-        $this->Cell(50, 10, 'Subtotal', 1, 1, 'C');
+        $this->Image('logos2.jpg',60,160,90);
+        $this->SetFont('Arial','B',15);
+        $this->Cell(0,10,'Factura',0,1,'C');
     }
 
     function Footer()
     {
         $this->SetY(-15);
-        $this->SetFont('Arial', 'I', 8);
-        $this->Cell(0, 10, 'Pagina ' . $this->PageNo() . ' de {nb}', 0, 0, 'C');
+        $this->SetFont('Arial','I',8);
+        $this->Cell(0,10,utf8_decode('Página ').$this->PageNo().'/{nb}',0,0,'C');
     }
 }
 
-// Comenzar la sesión si no ha sido iniciada
-session_start();
-
-// Verificar si el carrito está definido y no está vacío
-if (isset($_SESSION['CARRITO']) && count($_SESSION['CARRITO']) > 0) {
-    // Inicializar el array de items
-    $items = array();
-
-    // Recorrer todos los productos en el carrito
-    foreach ($_SESSION['CARRITO'] as $producto) {
-        $descripcion = $producto['NOMBRE'];
-        $cantidad = $producto['CANTIDAD'];
-        $precio = $producto['PRECIO'];
-        $subtotal = $cantidad * $precio;
-
-        // Agregar el item al array de items
-        $items[] = array(
-            $descripcion,
-            $cantidad,
-            $precio,
-            $subtotal
-        );
-    }
-} 
-
-$pdf = new PDF('L');
+$pdf = new PDF('P'); // Cambiado a formato vertical 'P'
 $pdf->AliasNbPages();
 $pdf->AddPage();
-$pdf->SetFont('Arial', '', 12);
+$pdf->SetFont('Arial','',12);
 
-// Obtener los datos de la venta
-$fecha = date('d/m/Y');
-$cliente = 'Nombre del Cliente';
+$servername = "localhost";
+$username = "root";
+$password = "Rubas2509";
+$dbname = "integradora2";
 
-// Establecer los datos en el objeto $pdf
-$pdf->SetClientName($cliente);
-$pdf->SetInvoiceDate($fecha);
+$conn = new mysqli($servername, $username, $password, $dbname);
 
-// Agregar los items al detalle de la venta
-foreach ($items as $item) {
-    $descripcion = $item[0];
-    $cantidad = $item[1];
-    $precio = $item[2];
-    $subtotal = $item[3];
-
-    $pdf->Cell(100, 10, $descripcion, 1, 0, 'C');
-    $pdf->Cell(40, 10, $cantidad, 1, 0, 'C');
-    $pdf->Cell(50, 10, number_format($precio, 2), 1, 0, 'C');
-    $pdf->Cell(50, 10, number_format($subtotal, 2), 1, 1, 'C');
+if ($conn->connect_error) {
+    die("Error de conexión: " . $conn->connect_error);
 }
 
-// Generar el contenido del PDF
-$pdf->Output('factura.pdf', 'D');
+$sql = "SELECT * FROM ventas";
+$result = $conn->query($sql);
+
+if ($result->num_rows > 0) {
+    $total = 0;
+
+    while($row = $result->fetch_assoc()) {
+        $pdf->Cell(0,10,'Descripcion: ' . $row["id_venta"],0,1,'L');
+        $pdf->Cell(0,10,'Fecha: ' . $row["ve_fechaventa"],0,1,'L');
+        $pdf->Cell(0,10,'Hora: ' . $row["ve_horaventa"],0,1,'L');
+        $pdf->Cell(0,10,'Cantidad: ' . $row["ve_cantidadprod"],0,1,'L');
+        $pdf->Cell(0,10,'Iva: ' . $row["ve_iva"],0,1,'L');
+        $pdf->Cell(0,10,'Subtotal: ' . $row["ve_subtotal"],0,1,'L');
+        $pdf->Cell(0,10,'Metodo: ' . $row["ve_metodopago"],0,1,'L');
+        $pdf->Cell(0,10,'Descuento: ' . $row["descuento_aplicado"],0,1,'L');
+        
+        $total += $row["ve_subtotal"];
+    }
+
+    $pdf->SetFont('Arial','B',12);
+    $pdf->Cell(0,10,'Total: $'.$total,0,1,'R'); // Alineado a la derecha
+} else {
+    $pdf->Cell(0,10,'No se encontraron resultados.',0,1,'C');
+}
+
+$conn->close();
+
+$pdf->Output();
+?>
