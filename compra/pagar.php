@@ -27,7 +27,7 @@ if ($_POST) {
     $metodoPago = 'PayPal'; // Establece el método de pago
     $descuentoAplicado = 0; // Si tienes descuentos, asigna el valor correcto
 
-   /*  $sentencia->bindParam(":ve_cantidadprod", $cantidadDeProductos);
+   /*$sentencia->bindParam(":ve_cantidadprod", $cantidadDeProductos);
     $sentencia->bindParam(":ve_iva", $iva);
     $sentencia->bindParam(":ve_subtotal", $subtotal);
     $sentencia->bindParam(":ve_metodopago", $metodoPago);
