@@ -5,7 +5,7 @@ class PDF extends FPDF
 {
     function Header()
     {
-        $this->Image('logos2.jpg',60,160,90);
+        $this->Image('logos2.jpg',60,160,90); // Ajusta las coordenadas de la imagen
         $this->SetFont('Arial','B',15);
         $this->Cell(0,10,'Factura',0,1,'C');
     }
@@ -18,7 +18,7 @@ class PDF extends FPDF
     }
 }
 
-$pdf = new PDF('P'); // Cambiado a formato vertical 'P'
+$pdf = new PDF('P');
 $pdf->AliasNbPages();
 $pdf->AddPage();
 $pdf->SetFont('Arial','',12);
@@ -41,11 +41,12 @@ if ($result->num_rows > 0) {
     $total = 0;
 
     while($row = $result->fetch_assoc()) {
+        $pdf->SetFont('Arial', 'B', 12);
         $pdf->Cell(0,10,'Descripcion: ' . $row["id_venta"],0,1,'L');
-        $pdf->Cell(0,10,'Fecha: ' . $row["ve_fechaventa"],0,1,'L');
-        $pdf->Cell(0,10,'Hora: ' . $row["ve_horaventa"],0,1,'L');
+        $pdf->Cell(0, 10, 'Fecha: ' . date('d-m-Y'), 0, 1, 'L');
+        $pdf->Cell(0, 10, 'Hora: ' . date('H:i:s'), 0, 1, 'L');
         $pdf->Cell(0,10,'Cantidad: ' . $row["ve_cantidadprod"],0,1,'L');
-        $pdf->Cell(0,10,'Iva: ' . $row["ve_iva"],0,1,'L');
+        $pdf->Cell(0,10,'IVA: ' . $row["ve_iva"],0,1,'L');
         $pdf->Cell(0,10,'Subtotal: ' . $row["ve_subtotal"],0,1,'L');
         $pdf->Cell(0,10,'Metodo: ' . $row["ve_metodopago"],0,1,'L');
         $pdf->Cell(0,10,'Descuento: ' . $row["descuento_aplicado"],0,1,'L');
@@ -54,7 +55,7 @@ if ($result->num_rows > 0) {
     }
 
     $pdf->SetFont('Arial','B',12);
-    $pdf->Cell(0,10,'Total: $'.$total,0,1,'R'); // Alineado a la derecha
+    $pdf->Cell(0,10,'Total: $'.$total,0,1,'R');
 } else {
     $pdf->Cell(0,10,'No se encontraron resultados.',0,1,'C');
 }

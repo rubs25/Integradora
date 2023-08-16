@@ -109,6 +109,8 @@
   <div class="container">
     <div class="menu">
       <a href="../admin/productos.php">Productos</a>
+       
+      <a href="../admin/inventario.php">Inventario</a>
       
       <a href="../admin/clientes.php">Clientes</a>
 

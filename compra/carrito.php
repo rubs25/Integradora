@@ -20,14 +20,14 @@ if(isset($_POST['btnAccion'])){
               $mensaje.="Ok nombre".$NOMBRE."<br/>";
                }else { $mensaje.="Upps... algo pasa con el nombre"."<br/>"; break;}
               # code...
-              if (is_numeric(openssl_decrypt($_POST['cantidad'],COD,KEY))) {
-                $CANTIDAD = openssl_decrypt($_POST['cantidad'],COD,KEY);
-                $mensaje.="Ok cantidad".$CANTIDAD."<br/>";
-                 }else { $mensaje.="Upps... algo pasa con la cantidad"."<br/>"; break;}
-              # code...
               if (is_numeric(openssl_decrypt($_POST['precio'],COD,KEY))) {
                 $PRECIO = openssl_decrypt($_POST['precio'],COD,KEY);
-                $mensaje.="Ok precio".$PRECIO."<br/>";
+                $mensaje.="Ok cantidad".$PRECIO."<br/>";
+                 }else { $mensaje.="Upps... algo pasa con la cantidad"."<br/>"; break;}
+              # code...
+              if (is_numeric(openssl_decrypt($_POST['cantidad'],COD,KEY))) {
+                $CANTIDAD = openssl_decrypt($_POST['cantidad'],COD,KEY);
+                $mensaje.="Ok precio".$CANTIDAD."<br/>";
                    }else { $mensaje.="Upps... algo pasa con el Costo"."<br/>"; break;}
 
 
@@ -35,8 +35,8 @@ if(isset($_POST['btnAccion'])){
               $producto=array(
                 'ID'=>$ID,
                 'NOMBRE'=>$NOMBRE,
-                'CANTIDAD'=>$CANTIDAD,
-                'PRECIO'=>$PRECIO
+                'PRECIO'=>$PRECIO,
+                'CANTIDAD'=>$CANTIDAD
               );
               $_SESSION['CARRITO'][0]=$producto;
               $mensaje="Producto agregado al carrito";
