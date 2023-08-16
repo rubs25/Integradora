@@ -34,8 +34,8 @@ include('conecction.php');
       <label for="ve_iva">IVA:</label>
       <input type="number" id="iva" name="ve_iva" step="0.01" min="0" required>
 
-      <label for="ve_subtotal">Subtotal:</label>
-      <input type="number" id="subtotal" name="ve_subtotal" step="0.01" min="0" required>
+      <label for="ve_total">Total:</label>
+      <input type="number" id="total" name="ve_total" step="0.01" min="0" required>
 
       <label for="ve_metodopago">Método de Pago:</label>
       <input id="metodo_pago" name="ve_metodopago">
@@ -56,7 +56,7 @@ include('conecction.php');
             <th>Hora</th>
             <th>Cantidad</th>
             <th>Iva</th>
-            <th>Subtotal</th>
+            <th>Total</th>
             <th>Metodo de Pago</th>
             <th>Descuento</th>
           </tr>
@@ -74,7 +74,7 @@ include('conecction.php');
         <td><?php echo $row['ve_horaventa']; ?></td>
         <td><?php echo $row['ve_cantidadprod']; ?></td>
         <td><?php echo $row['ve_iva']; ?></td>
-        <td><?php echo $row['ve_subtotal']; ?></td>
+        <td><?php echo $row['ve_total']; ?></td>
         <td><?php echo $row['ve_metodopago']; ?></td>
         <td><?php echo $row['descuento_aplicado']; ?></td>
         <td>
