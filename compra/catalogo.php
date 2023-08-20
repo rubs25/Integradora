@@ -1,68 +1,60 @@
 <?php
 include 'config.php';
-include 'cone.php'; 
+include 'cone.php';
 include 'carrito.php';
 include 'cabecera.php';
-
 ?>
-  <br>
-  <?php if($mensaje!=""){?>
+
+<br>
+<?php if($mensaje!=""){?>
   <div class="alert alert-success">
-  <?php echo $mensaje; ?>
-    <a href="mostrarCarrito.php" class="badge badge-success"> Ver carrito</a>
-    </div>
-  <?php } ?>
+    <?php echo $mensaje; ?>
+    <a href="mostrarCarrito.php" class="badge badge-success">Ver carrito</a>
+  </div>
+<?php } ?>
 </div>
 <div class="row">
 
-  <?php
+<?php
+if (isset($_GET['productos']) && is_numeric($_GET['productos'])) {
+  // Si necesitas filtrar por producto, deberías hacer una consulta similar pero agregando un WHERE
+  $sentencia=$pdo->prepare("SELECT * FROM products WHERE id=".$_GET['productos']);
+} else {
+  $sentencia=$pdo->prepare("SELECT * FROM products");
+}
+$sentencia->execute();
+$listaProductos = $sentencia->fetchAll(PDO::FETCH_ASSOC);
+//print_r($listaProductos);
+?>
 
-  if (isset($_GET['sucursal']) && is_numeric($_GET['sucursal'])) {
-    $sentencia=$pdo->prepare("SELECT * FROM inventario where id_sucursal = ".$_GET['sucursal']);
-  } else {
-    $sentencia=$pdo->prepare("SELECT * FROM inventario ");
-  }
-  $sentencia->execute();
-  $listaProductos = $sentencia->fetchAll(PDO::FETCH_ASSOC);
-  //print_r($listaProductos);
-  ?>
-
-  <?php foreach( $listaProductos as $producto){ ?>
-    <div class="col-4">
+<?php foreach( $listaProductos as $producto){ ?>
+  <div class="col-4">
     <div class="card">
       <img 
-      title="<?php echo $producto['pr_nombre'];?>"
-      alt="<?php echo $producto['pr_nombre'];?>"
+      title="<?php echo $producto['image'];?>"
+      alt="<?php echo $producto['image'];?>"
       class= "card-img-top"
-      src="<?php echo $producto['img'];?>">
-    <div class="card-body">
-      <span><?php echo $producto['pr_nombre'];?></span>
-      <p class="card-text"><?php echo $producto['pr_CantidadExistentes'];?></p>
-      <h5 class="card-title">$<?php echo $producto['pr_Precio_U_Venta'];?></h5>
+      src="/admin/images/<?php echo $producto['image']; ?>">
+      <div class="card-body">
+        <span><?php echo $producto['name'];?></span>
+        <h5 class="card-title">$<?php echo $producto['price'];?></h5>
 
-    <form action="" method="post">
-      <input type="hidden" name="id_inventario" id="id_inventario" value="<?php echo openssl_encrypt($producto['id_inventario'],COD,KEY);?>">
-      <input type="hidden" name="nombre" id="nombre" value="<?php echo openssl_encrypt($producto['pr_nombre'],COD,KEY);?>">
-      <input type="hidden" name="precio" id="precio"  value="<?php echo openssl_encrypt($producto['pr_Precio_U_Venta'],COD,KEY);?>">
-      <input type="hidden" name="cantidad" id="cantidad" value="<?php echo openssl_encrypt(1,COD,KEY);?>">
-    <button class="btn btn-primary"
-      name="btnAccion"
-      value="Agregar"
-      type="submit"> Agregar al carrito
-      </button>
-    </form>
-    
-    <!-- Agregar el botón para aumentar la cantidad -->
-    <form action="" method="post">
-      <input type="hidden" name="id_inventario" value="<?php echo openssl_encrypt($producto['id_inventario'],COD,KEY);?>">
-      <input type="hidden" name="btnAccion" value="Aumentar">
-      <button class="btn btn-success" type="submit">Aumentar cantidad</button>
-    </form>
-    
-     </div>
+        <form action="" method="post">
+          <input type="hidden" name="id_producto" id="id_producto" value="<?php echo openssl_encrypt($producto['id'],COD,KEY);?>">
+          <input type="hidden" name="nombre" id="nombre" value="<?php echo openssl_encrypt($producto['name'],COD,KEY);?>">
+          <input type="hidden" name="precio" id="precio"  value="<?php echo openssl_encrypt($producto['price'],COD,KEY);?>">
+          <input type="hidden" name="cantidad" id="cantidad" value="<?php echo openssl_encrypt(1,COD,KEY);?>">
+          <button class="btn btn-primary"
+            name="btnAccion"
+            value="Agregar"
+            type="submit">Agregar al carrito
+          </button>
+        </form>
+
+      </div>
     </div>
   </div>
-  <?php } ?>
+<?php } ?>
 
 </div>
 
