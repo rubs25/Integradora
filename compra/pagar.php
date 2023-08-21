@@ -39,8 +39,8 @@ if ($_POST) {
 
 <div class="jumbotron text-center">
     <h1 class="display-4"> ¡Paso Final! </h1>
-    <h2>Ingrese sus datos para poder continuar con la compra</h2>
-    <form action="" method="POST" class="formulario">
+    <h2>Ingrese sus datos para poder continuar con su compra</h2>
+    <form action="#" method="POST" class="formulario">
     <div class="form-group">
         <label for="cl_nombre">Nombre:</label>
         <input type="text" id="cl_nombre" name="cl_nombre" class="form-control" required>
@@ -70,8 +70,6 @@ if ($_POST) {
         <label for="cl_direccion">Dirección:</label>
         <textarea id="cl_direccion" name="cl_direccion" class="form-control"></textarea>
     </div>
-
-    <input type="submit" name="#" class="btn btn-primary" value="Agregar">
 </form>
 
     <hr class="my-4">

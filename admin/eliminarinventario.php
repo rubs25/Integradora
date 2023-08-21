@@ -1,6 +1,6 @@
 <?php
 // Conexión a la base de datos
-$conn = mysqli_connect('localhost', 'root', '123456', 'integradora') or die('Error al conectar con la base de datos: ' . mysqli_connect_error());
+$conn = mysqli_connect('localhost', 'root', 'Rubas2509', 'integradora4') or die('Error al conectar con la base de datos: ' . mysqli_connect_error());
 
 // Obtener el ID del producto a eliminar
 $id = $_GET['id'];
