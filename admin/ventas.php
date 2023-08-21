@@ -19,46 +19,18 @@ include('conecction.php');
   </div>
 
   <div class="container">
-    <h2>Agregar Venta</h2>
-    <form action="add.php" method="POST" class="formulario">
-      <label for="ve_fechaventa">Fecha de Venta:</label>
-      <input type="date" id="fecha" name="ve_fechaventa" required>
+    <h2>Ventas</h2>
 
-      <label for="ve_horaventa">Hora de Venta:</label>
-      <input type="time" id="hora" name="ve_horaventa" required>
-
-
-      <label for="ve_cantidadprod">Cantidad de Productos:</label>
-      <input type="number" id="cantidad" name="ve_cantidadprod" min="0" required>
-
-      <label for="ve_iva">IVA:</label>
-      <input type="number" id="iva" name="ve_iva" step="0.01" min="0" required>
-
-      <label for="ve_total">Total:</label>
-      <input type="number" id="total" name="ve_total" step="0.01" min="0" required>
-
-      <label for="ve_metodopago">Método de Pago:</label>
-      <input id="metodo_pago" name="ve_metodopago">
-        <!-- Opciones de métodos de pago -->
-      </select>
-
-      <label for="descuent_aplicado">Descuento Aplicado:</label>
-      <input type="number" id="descuento" name="descuent_aplicado" step="0.01" min="0" required>
-
-      <input type="submit" name="add" value="Agregar Venta">
-    </form>
 
     <table class="table table-bordered">
         <thead>
           <tr>
             <th>ID</th>
+            <th>Cliente</th>
             <th>Fecha</th>
             <th>Hora</th>
-            <th>Cantidad</th>
-            <th>Iva</th>
             <th>Total</th>
-            <th>Metodo de Pago</th>
-            <th>Descuento</th>
+            <th>Sucursal</th>
           </tr>
         </thead>
         <tbody>
@@ -70,17 +42,12 @@ include('conecction.php');
       
         <tr>
         <td><?php echo $row['id_venta']; ?></td>
-        <td><?php echo $row['ve_fechaventa']; ?></td>
-        <td><?php echo $row['ve_horaventa']; ?></td>
-        <td><?php echo $row['ve_cantidadprod']; ?></td>
-        <td><?php echo $row['ve_iva']; ?></td>
-        <td><?php echo $row['ve_total']; ?></td>
-        <td><?php echo $row['ve_metodopago']; ?></td>
-        <td><?php echo $row['descuento_aplicado']; ?></td>
+        <td><?php echo $row['id_cliente']; ?></td>
+        <td><?php echo $row['fecha_venta']; ?></td>
+        <td><?php echo $row['hora_venta']; ?></td>
+        <td><?php echo $row['total']; ?></td>
+        <td><?php echo $row['id_sucursal']; ?></td>
         <td>
-              <a href="editar2.php?id=<?php echo $row['id_venta']?>" class="btn btn-secondary">
-                Editar
-              </a>
               <a href="delete2.php?id=<?php echo $row['id_venta']?>" class="btn btn-danger">
                 Eliminar
               </a>

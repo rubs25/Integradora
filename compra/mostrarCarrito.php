@@ -2,7 +2,23 @@
 include 'config.php';
 include 'carrito.php';
 include 'cabecera.php';
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    if (isset($_POST['btnAccion'])) {
+        $accion = $_POST['btnAccion'];
+        if ($accion === 'incrementar') {
+            $indice = $_POST['indice'];
+            $_SESSION['CARRITO'][$indice]['CANTIDAD']++;
+        } elseif ($accion === 'decrementar') {
+            $indice = $_POST['indice'];
+            if ($_SESSION['CARRITO'][$indice]['CANTIDAD'] > 1) {
+                $_SESSION['CARRITO'][$indice]['CANTIDAD']--;
+            }
+        }
+    }
+}
 ?>
+
 <br>
 <h3>Lista del carrito</h3>
 <?php if(!empty($_SESSION['CARRITO'])) { ?>
@@ -20,7 +36,14 @@ include 'cabecera.php';
         <?php foreach($_SESSION['CARRITO'] as $indice=>$producto) { ?>
         <tr>
             <td width="40%"><?php echo $producto['NOMBRE']?></td>
-            <td width="15%" class="text-center"><?php echo $producto['CANTIDAD']?></td>
+            <td width="15%" class="text-center">
+                <form action="" method="post">
+                    <input type="hidden" name="indice" value="<?php echo $indice; ?>">
+                    <button class="btn btn-outline-primary" type="submit" name="btnAccion" value="incrementar">+</button>
+                    <?php echo $producto['CANTIDAD'] ?>
+                    <button class="btn btn-outline-primary" type="submit" name="btnAccion" value="decrementar">-</button>
+                </form>
+            </td>
             <td width="20%" class="text-center"><?php echo $producto['PRECIO']?></td>
             <?php $subtotalProducto = $producto['PRECIO'] * $producto['CANTIDAD']; ?>
             <td width="20%" class="text-center"><?php echo number_format($subtotalProducto,2);?></td>

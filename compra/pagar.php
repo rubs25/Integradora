@@ -39,6 +39,41 @@ if ($_POST) {
 
 <div class="jumbotron text-center">
     <h1 class="display-4"> ¡Paso Final! </h1>
+    <h2>Ingrese sus datos para poder continuar con la compra</h2>
+    <form action="" method="POST" class="formulario">
+    <div class="form-group">
+        <label for="cl_nombre">Nombre:</label>
+        <input type="text" id="cl_nombre" name="cl_nombre" class="form-control" required>
+    </div>
+
+    <div class="form-group">
+        <label for="cl_apellidomat">Apellido Paterno:</label>
+        <input type="text" id="cl_apellidomat" name="cl_apellidomat" class="form-control" required>
+    </div>
+
+    <div class="form-group">
+        <label for="cl_apellidopa">Apellido Materno:</label>
+        <input type="text" id="cl_apellidopa" name="cl_apellidopa" class="form-control" required>
+    </div>
+
+    <div class="form-group">
+        <label for="cl_numtelefono">Número de Teléfono:</label>
+        <input type="tel" id="cl_numtelefono" name="cl_numtelefono" class="form-control">
+    </div>
+
+    <div class="form-group">
+        <label for="cl_correo">Correo:</label>
+        <input type="email" id="cl_correo" name="cl_correo" class="form-control" required>
+    </div>
+
+    <div class="form-group">
+        <label for="cl_direccion">Dirección:</label>
+        <textarea id="cl_direccion" name="cl_direccion" class="form-control"></textarea>
+    </div>
+
+    <input type="submit" name="#" class="btn btn-primary" value="Agregar">
+</form>
+
     <hr class="my-4">
     <p class="lead"> Estás a punto de pagar con PayPal la cantidad de:
         <h4>$<?php echo number_format($total, 2); ?> </h4>

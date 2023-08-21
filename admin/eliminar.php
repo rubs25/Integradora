@@ -1,5 +1,4 @@
 <?php
-
 include("conecction.php");
 
 if(isset($_GET['id'])) {
@@ -7,9 +6,8 @@ if(isset($_GET['id'])) {
   $query = "DELETE FROM clientes WHERE id_cliente = $id";
   $result = mysqli_query($conexion, $query);
   if(!$result) {
-    die("Query Failed.");
+    die("Error al eliminar el cliente.");
   }
   header('Location: clientes.php');
 }
-
 ?>

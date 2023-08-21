@@ -19,8 +19,8 @@ if (isset($_POST['btnAccion'])) {
           // Insertar detalles del producto en la tabla 'detalles_ventas'
           $servername = "localhost";
           $username = "root";
-          $password = "samarmotas";
-          $dbname = "integradora";
+          $password = "Rubas2509";
+          $dbname = "integradora4";
 
           try {
             $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
