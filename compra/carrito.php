@@ -61,27 +61,23 @@ if (isset($_POST['btnAccion'])) {
                 $mensaje = "Producto agregado al carrito";
               }
 
-              foreach ($_SESSION['CARRITO'] as $product) {
-                $subtotal = $product['PRECIO'] * $product['CANTIDAD'];
+              // Calcular subtotal e iva
+              $subtotal = $product['PRECIO'] * $product['CANTIDAD'];
+              $subtotal = $subtotal/1.16;
+              $iva = $subtotal * 0.16;
+              $total = $subtotal + $iva;
 
-                // Calcular descuento e impuesto
-                $descuento = 0;
-                $iva = $subtotal * 0.16;
-                $total = $subtotal - $descuento + $iva;
-
-                $sql = "INSERT INTO carrito (id_venta,id_inventario,cantidad,precio,subtotal,descuento,iva,total) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
-                $stmt = $conn->prepare($sql);
-                // $stmt->bindParam(1, $product['ID_CARRITO']); //No puedes mandar id de una llave autoincrementable
-                $stmt->bindParam(1, $product['ID_VENTA']);
-                $stmt->bindParam(2, $product['ID_INVENTARIO']);
-                $stmt->bindParam(3, $product['CANTIDAD']);
-                $stmt->bindParam(4, $product['PRECIO']);
-                $stmt->bindParam(5, $subtotal);
-                $stmt->bindParam(6, $descuento);
-                $stmt->bindParam(7, $iva);
-                $stmt->bindParam(8, $total);
-                $stmt->execute();
-              }
+              // Insertar en la tabla carrito
+              $sql = "INSERT INTO carrito (id_venta, id_inventario, cantidad, precio, subtotal, iva, total) VALUES (?, ?, ?, ?, ?, ?, ?)";
+              $stmt = $conn->prepare($sql);
+              $stmt->bindParam(1, $product['ID_VENTA']);
+              $stmt->bindParam(2, $product['ID_INVENTARIO']);
+              $stmt->bindParam(3, $product['CANTIDAD']);
+              $stmt->bindParam(4, $product['PRECIO']);
+              $stmt->bindParam(5, $subtotal);
+              $stmt->bindParam(6, $iva);
+              $stmt->bindParam(7, $total);
+              $stmt->execute();
 
               $conn = null; // Cerrar la conexión
 
@@ -120,5 +116,7 @@ if (isset($_POST['btnAccion'])) {
       break;
   }
 }
+
+// ... (código posterior)
 
 ?>

@@ -21,7 +21,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 <br>
 <h3>Lista del carrito</h3>
-<?php if(!empty($_SESSION['CARRITO'])) { ?>
+<?php if (!empty($_SESSION['CARRITO'])) { ?>
 <table class="table table-light table-bordered">
     <tbody>
         <tr>
@@ -31,11 +31,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <th width="20%" class="text-center">Total</th>
             <th width="5%">Eliminar</th>
         </tr>
-        <?php $subtotal=0; ?>
-        <?php $descuentoTotal=0; ?>
-        <?php foreach($_SESSION['CARRITO'] as $indice=>$producto) { ?>
+        <?php $subtotal = 0; ?>
+        <?php foreach ($_SESSION['CARRITO'] as $indice => $producto) { ?>
         <tr>
-            <td width="40%"><?php echo $producto['NOMBRE']?></td>
+            <td width="40%"><?php echo $producto['NOMBRE'] ?></td>
             <td width="15%" class="text-center">
                 <form action="" method="post">
                     <input type="hidden" name="indice" value="<?php echo $indice; ?>">
@@ -44,39 +43,31 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <button class="btn btn-outline-primary" type="submit" name="btnAccion" value="decrementar">-</button>
                 </form>
             </td>
-            <td width="20%" class="text-center"><?php echo $producto['PRECIO']?></td>
+            <td width="20%" class="text-center"><?php echo $producto['PRECIO'] ?></td>
             <?php $subtotalProducto = $producto['PRECIO'] * $producto['CANTIDAD']; ?>
-            <td width="20%" class="text-center"><?php echo number_format($subtotalProducto,2);?></td>
+            <td width="20%" class="text-center"><?php echo number_format($subtotalProducto, 2); ?></td>
             <td width="5%">
-                <form action="" method="post">   
-                    <input type="hidden" name="id_inventario" id="id_inventario" value="<?php echo openssl_encrypt($producto['ID'],COD,KEY);?>">
+                <form action="" method="post">
+                    <input type="hidden" name="id_inventario" id="id_inventario" value="<?php echo openssl_encrypt($producto['ID'], COD, KEY); ?>">
                     <button class="btn btn-outline-danger" type="submit" name="btnAccion" value="Eliminar">Eliminar</button>
                 </form>
             </td>
-        </tr> 
+        </tr>
         <?php $subtotal += $subtotalProducto; ?>
-        <?php $descuento = $subtotalProducto * 0.16; ?>
-        <?php $descuentoTotal += $descuento; ?>
         <?php } ?>
         <tr>
             <td colspan="3" align="right"><h3>Subtotal</h3></td>
-            <td align="right"><h3>$<?php echo number_format($subtotal,2);?></h3></td>
+            <td align="right"><h3>$<?php echo number_format($subtotal/1.16, 2); ?></h3></td>
             <td></td>
         </tr>
-        <tr>
-            <td colspan="3" align="right"><h3>Descuento</h3></td>
-            <td align="right"><h3>$<?php echo number_format($descuentoTotal,2);?></h3></td>
-            <td></td>
-        </tr>
-        <?php $subtotalDescuento = $subtotal - $descuentoTotal; ?>
         <tr>
             <td colspan="3" align="right"><h3>IVA</h3></td>
-            <td align="right"><h3>$<?php echo number_format($subtotalDescuento * 0.1,2);?></h3></td>
+            <td align="right"><h3>$<?php echo number_format(($subtotal/1.16)*0.16, 2); ?></h3></td>
             <td></td>
         </tr>
         <tr>
             <td colspan="3" align="right"><h3>Total</h3></td>
-            <td align="right"><h3>$<?php echo number_format($subtotalDescuento * 1.1, 2);?></h3></td>
+            <td align="right"><h3>$<?php echo number_format($subtotal, 2); ?></h3></td>
             <td></td>
         </tr>
         <tr>
@@ -104,4 +95,4 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         No hay productos en el carrito...
     </div>
 <?php } ?>
-<?php include 'pie.php';?>
+<?php include 'pie.php'; ?>

@@ -1,5 +1,7 @@
 <?php
+session_start();
 require('fpdf/fpdf.php');
+
 
 $pdf = new FPDF();
 $pdf->AddPage();
@@ -21,14 +23,14 @@ $pdf->SetFont('Arial', '', 12);
 
 $numeroFactura = mt_rand(10000, 99999);
 
-session_start();
+
 if (isset($_SESSION['user_id'])) {
     $clientId = $_SESSION['user_id'];
 } else {
     die("No se proporcionó el ID del cliente.");
 }
 
-$query = "SELECT cl_nombre, cl_apellidopa, cl_domicilio, cl_regimenFiscal FROM cliente WHERE id_cliente = $clientId";
+$query = "SELECT cl_nombre, cl_apellidopa, cl_domicilio, cl_regimenFiscal FROM clientes WHERE id_cliente = $clientId";
 $result = mysqli_query($conexion, $query);
 
 if ($result && mysqli_num_rows($result) > 0) {
@@ -44,7 +46,7 @@ if ($result && mysqli_num_rows($result) > 0) {
 function obtenerProductosCarrito($conexion, $clienteId)
 {
     $query = "SELECT p.pr_Nombre, p.pr_Precio_U_Venta, d.det_cantidad
-              FROM producto p
+              FROM products p
               INNER JOIN tdetalle_venta d ON p.id_producto = d.det_producto
               WHERE d.det_cliente = $clienteId";
 
@@ -72,11 +74,11 @@ $ivaPorcentaje = 16;
 $descuentoPorcentaje = 0;
 
 // Obtener el tipo de cliente desde la base de datos
-$query = "SELECT cl_tipo FROM cliente WHERE id_cliente = $clientId";
+$query = "SELECT id_cliente FROM clientes WHERE id_cliente = $clientId";
 $result = mysqli_query($conexion, $query);
 
 if ($result && mysqli_num_rows($result) > 0) {
-    $clientTipo = mysqli_fetch_assoc($result)['cl_tipo'];
+    $clientTipo = mysqli_fetch_assoc($result)['id_cliente'];
 
     // Asignar porcentaje de descuento según el tipo de cliente
     if ($clientTipo == 1) {
@@ -148,7 +150,7 @@ foreach ($cartItems as $item) {
     $pdf->Cell(30, 10, $item["Cantidad"], 1, 0, 'C');
     $pdf->Cell(40, 10, '$ ' . number_format($importe, 2), 1, 1, 'C');
 }
-
+ 
 $pdf->SetFont('Arial', 'B', 12);
 
 $descuento = ($descuentoPorcentaje / 100) * $subtotal;

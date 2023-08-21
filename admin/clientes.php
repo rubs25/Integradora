@@ -164,7 +164,7 @@ $result_clientes = mysqli_query($conexion, $query_clientes);
 
     <div class="container">
         <h2>Agregar Cliente</h2>
-        <form action="alta.php" method="POST" class="formulario">
+        <form action="" method="POST" class="formulario">
             <label for="cl_nombre">Nombre:</label>
             <input type="text" id="cl_nombre" name="cl_nombre" required>
 

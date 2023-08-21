@@ -2,7 +2,7 @@
 include("../basedatos/conexion.php");
 // Comenzar la sesión si no ha sido iniciada
 if (session_status() == PHP_SESSION_NONE) {
-    session_start();
+
 }
 
 // Verificar si el carrito está definido y no está vacío
