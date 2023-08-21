@@ -19,8 +19,8 @@ if (isset($_POST['btnAccion'])) {
           // Insertar detalles del producto en la tabla 'detalles_ventas'
           $servername = "localhost";
           $username = "root";
-          $password = "Rubas2509";
-          $dbname = "integradora4";
+          $password = "samarmotas";
+          $dbname = "integradora";
 
           try {
             $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
@@ -69,9 +69,9 @@ if (isset($_POST['btnAccion'])) {
                 $iva = $subtotal * 0.16;
                 $total = $subtotal - $descuento + $iva;
 
-                $sql = "INSERT INTO carrito (id_carrito,id_venta,id_inventario,cantidad,precio,subtotal,descuento,iva,total) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+                $sql = "INSERT INTO carrito (id_venta,id_inventario,cantidad,precio,subtotal,descuento,iva,total) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
                 $stmt = $conn->prepare($sql);
-                $stmt->bindParam(1, $product['ID_CARRITO']);
+                // $stmt->bindParam(1, $product['ID_CARRITO']); //No puedes mandar id de una llave autoincrementable
                 $stmt->bindParam(1, $product['ID_VENTA']);
                 $stmt->bindParam(2, $product['ID_INVENTARIO']);
                 $stmt->bindParam(3, $product['CANTIDAD']);

@@ -40,9 +40,9 @@ $listaProductos = $sentencia->fetchAll(PDO::FETCH_ASSOC);
         <h5 class="card-title">$<?php echo $producto['price'];?></h5>
 
         <form action="" method="post">
-          <input type="hidden" name="id_producto" id="id_producto" value="<?php echo openssl_encrypt($producto['id'],COD,KEY);?>">
-          <input type="hidden" name="nombre" id="nombre" value="<?php echo openssl_encrypt($producto['name'],COD,KEY);?>">
-          <input type="hidden" name="precio" id="precio"  value="<?php echo openssl_encrypt($producto['price'],COD,KEY);?>">
+          <input type="hidden" name="id" id="id" value="<?php echo openssl_encrypt($producto['id'],COD,KEY);?>">
+          <input type="hidden" name="name" id="name" value="<?php echo openssl_encrypt($producto['name'],COD,KEY);?>">
+          <input type="hidden" name="price" id="price"  value="<?php echo openssl_encrypt($producto['price'],COD,KEY);?>">
           <input type="hidden" name="cantidad" id="cantidad" value="<?php echo openssl_encrypt(1,COD,KEY);?>">
           <button class="btn btn-primary"
             name="btnAccion"
