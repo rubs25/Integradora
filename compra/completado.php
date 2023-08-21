@@ -28,7 +28,7 @@ if (isset($_SESSION['CARRITO']) && count($_SESSION['CARRITO']) > 0) {
         //despues agregar id_sucursal al carrito por producto/
         $total = $producto['CANTIDAD'] * $producto['PRECIO'];
         // Obtener la cantidad existente del producto en el inventario
-        $stmt = $conexion->prepare("SELECT pr_CantidadExistentes FROM inventario WHERE id_inventario = ?");
+        $stmt = $conexion->prepare("SELECT pr_CantidadExistentes FROM inventario WHERE id_producto = ?");
         $stmt->bind_param("i", $producto['ID']);
         $stmt->execute();
         $stmt->bind_result($cantidadExistente);
@@ -39,7 +39,7 @@ if (isset($_SESSION['CARRITO']) && count($_SESSION['CARRITO']) > 0) {
         $nuevaCantidadExistente = $cantidadExistente - $producto['CANTIDAD'];
 
         // Actualizar la cantidad existente del producto en el inventario
-        $stmt = $conexion->prepare("UPDATE inventario SET pr_CantidadExistentes = ? WHERE id_inventario = ?");
+        $stmt = $conexion->prepare("UPDATE inventario SET pr_CantidadExistentes = ? WHERE id_producto = ?");
         $stmt->bind_param("ii", $nuevaCantidadExistente, $producto['ID']);
         $stmt->execute();
         $stmt->close();
