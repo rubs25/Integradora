@@ -15,7 +15,9 @@ if (isset($_SESSION['CARRITO']) && count($_SESSION['CARRITO']) > 0) {
     //     die("Conexión fallida: " . $conexion->connect_error);
     // }
 
-
+    $total = 0;
+    $fechaActual = date("Y-m-d");
+    $horaActual = date("h:i:s");
     // Recorrer todos los productos en el carrito
     foreach ($_SESSION['CARRITO'] as $producto) {
         
@@ -24,7 +26,7 @@ if (isset($_SESSION['CARRITO']) && count($_SESSION['CARRITO']) > 0) {
         //los datos se deben volver a calcular
         //por ahora el id de sucursal va ser fija
         //despues agregar id_sucursal al carrito por producto/
-
+        $total = $producto['CANTIDAD'] * $producto['PRECIO'];
         // Obtener la cantidad existente del producto en el inventario
         $stmt = $conexion->prepare("SELECT pr_CantidadExistentes FROM inventario WHERE id_inventario = ?");
         $stmt->bind_param("i", $producto['ID']);
@@ -42,6 +44,19 @@ if (isset($_SESSION['CARRITO']) && count($_SESSION['CARRITO']) > 0) {
         $stmt->execute();
         $stmt->close();
     }
+
+    //registrar venta
+    $id_cliente = 1;
+    $sucursal = 101;
+    $sql = "INSERT INTO ventas (id_cliente, fecha_venta ,hora_venta ,total, id_sucursal) VALUES (?, ?, ?, ?, ?)";
+    $stmt = $conexion->prepare($sql);
+    $stmt->bind_param("issdi", $id_cliente, $fechaActual, $horaActual, $total, $sucursal);
+    // $stmt->bindParam(1, $id_cliente);
+    // $stmt->bindParam(2, $fechaActual);
+    // $stmt->bindParam(3, $horaActual);
+    // $stmt->bindParam(4, $total);
+    // $stmt->bindParam(5, 101);
+    $stmt->execute();
 
     // Cerrar la conexión
     $conexion->close();
