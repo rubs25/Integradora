@@ -4,14 +4,14 @@ include("conecction.php");
 if (isset($_POST['registrar'])) {
     $contrasena = $_POST['contrasena'];
     $usuario = $_POST['usuario'];
-    $tipo = $_POST['tipo_usuario'];
+    $tipo = $_POST['tipo'];
 
     // Utilizar consulta preparada
     $query = "INSERT INTO t_user (contrasena, usuario, tipo_usuario)
-              VALUES (1$contrasena', '$usuario', '$tipo')";
+              VALUES ('$contrasena', '$usuario', '$tipo')";
               
     $stmt = mysqli_prepare($conexion, $query);
-    mysqli_stmt_bind_param($stmt, "sss", $contrasena, $usuario, $tipo);
+   // mysqli_stmt_bind_param($stmt, "sss", $contrasena, $usuario, $tipo);
     
     $ejecutar = mysqli_stmt_execute($stmt);
 

@@ -22,7 +22,7 @@ include('conecction.php');
       <input type="text" name="usuario">
 
       <label for="tipo_usuario">Tipo de usuario :</label>
-      <select name="tipo_usuario" id="tipo_usuario">
+      <select name="tipo" id="tipo">
         <option value="1">Administrador</option>
         <option value="2">Cliente</option>
         <option value="3">Empleado</option>
