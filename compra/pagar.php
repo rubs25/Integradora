@@ -14,8 +14,8 @@ if ($_POST) {
         $total += ($producto['PRECIO'] * $producto['CANTIDAD']);
     }
 
-    //$total=$total-($total*0.16);
-    //$total=$total+($total*0.1);
+    $total=$total-($total*0.16);
+    $total=$total+($total*0.1);
     //$sentencia = $pdo->prepare("INSERT INTO `ventas` 
            //(`id_producto`, `id_estatus`, `ve_fechaventa`, `ve_horaventa`, `ve_cantidadprod`, `ve_iva`, `ve_subtotal`, `ve_metodopago`, `descuento_aplicado`, `id_sucursal`) 
     //VALUES (NULL, NULL, NOW(), NOW(), :ve_cantidadprod, :ve_iva, :ve_subtotal, :ve_metodopago, :descuento_aplicado, NULL);");
