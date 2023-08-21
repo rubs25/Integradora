@@ -3,33 +3,30 @@ require ('fpdf/fpdf.php');
 
 class PDF extends FPDF
 {
-    // ... (Las funciones de Encabezado y Pie de página permanecen sin cambios)
-
-    function TablaCentrada($encabezados, $datos)
+    // Cabecera de página
+    function Header()
     {
-        // Calcular el ancho total de la tabla
-        $anchoTotal = array_sum($this->anchos);
+        $this->SetFont('Arial','B',15);
+        $this->Cell(0,10,'Reporte de inventario',0,1,'C');
         
-        // Calcular la posición X de inicio para centrar la tabla
-        $inicioX = ($this->GetPageWidth() - $anchoTotal) / 2;
-        
-        // Establecer fuente y ancho de celda
-        $this->SetFont('Arial', '', 12);
-        $this->SetX($inicioX);
-        
-        // Encabezados
-        foreach ($encabezados as $clave => $columna) {
-            $this->Cell($this->anchos[$clave], 10, $columna, 1, 0, 'C');
-        }
+        $this->SetFont('Arial','',12);
+        $this->Cell(20,10,'Fecha: ' . date('Y-m-d'), 0, 0, 'L'); // Agregar la fecha
         $this->Ln();
-        
-        // Datos
-        foreach ($datos as $fila) {
-            foreach ($fila as $clave => $columna) {
-                $this->Cell($this->anchos[$clave], 10, $columna, 1, 0, 'C');
-            }
-            $this->Ln();
-        }
+        $this->Cell(40,10,'ID Inventario',1,0,'C');
+        $this->Cell(40,10,'ID Producto',1,0,'C');
+        $this->Cell(40,10,'Cantidad Existente',1,0,'C');
+        $this->Cell(40,10,'ID Sucursal',1,1,'C');
+    }
+    
+    // Pie de página
+    function Footer()
+    {
+        // Posición: a 1,5 cm del final
+        $this->SetY(-15);
+        // Arial italic 8
+        $this->SetFont('Arial','I',8);
+        // Número de página
+        $this->Cell(0,10,utf8_decode('Página ').$this->PageNo().'/{nb}',0,0,'C');
     }
 }
 
@@ -37,28 +34,21 @@ require 'cone.php';
 $consulta = "SELECT * FROM inventario";
 $resultado = $mysqli->query($consulta);
 
-$pdf = new PDF();
-$pdf->AliasNbPages();
-$pdf->AddPage(); // Formato horizontal
+if ($resultado) {
+    $pdf = new PDF();
+    $pdf->AliasNbPages();
+    $pdf->AddPage(); // Formato horizontal
+    $pdf->SetFont('Arial','',12);
 
-// Definir los encabezados de las columnas y sus anchos correspondientes
-$encabezados = array('ID', 'Producto', 'Cantidad', 'Sucursal');
-$pdf->anchos = array(20, 30, 20, 20);
+    while ($row = $resultado->fetch_assoc()) {
+        $pdf->Cell(40,10,$row['id_inventario'],1,0,'C');
+        $pdf->Cell(40,10,$row['id_producto'],1,0,'C');
+        $pdf->Cell(40,10,$row['pr_CantidadExistentes'],1,0,'C');
+        $pdf->Cell(40,10,$row['id_sucursal'],1,1,'C'); // Agregar la columna id_sucursal
+    }
 
-$datos = array(); // Preparar el array de datos
-
-while ($fila = $resultado->fetch_assoc()) {
-    $datos[] = array(
-        $fila['id_inventario'],
-        $fila['id_producto'],
-        $fila['pr_CantidadExistentes'],
-        $fila['id_sucursal']
-    );
+    $pdf->Output();
+} else {
+    echo "Error: " . $mysqli->error;
 }
-
-$pdf->TablaCentrada($encabezados, $datos); // Generar la tabla centrada
-
-$pdf->Output();
-
-
 ?>

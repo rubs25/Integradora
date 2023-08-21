@@ -215,6 +215,9 @@
             </form>
         </div>
     </div>
+    <div class="text-right">
+                <a href="../admin/Rproductos.php?id=<?php echo $row['id']?>" target="_blank" class="btn btn-success"><i class="fas fa-file-pdf"></i> Generar Reporte</a>
+              </div>
 
 
     <script>

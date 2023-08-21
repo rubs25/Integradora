@@ -160,6 +160,10 @@
         <input type="number" id="id_sucursal" name="id_sucursal" required>
 
         <input type="submit" name="alta" class="btn btn-primary">
+        
+    <div class="text-right">
+                <a href="../admin/Rinventario.php?id=<?php echo $row['id']?>" target="_blank" class="btn btn-success"><i class="fas fa-file-pdf"></i> Generar Reporte</a>
+              </div>
     </form>
 
     <h2>Productos en el Inventario</h2>
@@ -187,7 +191,9 @@ while ($row_inventario = mysqli_fetch_assoc($result_inventario)) {
     echo "<td>" . $row_inventario['id_sucursal'] . "</td>";
     echo "<td><a href='editarinventario.php?id=" . $row_inventario['id_inventario'] . "'>Editar</a></td>";
     echo "<td><a href='eliminarinventario.php?id=" . $row_inventario['id_inventario'] . "' class='eliminar' onclick='return confirm(\"¿Estás seguro de que deseas eliminar este producto?\")'>Eliminar</a></td>";
+    
     echo "</tr>";
+    
 }
 
 

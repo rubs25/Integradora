@@ -10,12 +10,12 @@ class PDF extends FPDF
         $this->Cell(0,10,'Reporte de productos',0,1,'C');
         
         $this->SetFont('Arial','',12);
+        $this->Cell(20,10,'Fecha: ' . date('Y-m-d'), 0, 0, 'L'); // Agregar la fecha
+        $this->Ln();
         $this->Cell(20,10,'ID',1,0,'C');
-        $this->Cell(60,10,'Nombre',1,0,'C');
-        $this->Cell(30,10,'Producto',1,0,'C');
-        $this->Cell(20,10,'Cantidad',1,0,'C');
-        $this->Cell(20,10,'Sucursal',1,0,'C');
-        $this->Cell(20,10,'Precio',1,1,'C');
+        $this->Cell(40,10,'Nombre',1,0,'C');
+        $this->Cell(20,10,'Precio',1,0,'C');
+        $this->Cell(100,10,'Imagen',1,1,'C');
     }
     
     // Pie de página
@@ -31,22 +31,25 @@ class PDF extends FPDF
 }
 
 require 'cone.php';
-$consulta = "SELECT * FROM inventario";
+$consulta = "SELECT * FROM products";
 $resultado = $mysqli->query($consulta);
 
-$pdf = new PDF();
-$pdf->AliasNbPages();
-$pdf->AddPage(); // Formato horizontal
-$pdf->SetFont('Arial','',12);
+if ($resultado) {
+    $pdf = new PDF();
+    $pdf->AliasNbPages();
+    $pdf->AddPage(); // Formato horizontal
+    $pdf->SetFont('Arial','',12);
 
-while ($row = $resultado->fetch_assoc()) {
-    $pdf->Cell(20,10,$row['id_inventario'],1,0,'C');
-    $pdf->Cell(60,10,$row['pr_nombre'],1,0,'C');
-    $pdf->Cell(30,10,$row['id_producto'],1,0,'C');
-    $pdf->Cell(20,10,$row['pr_CantidadExistentes'],1,0,'C');
-    $pdf->Cell(20,10,$row['id_sucursal'],1,0,'C');
-    $pdf->Cell(20,10,$row['pr_Precio_U_Venta'],1,1,'C');
+    while ($row = $resultado->fetch_assoc()) {
+        $pdf->Cell(20,10,$row['id'],1,0,'C');
+        $pdf->Cell(40,10,$row['name'],1,0,'C');
+        $pdf->Cell(20,10,$row['price'],1,0,'C');
+        $pdf->Cell(100,10,$row['image'],1,0,'C'); // Cambio en este Cell
+        $pdf->Ln(); // Agregar un salto de línea después de cada fila
+    }
+
+    $pdf->Output();
+} else {
+    echo "Error: " . $mysqli->error;
 }
-
-$pdf->Output();
 ?>
