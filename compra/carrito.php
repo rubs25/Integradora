@@ -27,7 +27,11 @@ if (isset($_POST['btnAccion'])) {
             $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
             // Preparar la consulta SQL
-            $stmt = $conn->prepare("SELECT inventario.id_inventario, products.id, products.name, products.price, inventario.pr_CantidadExistentes FROM inventario INNER JOIN products ON inventario.id_producto = products.id WHERE inventario.id_producto = :id_producto");
+            $stmt = $conn->prepare("SELECT inventario.id_inventario, products.id, products.name, products.price, inventario.pr_CantidadExistentes 
+            FROM inventario 
+            INNER JOIN products 
+            ON inventario.id_producto = products.id 
+            WHERE inventario.id_producto = :id_producto");
             // Ejecutar la consulta SQL
             $stmt->execute(['id_producto' => $ID]);
             // Obtener los datos del producto
