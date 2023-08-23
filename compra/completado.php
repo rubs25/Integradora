@@ -1,73 +1,54 @@
 <?php
-include("../basedatos/conexion.php");
-// Comenzar la sesión si no ha sido iniciada
-if (session_status() == PHP_SESSION_NONE) {
+include 'config.php';
+include 'cone.php';
+include 'carrito.php';
+include 'cabecera.php';
 
+// Obtén los detalles del cliente y la venta
+$nombre = $_POST['nombre'];
+$apellido_materno = $_POST['apellido_materno'];
+$apellido_paterno = $_POST['apellido_paterno'];
+$telefono = $_POST['telefono'];
+$correo = $_POST['correo'];
+$direccion = $_POST['direccion'];
+
+// Insertar en la tabla 'clientes'
+$sqlCliente = "INSERT INTO clientes (nombre, apellido_materno, apellido_paterno, telefono, correo, direccion) VALUES (?, ?, ?, ?, ?, ?)";
+$stmtCliente = $conn->prepare($sqlCliente);
+$stmtCliente->bindParam(1, $nombre);
+$stmtCliente->bindParam(2, $apellido_materno);
+$stmtCliente->bindParam(3, $apellido_paterno);
+$stmtCliente->bindParam(4, $telefono);
+$stmtCliente->bindParam(5, $correo);
+$stmtCliente->bindParam(6, $direccion);
+$stmtCliente->execute();
+
+$idCliente = $conn->lastInsertId(); // Obtener el ID del cliente insertado
+
+// Insertar en la tabla 'ventas'
+$sqlVenta = "INSERT INTO ventas (id_cliente, fecha, total, metodo_pago) VALUES (?, NOW(), ?, ?)";
+$stmtVenta = $conn->prepare($sqlVenta);
+$stmtVenta->bindParam(1, $idCliente);
+$stmtVenta->bindParam(2, $subtotal);
+$stmtVenta->bindParam(3, $metodoPago);
+$stmtVenta->execute();
+
+$idVenta = $conn->lastInsertId(); // Obtener el ID de la venta insertada
+
+
+// Actualizar el inventario: restar cantidades compradas
+foreach ($_SESSION['CARRITO'] as $producto) {
+    // Resta la cantidad comprada al inventario
+    // Actualiza el inventario en la base de datos
 }
 
-// Verificar si el carrito está definido y no está vacío
-if (isset($_SESSION['CARRITO']) && count($_SESSION['CARRITO']) > 0) {
-    // Conexión a la base de datos
-    // $conexion = new mysqli('localhost', 'root', 'Rubas2509', 'integradora2');
+// Limpia el carrito después de la compra
+$_SESSION['CARRITO'] = array();
 
-    // // Verificar la conexión
-    // if ($conexion->connect_error) {
-    //     die("Conexión fallida: " . $conexion->connect_error);
-    // }
+// ... (código adicional de la página 'completado.php')
 
-    $total = 0;
-    $fechaActual = date("Y-m-d");
-    $horaActual = date("h:i:s");
-    // Recorrer todos los productos en el carrito
-    foreach ($_SESSION['CARRITO'] as $producto) {
-        
-        //registrar venta a la base de datos
-        //idproducto va ser igual a id_inventario
-        //los datos se deben volver a calcular
-        //por ahora el id de sucursal va ser fija
-        //despues agregar id_sucursal al carrito por producto/
-        $total = $producto['CANTIDAD'] * $producto['PRECIO'];
-        // Obtener la cantidad existente del producto en el inventario
-        $stmt = $conexion->prepare("SELECT pr_CantidadExistentes FROM inventario WHERE id_producto = ?");
-        $stmt->bind_param("i", $producto['ID']);
-        $stmt->execute();
-        $stmt->bind_result($cantidadExistente);
-        $stmt->fetch();
-        $stmt->close();
-
-        // Calcular la nueva cantidad existente
-        $nuevaCantidadExistente = $cantidadExistente - $producto['CANTIDAD'];
-
-        // Actualizar la cantidad existente del producto en el inventario
-        $stmt = $conexion->prepare("UPDATE inventario SET pr_CantidadExistentes = ? WHERE id_producto = ?");
-        $stmt->bind_param("ii", $nuevaCantidadExistente, $producto['ID']);
-        $stmt->execute();
-        $stmt->close();
-    }
-
-    //registrar venta
-    $id_cliente = 1;
-    $sucursal = 101;
-    $sql = "INSERT INTO ventas (id_cliente, fecha_venta ,hora_venta ,total, id_sucursal) VALUES (?, ?, ?, ?, ?)";
-    $stmt = $conexion->prepare($sql);
-    $stmt->bind_param("issdi", $id_cliente, $fechaActual, $horaActual, $total, $sucursal);
-    // $stmt->bindParam(1, $id_cliente);
-    // $stmt->bindParam(2, $fechaActual);
-    // $stmt->bindParam(3, $horaActual);
-    // $stmt->bindParam(4, $total);
-    // $stmt->bindParam(5, 101);
-    $stmt->execute();
-
-    // Cerrar la conexión
-    $conexion->close();
-
-    // Destruir la sesión del carrito
-    unset($_SESSION['CARRITO']);
-}
+include 'pie.php';
 ?>
-
-
-
 
 <!DOCTYPE html>
 <html lang="es">

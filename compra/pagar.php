@@ -51,13 +51,14 @@ if ($_POST) {
             });
         },
         onApprove: function(data, actions) {
-            actions.order.capture().then(function(details) {
-                // Lógica adicional después de realizar el pago
+    actions.order.capture().then(function(details) {
+        // Actualizar el inventario: Restar las cantidades compradas
 
-                // Redirige a la página 'completado.php'
-                window.location.href = "completado.php";
-            });
-        },
+        // Redirige a la página 'completado.php'
+        window.location.href = "completado.php";
+    });
+},
+
         onCancel: function(data) {
             alert("Su pago ha sido cancelado");
             console.log(data);

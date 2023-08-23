@@ -1,3 +1,13 @@
+<?php
+session_start();
+
+if (!isset($_SESSION['usuario'])) {
+    header('Location: login.php');
+    exit;
+}
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -130,11 +140,15 @@
 <body>
     <?php
     // Conexión a la base de datos
-    $conn = mysqli_connect('localhost', 'root', 'Rubas2509', 'integradora4') or die('Error al conectar con la base de datos: ' . mysqli_connect_error());
+    $conn = mysqli_connect('localhost', 'root', '123456', 'integradora') or die('Error al conectar con la base de datos: ' . mysqli_connect_error());
 
     // Obtener los productos disponibles
     $query_productos = "SELECT * FROM products";
     $result_productos = mysqli_query($conn, $query_productos);
+
+    // Obtener las sucursales disponibles
+    $query_sucursales = "SELECT * FROM sucursales";
+    $result_sucursales = mysqli_query($conn, $query_sucursales);
     ?>
 
     <a href="administrador.php" class="btn">Regresar</a>
@@ -156,9 +170,15 @@
         <label for="pr_CantidadExistentes">Cantidad Existentes:</label>
         <input type="number" id="pr_CantidadExistentes" name="pr_CantidadExistentes" required>
 
-        <label for="id_sucursal">ID Sucursal:</label>
-        <input type="number" id="id_sucursal" name="id_sucursal" required>
-
+        <label for="id_sucursal">Sucursal:</label>
+    <select id="id_sucursal" name="id_sucursal" required>
+        <?php
+        // Mostrar las sucursales en el menú desplegable
+        while ($row_sucursal = mysqli_fetch_assoc($result_sucursales)) {
+            echo "<option value='" . $row_sucursal['id_Sucursal'] . "'>" . $row_sucursal['dp_nombre'] . "</option>";
+        }
+        ?>
+    </select>
         <input type="submit" name="alta" class="btn btn-primary">
         
     <div class="text-right">

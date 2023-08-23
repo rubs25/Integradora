@@ -8,17 +8,18 @@ include 'cabecera.php';
 if (isset($_GET['sucursal'])) {
   $sucursal = $_GET['sucursal'];
   $sentencia = $pdo->prepare("SELECT p.id AS product_id, p.name AS product_name, p.price AS product_price, p.image AS product_image, 
-i.pr_CantidadExistentes, i.id_sucursal
+i.pr_CantidadExistentes, i.id_sucursal, i.id_inventario
 FROM products p
 INNER JOIN inventario i ON p.id = i.id_producto
-WHERE i.id_sucursal = :sucursal");
-  $sentencia->bindParam(':sucursal', $sucursal, PDO::PARAM_INT);
+WHERE i.id_sucursal = :id_sucursal");
+  $sentencia->bindParam(':id_sucursal', $sucursal, PDO::PARAM_INT);
 } else {
   // Si no se selecciona una sucursal, muestra todos los productos
   $sentencia = $pdo->prepare("SELECT p.id AS product_id, p.name AS product_name, p.price AS product_price, p.image AS product_image, 
-i.pr_CantidadExistentes, i.id_sucursal
+i.pr_CantidadExistentes, i.id_sucursal, i.id_inventario
 FROM products p
-INNER JOIN inventario i ON p.id = i.id_producto");
+INNER JOIN inventario i ON p.id = i.id_producto
+WHERE i.id_sucursal = id_sucursal");
 }
 
 $sentencia->execute();
@@ -40,9 +41,11 @@ $listaProductos = $sentencia->fetchAll(PDO::FETCH_ASSOC);
         
         <p>Cantidad existente: <?php echo $producto['pr_CantidadExistentes']; ?></p>
         <p>Sucursal: <?php echo $producto['id_sucursal']; ?></p>
+        <p>inventario: <?php echo $producto['id_inventario']; ?></p>
 
         <form action="" method="post">
           <input type="hidden" name="id" id="id" value="<?php echo openssl_encrypt($producto['product_id'], COD, KEY); ?>">
+          <input type="hidden" name="id_inventario" id="id_inventario" value="<?php echo openssl_encrypt($producto['id_inventario'], COD, KEY); ?>">
           <input type="hidden" name="name" id="name" value="<?php echo openssl_encrypt($producto['product_name'], COD, KEY); ?>">
           <input type="hidden" name="price" id="price"  value="<?php echo openssl_encrypt($producto['product_price'], COD, KEY); ?>">
           <input type="hidden" name="cantidad" id="cantidad" value="<?php echo openssl_encrypt(1, COD, KEY); ?>">

@@ -9,13 +9,14 @@ if (isset($_POST['btnAccion'])) {
 
   switch ($_POST['btnAccion']) {
     case 'Agregar':
-      if (isset($_POST['id']) && isset($_POST['name']) && isset($_POST['price']) && isset($_POST['cantidad'])) {
+      if (isset($_POST['id']) && isset($_POST['name']) && isset($_POST['price']) && isset($_POST['cantidad']) && isset($_POST['id_inventario'])) {
         $ID = openssl_decrypt($_POST['id'], COD, KEY);
         $NOMBRE = openssl_decrypt($_POST['name'], COD, KEY);
         $PRECIO = openssl_decrypt($_POST['price'], COD, KEY);
         $CANTIDAD = openssl_decrypt($_POST['cantidad'], COD, KEY);
+        $INVENTARIO = openssl_decrypt($_POST['id_inventario'], COD, KEY);
 
-        if (is_numeric($ID) && is_string($NOMBRE) && is_numeric($PRECIO) && is_numeric($CANTIDAD)) {
+        if (is_numeric($ID) && is_string($NOMBRE) && is_numeric($PRECIO) && is_numeric($CANTIDAD) && is_numeric($INVENTARIO)) {
           // Insertar detalles del producto en la tabla 'detalles_ventas'
           $servername = "localhost";
           $username = "root";
@@ -59,9 +60,11 @@ if (isset($_POST['btnAccion'])) {
                   'ID' => $ID,
                   'NOMBRE' => $NOMBRE,
                   'CANTIDAD' => $CANTIDAD,
-                  'PRECIO' => $PRECIO
+                  'PRECIO' => $PRECIO,
+                  'INVENTARIO' => $INVENTARIO
                 );
                 $_SESSION['CARRITO'][$ID] = $product;
+                echo "<script>alert('Producto agregado al carrito');</script>";
                 $mensaje = "Producto agregado al carrito";
               }
 
@@ -74,17 +77,15 @@ if (isset($_POST['btnAccion'])) {
               // Insertar en la tabla carrito
               $sql = "INSERT INTO carrito (id_venta, id_inventario, cantidad, precio, subtotal, iva, total) VALUES (?, ?, ?, ?, ?, ?, ?)";
               $stmt = $conn->prepare($sql);
-              $stmt->bindParam(1, $product['ID_VENTA']);
-              $stmt->bindParam(2, $product['ID_INVENTARIO']);
+              $stmt->bindParam(1, $product['ID_VENTA']); // Ajustar esta línea con la columna correcta
+              $stmt->bindParam(2, $product['INVENTARIO']); // Ajustar esta línea con la columna correcta
               $stmt->bindParam(3, $product['CANTIDAD']);
               $stmt->bindParam(4, $product['PRECIO']);
               $stmt->bindParam(5, $subtotal);
               $stmt->bindParam(6, $iva);
               $stmt->bindParam(7, $total);
               $stmt->execute();
-
-              $conn = null; // Cerrar la conexión
-
+        
               $mensaje .= "";
             } else {
               $mensaje .= "El producto no está disponible en el inventario.<br/>";
@@ -100,27 +101,45 @@ if (isset($_POST['btnAccion'])) {
       }
 
       break;
+            // ... (resto del código)
+case "Eliminar":
+  if (isset($_POST['id_inventario']) && is_numeric(openssl_decrypt($_POST['id_inventario'], COD, KEY))) {
+      $ID = openssl_decrypt($_POST['id_inventario'], COD, KEY);
+      $servername = "localhost";
+      $username = "root";
+      $password = "Rubas2509";
+      $dbname = "integradora4";
 
-    case "Eliminar":
-      if (isset($_POST['id_inventario']) && is_numeric(openssl_decrypt($_POST['id_inventario'], COD, KEY))) {
-        $ID = openssl_decrypt($_POST['id_inventario'], COD, KEY);
-        foreach ($_SESSION['CARRITO'] as $indice => $product) {
-          if ($product['ID'] == $ID) {
-            unset($_SESSION['CARRITO'][$indice]);
-            echo "<script>alert('Producto eliminado del carrito');</script>";
+      try {
+          $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
+          $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+          foreach ($_SESSION['CARRITO'] as $indice => $product) {
+              if ($product['ID'] == $ID) {
+                  // Eliminar el producto de la tabla carrito en la base de datos
+                  $sqlEliminar = "DELETE FROM carrito WHERE id_inventario = ?";
+                  $stmtEliminar = $conn->prepare($sqlEliminar);
+                  $stmtEliminar->bindParam(1, $product['INVENTARIO']);
+                  $stmtEliminar->execute();
+
+                  // Eliminar el producto del carrito en la sesión
+                  unset($_SESSION['CARRITO'][$indice]);
+
+                  // Utilizar un mensaje en HTML en lugar de JavaScript
+                  
+                echo "<script>alert('Producto eliminado del carrito');</script>";
+                  $mensaje = "Producto eliminado del carrito";
+                  break; // Salir del ciclo una vez eliminado el producto
+              }
           }
-        }
-      } else {
-        $mensaje .= "UPS.... ID incorrecto" . $ID . "<br/>";
+
+          $conn = null; // Cerrar la conexión
+      } catch (PDOException $e) {
+          $mensaje .= "Error al conectar a la base de datos: " . $e->getMessage();
       }
-      break;
-
-    default:
-      echo "Acción no definida";
-      break;
   }
-}
-
-// ... (código posterior)
-
-?>
+  break;
+// ... (resto del código
+}}
+        
+      ?>
