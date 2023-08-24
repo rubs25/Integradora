@@ -3,6 +3,18 @@ include 'config.php';
 include 'carrito.php';
 include 'cabecera.php';
 
+$host = "localhost";
+$usuario = "root";
+$contraseña = "Rubas2509";
+$base_de_datos = "integradora4";
+
+$conn = mysqli_connect($host, $usuario, $contraseña, $base_de_datos);
+
+if (!$conn) {
+    die("Error en la conexión: " . mysqli_connect_error());
+}
+
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_POST['btnAccion'])) {
         $accion = $_POST['btnAccion'];
@@ -14,9 +26,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $productoId = $_SESSION['CARRITO'][$indice]['ID'];
 
             // Actualizar la cantidad en la base de datos
-            $sql = "UPDATE productos SET cantidad = cantidad + 1 WHERE id = :id";
+            $sql = "UPDATE inventario SET pr_CantidadExistentes = pr_CantidadExistentes + 1 WHERE id_producto = id_producto";
             $stmt = $conn->prepare($sql);
-            $stmt->bindParam(':id', $productoId);
+            $stmt->bindParam('id_producto', $productoId);
             $stmt->execute();
         } elseif ($accion === 'decrementar') {
             $indice = $_POST['indice'];
@@ -27,9 +39,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $productoId = $_SESSION['CARRITO'][$indice]['ID'];
 
                 // Actualizar la cantidad en la base de datos
-                $sql = "UPDATE productos SET cantidad = cantidad - 1 WHERE id = :id";
+                $sql = "UPDATE inventario SET pr_CantidadExistentes = pr_CantidadExistentes - 1 WHERE id_producto = id_producto";
                 $stmt = $conn->prepare($sql);
-                $stmt->bindParam(':id', $productoId);
+                $stmt->bindParam('id_producto', $productoId);
                 $stmt->execute();
             }
         }
@@ -90,7 +102,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </tr>
             <tr>
                 <td colspan="5">
-                    <form action="" method="post">
+                    <form action="cliente.php" method="post">
                         <div class="alert alert-success">
                             <div class="form-group">
                                 <!-- Campos del formulario -->
@@ -116,7 +128,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                 Los productos se enviarán a esta dirección.
                             </small>
                         </div>
-                        <button class="btn btn-primary btn-lg btn-block" type="submit" name="btnAccion" value="proceder">
+                        <button class="btn btn-primary btn-lg btn-block" type="submit" name="btnAccion" value="proceder"  method="post">
                             Proceder al pago >>
                         </button>
                     </form>
@@ -134,30 +146,4 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 ?>
 
-<?php
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['btnAccion']) && $_POST['btnAccion'] === 'proceder') {
-    $nombre = $_POST['nombre'];
-    $apellido_materno = $_POST['apellido_materno'];
-    $apellido_paterno = $_POST['apellido_paterno'];
-    $telefono = $_POST['telefono'];
-    $correo = $_POST['correo'];
-    $direccion = $_POST['direccion'];
 
-    // Realiza la inserción en la tabla "clientes"
-    try {
-        $sql = "INSERT INTO clientes (nombre, apellido_materno, apellido_paterno, telefono, correo, direccion) 
-        VALUES ($nombre, $apellido_materno, $apellido_paterno, $telefono, $correo, $direccion)";
-        $stmt = $conn->prepare($sql);
-        $stmt->bindParam(1, $nombre);
-        $stmt->bindParam(2, $apellido_materno);
-        $stmt->bindParam(3, $apellido_paterno);
-        $stmt->bindParam(4, $telefono);
-        $stmt->bindParam(5, $correo);
-        $stmt->bindParam(6, $direccion);
-        $stmt->execute();
-        // Resto del código...
-    } catch (PDOException $e) {
-        echo 'Error al realizar la consulta: ' . $e->getMessage();
-    }
-}
-?>

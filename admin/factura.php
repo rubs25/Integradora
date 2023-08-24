@@ -1,4 +1,5 @@
 <?php
+include '../basedatos/conexion.php';
 session_start();
 require('fpdf/fpdf.php');
 
@@ -23,22 +24,25 @@ $pdf->SetFont('Arial', '', 12);
 
 $numeroFactura = mt_rand(10000, 99999);
 
+//$query = "SELECT * FROM t_user WHERE usuario = usuario";
 
-if (isset($_SESSION['user_id'])) {
-    $clientId = $_SESSION['user_id'];
+if (isset($_SESSION['cliente_id'])) {
+    $clientId = $_SESSION['cliente_id'];
+   
 } else {
     die("No se proporcionó el ID del cliente.");
 }
 
-$query = "SELECT cl_nombre, cl_apellidopa, cl_domicilio, cl_regimenFiscal FROM clientes WHERE id_cliente = $clientId";
+$query = "SELECT cl_nombre, cl_apellidopa, cl_direccion, null as cl_regimenFiscal FROM clientes WHERE id_cliente = $clientId";
 $result = mysqli_query($conexion, $query);
 
 if ($result && mysqli_num_rows($result) > 0) {
     $clientData = mysqli_fetch_assoc($result);
     $clientName = $clientData['cl_nombre'];
     $clientLastName = $clientData['cl_apellidopa'];
-    $clientAddress = $clientData['cl_domicilio'];
+    $clientAddress = $clientData['cl_direccion'];
     $clientFisical = $clientData['cl_regimenFiscal'];
+    
 } else {
     die("El cliente no existe o hubo un error en la consulta.");
 }
@@ -71,24 +75,10 @@ function obtenerProductosCarrito($conexion, $clienteId)
 $cartItems = obtenerProductosCarrito($conexion, $clientId);
 
 $ivaPorcentaje = 16;
-$descuentoPorcentaje = 0;
 
 // Obtener el tipo de cliente desde la base de datos
 $query = "SELECT id_cliente FROM clientes WHERE id_cliente = $clientId";
 $result = mysqli_query($conexion, $query);
-
-if ($result && mysqli_num_rows($result) > 0) {
-    $clientTipo = mysqli_fetch_assoc($result)['id_cliente'];
-
-    // Asignar porcentaje de descuento según el tipo de cliente
-    if ($clientTipo == 1) {
-        $descuentoPorcentaje = 5;
-    } elseif ($clientTipo == 2) {
-        $descuentoPorcentaje = 10;
-    } elseif ($clientTipo == 3) {
-        $descuentoPorcentaje = 15;
-    }
-}
 
 $logoX = 10;
 $logoY = 10;
@@ -127,8 +117,6 @@ $pdf->Cell(0, 10, 'Datos del Cliente:', 0, 1, 'R');
 $pdf->Cell(0, 10, 'Nombre: ' . $clientName . ' ' . $clientLastName, 0, 1, 'R');
 $pdf->Cell(0, 10, 'Direccion:', 0, 1, 'R');
 $pdf->Cell(0, 10, $clientAddress, 0, 1, 'R');
-$pdf->Cell(0, 10, 'Regimen Fiscal:', 0, 1, 'R');
-$pdf->Cell(0, 10, $clientFisical, 0, 1, 'R');
 
 $pdf->Ln(20);
 
@@ -152,21 +140,6 @@ foreach ($cartItems as $item) {
 }
  
 $pdf->SetFont('Arial', 'B', 12);
-
-$descuento = ($descuentoPorcentaje / 100) * $subtotal;
-$conDescuento = $subtotal - $descuento;
-$pdf->Cell(150, 10, 'Descuento (' . $descuentoPorcentaje . '%):', 1, 0, 'R', 1);
-$pdf->Cell(40, 10, '$ ' . number_format($conDescuento, 2), 1, 1, 'C');
-
-$iva = ($ivaPorcentaje / 100) * $conDescuento;
-$pdf->Cell(150, 10, 'IVA (' . $ivaPorcentaje . '%):', 1, 0, 'R', 1);
-$pdf->Cell(40, 10, '$ ' . number_format($iva, 2), 1, 1, 'C');
-
-$total = $conDescuento + $iva;
-$pdf->SetFont('Arial', 'B', 14);
-$pdf->Cell(150, 10, 'Total:', 1, 0, 'R', 1);
-$pdf->Cell(40, 10, '$ ' . number_format($total, 2), 1, 1, 'C');
-$pdf->Ln(20);
 
 if (file_exists('../img/Limpia-Express_cocosign.png')) {
     $pdf->Image('../img/Limpia-Express_cocosign.png', $signatureX, $signatureY, 100);
