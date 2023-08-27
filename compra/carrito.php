@@ -64,7 +64,6 @@ if (isset($_POST['btnAccion'])) {
                   'INVENTARIO' => $INVENTARIO
                 );
                 $_SESSION['CARRITO'][$ID] = $product;
-                echo "<script>alert('Producto agregado al carrito');</script>";
                 $mensaje = "Producto agregado al carrito";
               }
 
@@ -126,8 +125,6 @@ case "Eliminar":
                   unset($_SESSION['CARRITO'][$indice]);
 
                   // Utilizar un mensaje en HTML en lugar de JavaScript
-                  
-                echo "<script>alert('Producto eliminado del carrito');</script>";
                   $mensaje = "Producto eliminado del carrito";
                   break; // Salir del ciclo una vez eliminado el producto
               }

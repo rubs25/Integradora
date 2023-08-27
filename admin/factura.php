@@ -32,48 +32,73 @@ if (isset($_SESSION['cliente_id'])) {
 } else {
     die("No se proporcionó el ID del cliente.");
 }
-
-$query = "SELECT cl_nombre, cl_apellidopa, cl_direccion, null as cl_regimenFiscal FROM clientes WHERE id_cliente = $clientId";
+$query = "SELECT 
+v.id_venta, 
+c.cl_nombre, 
+c.cl_apellidomat, 
+c.cl_apellidopa, 
+p.name AS product_name, 
+p.price AS product_price, 
+v.fecha_venta, 
+v.hora_venta, 
+v.total 
+FROM ventas v 
+INNER JOIN clientes c ON v.id_cliente = c.id_cliente 
+INNER JOIN products p ON v.id_venta = p.id 
+WHERE v.id_cliente = $clientId";
+//$query = "SELECT cl_nombre, cl_apellidopa, cl_direccion, null as cl_regimenFiscal FROM clientes WHERE id_cliente = $clientId";
+$products = array();
 $result = mysqli_query($conexion, $query);
 
 if ($result && mysqli_num_rows($result) > 0) {
     $clientData = mysqli_fetch_assoc($result);
     $clientName = $clientData['cl_nombre'];
-    $clientLastName = $clientData['cl_apellidopa'];
-    $clientAddress = $clientData['cl_direccion'];
-    $clientFisical = $clientData['cl_regimenFiscal'];
+    $clientLastNameMat = $clientData['cl_apellidomat'];
+    $clientLastNamePat = $clientData['cl_apellidopa'];
+    $clientProduct = $clientData['product_name'];
+    $clientPrice = $clientData['product_price'];
+    $clientFecha = $clientData['fecha_venta'];
+    $clientHora = $clientData['hora_venta'];
+    $clientTotal = $clientData['total'];
     
 } else {
+    
     die("El cliente no existe o hubo un error en la consulta.");
-}
-
-function obtenerProductosCarrito($conexion, $clienteId)
-{
-    $query = "SELECT p.pr_Nombre, p.pr_Precio_U_Venta, d.det_cantidad
-              FROM products p
-              INNER JOIN tdetalle_venta d ON p.id_producto = d.det_producto
-              WHERE d.det_cliente = $clienteId";
-
-    $result = mysqli_query($conexion, $query);
-
-    $productos = array();
-
-    if ($result && mysqli_num_rows($result) > 0) {
-        while ($row = mysqli_fetch_assoc($result)) {
-            $productos[] = array(
-                "Nombre" => $row['pr_Nombre'],
-                "Precio" => $row['pr_Precio_U_Venta'],
-                "Cantidad" => $row['det_cantidad'],
-            );
-        }
-    }
-
-    return $productos;
 }
 
 // Obtener los productos del carrito para el cliente actual
 $cartItems = obtenerProductosCarrito($conexion, $clientId);
+function obtenerProductosCarrito($conexion, $clientId)
+/* {
+$query = "SELECT 
+v.id_venta, 
+c.cl_nombre, 
+c.cl_apellidomat, 
+c.cl_apellidopa, 
+p.name AS product_name, 
+p.price AS product_price, 
+v.fecha_venta, 
+v.hora_venta, 
+v.total 
+FROM ventas v 
+INNER JOIN clientes c ON v.id_cliente = c.id_cliente 
+INNER JOIN products p ON v.id_venta = p.id 
+WHERE v.id_cliente = $clientId";
+$products = array();
 
+$result = mysqli_query($conexion, $query);
+
+    $result = mysqli_query($conexion, $query);
+    $ventas = [];
+if ($result && mysqli_num_rows($result) > 0) {
+    while ($row = mysqli_fetch_assoc($result)) {
+        $ventas[] = $row;
+    }
+}
+
+    return $products;
+}
+ */
 $ivaPorcentaje = 16;
 
 // Obtener el tipo de cliente desde la base de datos
@@ -110,8 +135,6 @@ $fechaHoraCompra = date('d/m/Y H:i:s');
 $pdf->Cell(0, 10, 'Fecha y Hora de la Compra:', 0, 1, 'L');
 $pdf->Cell(0, 10, $fechaHoraCompra, 0, 1, 'L');
 
-$pdf->Cell(0, 10, 'Numero de Factura: ' . $numeroFactura, 0, 1, 'L');
-
 $pdf->SetXY($pageWidth - 130, $logoY + 5);
 $pdf->Cell(0, 10, 'Datos del Cliente:', 0, 1, 'R');
 $pdf->Cell(0, 10, 'Nombre: ' . $clientName . ' ' . $clientLastName, 0, 1, 'R');
@@ -129,14 +152,17 @@ $pdf->Cell(40, 10, 'Subtotal', 1, 1, 'C', 1);
 
 $pdf->SetFont('Arial', '', 12);
 $subtotal = 0;
-foreach ($cartItems as $item) {
-    $importe = $item["Precio"] * $item["Cantidad"];
-    $subtotal += $importe;
+$venta = array();
 
-    $pdf->Cell(80, 10, $item["Nombre"], 1, 0, 'L');
-    $pdf->Cell(40, 10, '$ ' . number_format($item["Precio"], 2), 1, 0, 'C');
-    $pdf->Cell(30, 10, $item["Cantidad"], 1, 0, 'C');
-    $pdf->Cell(40, 10, '$ ' . number_format($importe, 2), 1, 1, 'C');
+$ventas = obtenerProductosCarrito($conexion, $clientId);
+
+foreach ($ventas as $venta) {
+    $pdf->Cell(80, 10, $venta["cl_nombre"], 1, 0, 'L');
+    $pdf->Cell(40, 10, . number_format($venta["cl_nombre"], 2), 1, 0, 'C');
+    $pdf->Cell(80, 10, $venta["product_name"], 1, 0, 'L');
+    $pdf->Cell(40, 10, '' . number_format($venta["product_price"], 2), 1, 0, 'C');
+    $pdf->Cell(30, 10, $venta["fecha_venta"], 1, 0, 'C');
+    $pdf->Cell(40, 10, '' . number_format($venta["hora_venta"], 2), 1, 1, 'C');
 }
  
 $pdf->SetFont('Arial', 'B', 12);

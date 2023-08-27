@@ -1,53 +1,102 @@
+
 <?php
 include 'config.php';
 include 'carrito.php';
 include 'cabecera.php';
 
-$host = "localhost";
-$usuario = "root";
-$contraseña = "Rubas2509";
-$base_de_datos = "integradora4";
-
-$conn = mysqli_connect($host, $usuario, $contraseña, $base_de_datos);
-
-if (!$conn) {
-    die("Error en la conexión: " . mysqli_connect_error());
+// Establecer la conexión a la base de datos
+try {
+    $conn = new PDO("mysql:host=" . SERVIDOR . ";dbname=" . BD, USUARIO, PASSWORD);
+    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+} catch (PDOException $e) {
+    echo "Error de conexión: " . $e->getMessage();
 }
-
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_POST['btnAccion'])) {
         $accion = $_POST['btnAccion'];
         if ($accion === 'incrementar') {
             $indice = $_POST['indice'];
-            $_SESSION['CARRITO'][$indice]['CANTIDAD']++;
 
-            // Obtener el ID del producto desde el carrito de sesiones
-            $productoId = $_SESSION['CARRITO'][$indice]['ID'];
+            // Obtener el ID del producto y la cantidad en el carrito
+            $id_inventario = $_SESSION['CARRITO'][$indice]['INVENTARIO'];
+            $cantidad_en_carrito = $_SESSION['CARRITO'][$indice]['CANTIDAD'];
 
-            // Actualizar la cantidad en la base de datos
-            $sql = "UPDATE inventario SET pr_CantidadExistentes = pr_CantidadExistentes + 1 WHERE id_producto = id_producto";
-            $stmt = $conn->prepare($sql);
-            $stmt->bindParam('id_producto', $productoId);
-            $stmt->execute();
+            // Consultar la cantidad existente en el inventario
+            $sql_cantidad_inventario = "SELECT pr_CantidadExistentes FROM inventario WHERE id_inventario = ?";
+            $stmt_cantidad_inventario = $conn->prepare($sql_cantidad_inventario);
+            $stmt_cantidad_inventario->execute([$id_inventario]);
+            $cantidad_disponible = $stmt_cantidad_inventario->fetchColumn();
+
+            // Verificar si hay suficientes productos en el inventario
+            if ($cantidad_en_carrito + 1 <= $cantidad_disponible) {
+                // Incrementar la cantidad en el carrito
+                $_SESSION['CARRITO'][$indice]['CANTIDAD']++;
+
+                // Realizar cálculos
+                $product = $_SESSION['CARRITO'][$indice];
+                $subtotal = $product['PRECIO'] * $product['CANTIDAD'];
+                $subtotal = $subtotal / 1.16;
+                $iva = $subtotal * 0.16;
+                $total = $subtotal + $iva;
+
+                // Actualizar datos en la sesión
+                $_SESSION['CARRITO'][$indice]['SUBTOTAL'] = $subtotal;
+                $_SESSION['CARRITO'][$indice]['IVA'] = $iva;
+                $_SESSION['CARRITO'][$indice]['TOTAL'] = $total;
+
+                // Actualizar la cantidad y otros datos en la tabla carrito en la base de datos
+                $nueva_cantidad = $_SESSION['CARRITO'][$indice]['CANTIDAD'];
+
+                $sql_actualizar = "UPDATE carrito SET cantidad = ?, subtotal = ?, iva = ?, total = ? WHERE id_inventario = ?";
+                $stmt_actualizar = $conn->prepare($sql_actualizar);
+                $stmt_actualizar->bindValue(1, $nueva_cantidad);
+                $stmt_actualizar->bindValue(2, $subtotal);
+                $stmt_actualizar->bindValue(3, $iva);
+                $stmt_actualizar->bindValue(4, $total);
+                $stmt_actualizar->bindValue(5, $id_inventario);
+                $stmt_actualizar->execute();
+            } else {
+                echo "<script>alert('No hay suficientes productos en el inventario');</script>";
+            }
         } elseif ($accion === 'decrementar') {
             $indice = $_POST['indice'];
             if ($_SESSION['CARRITO'][$indice]['CANTIDAD'] > 1) {
                 $_SESSION['CARRITO'][$indice]['CANTIDAD']--;
 
-                // Obtener el ID del producto desde el carrito de sesiones
-                $productoId = $_SESSION['CARRITO'][$indice]['ID'];
+                // Realizar cálculos y actualizar datos en la sesión
+                $product = $_SESSION['CARRITO'][$indice];
+                $subtotal = $product['PRECIO'] * $product['CANTIDAD'];
+                $subtotal = $subtotal / 1.16;
+                $iva = $subtotal * 0.16;
+                $total = $subtotal + $iva;
 
-                // Actualizar la cantidad en la base de datos
-                $sql = "UPDATE inventario SET pr_CantidadExistentes = pr_CantidadExistentes - 1 WHERE id_producto = id_producto";
-                $stmt = $conn->prepare($sql);
-                $stmt->bindParam('id_producto', $productoId);
-                $stmt->execute();
+                // Actualizar datos en la sesión
+                $_SESSION['CARRITO'][$indice]['SUBTOTAL'] = $subtotal;
+                $_SESSION['CARRITO'][$indice]['IVA'] = $iva;
+                $_SESSION['CARRITO'][$indice]['TOTAL'] = $total;
+
+                // Actualizar la cantidad y otros datos en la tabla carrito en la base de datos
+                $id_inventario = $_SESSION['CARRITO'][$indice]['INVENTARIO'];
+                $nueva_cantidad = $_SESSION['CARRITO'][$indice]['CANTIDAD'];
+
+                $sql_actualizar = "UPDATE carrito SET cantidad = ?, subtotal = ?, iva = ?, total = ? WHERE id_inventario = ?";
+                $stmt_actualizar = $conn->prepare($sql_actualizar);
+                $stmt_actualizar->bindValue(1, $nueva_cantidad);
+                $stmt_actualizar->bindValue(2, $subtotal);
+                $stmt_actualizar->bindValue(3, $iva);
+                $stmt_actualizar->bindValue(4, $total);
+                $stmt_actualizar->bindValue(5, $id_inventario);
+                $stmt_actualizar->execute();
             }
         }
+        // ... (resto del código)
     }
 }
+
+// Resto del código HTML y la tabla del carrito aquí...
 ?>
+
 
 <br>
 <h3>Lista del carrito</h3>
@@ -145,5 +194,3 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <?php
 }
 ?>
-
-

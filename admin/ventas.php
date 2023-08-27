@@ -1,3 +1,15 @@
+
+<?php
+session_start();
+
+if (!isset($_SESSION['usuario'])) {
+    header('Location: ../sesion/inicio_usuario.php');
+    exit;
+}
+?>
+
+
+
 <?php 
 include('conecction.php');
 ?>
