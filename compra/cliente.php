@@ -62,16 +62,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['btnAccion']) && $_POS
         $metodoPago = 'PayPal';
 
         // Inserción de la venta en la tabla "ventas"
-        $sqlVenta = "INSERT INTO ventas (id_cliente, fecha_venta, hora_venta, total, id_sucursal) 
-        VALUES (?, CURDATE(), CURTIME(), ?, ?)";
+     // Inserción de la venta en la tabla "ventas"
+$sqlVenta = "INSERT INTO ventas (id_cliente, fecha_venta, hora_venta, total, id_sucursal, id_producto) 
+VALUES (?, CURDATE(), CURTIME(), ?, ?, ?)";
 
-        $stmtVenta = $conn->prepare($sqlVenta);
-        $stmtVenta->bindParam(1, $clienteId);
-        $stmtVenta->bindParam(2, $total);
-        // Asigna el ID de la sucursal según tus necesidades
-        $idSucursal = 1;  // Esto es un ejemplo, reemplázalo con el valor correcto
-        $stmtVenta->bindParam(3, $idSucursal);
-        $stmtVenta->execute();
+$stmtVenta = $conn->prepare($sqlVenta);
+$stmtVenta->bindParam(1, $clienteId);
+$stmtVenta->bindParam(2, $total);
+// Asigna el ID de la sucursal según tus necesidades
+$idSucursal = 1;  // Esto es un ejemplo, reemplázalo con el valor correcto
+$stmtVenta->bindParam(3, $idSucursal);
+
+// Realiza una inserción por cada producto en el carrito
+foreach ($_SESSION['CARRITO'] as $producto) {
+    $productoId = $producto['ID'];
+    $stmtVenta->bindParam(4, $productoId);
+    $stmtVenta->execute();
+}
 
         //hacer un update del carrito
         

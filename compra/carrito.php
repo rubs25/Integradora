@@ -1,13 +1,20 @@
 <?php
 session_start();
 
+if (!isset($_SESSION['usuario'])) {
+    header('Location: ../sesion/inicio_usuario.php');
+    exit;
+}
+?>
+<?php
+
 $mensaje = "";
 
 // Verificar si se hizo clic en el botón del formulario
 if (isset($_POST['btnAccion'])) {
   $ID = ""; // Asignar un valor predeterminado a $ID
 
-  switch ($_POST['btnAccion']) {
+  switch ($_POST['btnAccion']) {  
     case 'Agregar':
       if (isset($_POST['id']) && isset($_POST['name']) && isset($_POST['price']) && isset($_POST['cantidad']) && isset($_POST['id_inventario'])) {
         $ID = openssl_decrypt($_POST['id'], COD, KEY);

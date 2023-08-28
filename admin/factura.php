@@ -3,7 +3,6 @@ include '../basedatos/conexion.php';
 session_start();
 require('fpdf/fpdf.php');
 
-
 $pdf = new FPDF();
 $pdf->AddPage();
 
@@ -24,94 +23,45 @@ $pdf->SetFont('Arial', '', 12);
 
 $numeroFactura = mt_rand(10000, 99999);
 
-//$query = "SELECT * FROM t_user WHERE usuario = usuario";
-
 if (isset($_SESSION['cliente_id'])) {
     $clientId = $_SESSION['cliente_id'];
-   
 } else {
     die("No se proporcionó el ID del cliente.");
 }
+
 $query = "SELECT 
-v.id_venta, 
-c.cl_nombre, 
-c.cl_apellidomat, 
-c.cl_apellidopa, 
-p.name AS product_name, 
-p.price AS product_price, 
-v.fecha_venta, 
-v.hora_venta, 
-v.total 
-FROM ventas v 
-INNER JOIN clientes c ON v.id_cliente = c.id_cliente 
-INNER JOIN products p ON v.id_venta = p.id 
-WHERE v.id_cliente = $clientId";
-//$query = "SELECT cl_nombre, cl_apellidopa, cl_direccion, null as cl_regimenFiscal FROM clientes WHERE id_cliente = $clientId";
-$products = array();
+            v.id_venta, 
+            c.cl_nombre, 
+            c.cl_apellidomat, 
+            c.cl_apellidopa, 
+            p.name AS product_name, 
+            p.price AS product_price, 
+            v.fecha_venta, 
+            v.hora_venta, 
+            v.total 
+          FROM ventas v 
+          INNER JOIN clientes c ON v.id_cliente = c.id_cliente 
+          INNER JOIN products p ON v.id_producto = p.id
+          WHERE v.id_cliente = $clientId";
+
 $result = mysqli_query($conexion, $query);
 
 if ($result && mysqli_num_rows($result) > 0) {
-    $clientData = mysqli_fetch_assoc($result);
-    $clientName = $clientData['cl_nombre'];
-    $clientLastNameMat = $clientData['cl_apellidomat'];
-    $clientLastNamePat = $clientData['cl_apellidopa'];
-    $clientProduct = $clientData['product_name'];
-    $clientPrice = $clientData['product_price'];
-    $clientFecha = $clientData['fecha_venta'];
-    $clientHora = $clientData['hora_venta'];
-    $clientTotal = $clientData['total'];
-    
-} else {
-    
-    die("El cliente no existe o hubo un error en la consulta.");
-}
-
-// Obtener los productos del carrito para el cliente actual
-$cartItems = obtenerProductosCarrito($conexion, $clientId);
-function obtenerProductosCarrito($conexion, $clientId)
-/* {
-$query = "SELECT 
-v.id_venta, 
-c.cl_nombre, 
-c.cl_apellidomat, 
-c.cl_apellidopa, 
-p.name AS product_name, 
-p.price AS product_price, 
-v.fecha_venta, 
-v.hora_venta, 
-v.total 
-FROM ventas v 
-INNER JOIN clientes c ON v.id_cliente = c.id_cliente 
-INNER JOIN products p ON v.id_venta = p.id 
-WHERE v.id_cliente = $clientId";
-$products = array();
-
-$result = mysqli_query($conexion, $query);
-
-    $result = mysqli_query($conexion, $query);
-    $ventas = [];
-if ($result && mysqli_num_rows($result) > 0) {
+    $ventas = array();
     while ($row = mysqli_fetch_assoc($result)) {
         $ventas[] = $row;
     }
+} else {
+    die("El cliente no existe o hubo un error en la consulta.");
 }
-
-    return $products;
-}
- */
-$ivaPorcentaje = 16;
-
-// Obtener el tipo de cliente desde la base de datos
-$query = "SELECT id_cliente FROM clientes WHERE id_cliente = $clientId";
-$result = mysqli_query($conexion, $query);
 
 $logoX = 10;
 $logoY = 10;
 $signatureX = $pageWidth - 120;
 $signatureY = 180;
 
-if (file_exists('../img/logo.jpg')) {
-    $pdf->Image('../img/logo.jpg', $logoX, $logoY, 40);
+if (file_exists('../admin/logos2.jpg')) {
+    $pdf->Image('../admin/logos2.jpg', $logoX, $logoY, 40);
 }
 
 $emisorNombre = "Motors-Toys S.A. de C.V.";
@@ -137,38 +87,56 @@ $pdf->Cell(0, 10, $fechaHoraCompra, 0, 1, 'L');
 
 $pdf->SetXY($pageWidth - 130, $logoY + 5);
 $pdf->Cell(0, 10, 'Datos del Cliente:', 0, 1, 'R');
-$pdf->Cell(0, 10, 'Nombre: ' . $clientName . ' ' . $clientLastName, 0, 1, 'R');
-$pdf->Cell(0, 10, 'Direccion:', 0, 1, 'R');
-$pdf->Cell(0, 10, $clientAddress, 0, 1, 'R');
+$pdf->Cell(0, 10, 'Nombre: ' . $ventas[0]['cl_nombre'] . ' ', 0, 1, 'R');
+$pdf->Cell(0, 10, 'Apellidos: ' . $ventas[0]['cl_apellidopa'] . ' ' . $ventas[0]['cl_apellidomat'], 0, 1, 'R');
 
 $pdf->Ln(20);
 
-$pdf->SetFillColor(200, 220, 255);
+$pdf->SetFillColor(255, 230, 200);
 $pdf->SetFont('Arial', 'B', 12);
 $pdf->Cell(80, 10, 'Productos', 1, 0, 'C', 1);
 $pdf->Cell(40, 10, 'Precios', 1, 0, 'C', 1);
-$pdf->Cell(30, 10, 'Cantidades', 1, 0, 'C', 1);
+$pdf->Cell(30, 10, 'Fecha', 1, 0, 'C', 1);
 $pdf->Cell(40, 10, 'Subtotal', 1, 1, 'C', 1);
+
+// ...
 
 $pdf->SetFont('Arial', '', 12);
 $subtotal = 0;
-$venta = array();
-
-$ventas = obtenerProductosCarrito($conexion, $clientId);
+$ivaTotal = 0;
+$total = 0;
 
 foreach ($ventas as $venta) {
-    $pdf->Cell(80, 10, $venta["cl_nombre"], 1, 0, 'L');
-    $pdf->Cell(40, 10, . number_format($venta["cl_nombre"], 2), 1, 0, 'C');
     $pdf->Cell(80, 10, $venta["product_name"], 1, 0, 'L');
-    $pdf->Cell(40, 10, '' . number_format($venta["product_price"], 2), 1, 0, 'C');
+    $pdf->Cell(40, 10, '$' . number_format($venta["product_price"], 2), 1, 0, 'C');
     $pdf->Cell(30, 10, $venta["fecha_venta"], 1, 0, 'C');
-    $pdf->Cell(40, 10, '' . number_format($venta["hora_venta"], 2), 1, 1, 'C');
+
+    // Calcula los valores de acuerdo a tus cálculos
+    $subtotalProducto = $venta["total"] / 1.16;
+    $ivaProducto = $venta["total"] - $subtotalProducto;
+
+    $pdf->Cell(40, 10, '$' . number_format($subtotalProducto, 2), 1, 1, 'C');
+    
+    $subtotal += $subtotalProducto;
+    $ivaTotal += $ivaProducto;
+    $total += $venta["total"];
 }
- 
+
 $pdf->SetFont('Arial', 'B', 12);
 
-if (file_exists('../img/Limpia-Express_cocosign.png')) {
-    $pdf->Image('../img/Limpia-Express_cocosign.png', $signatureX, $signatureY, 100);
+if (file_exists('../admin/logos2.jpg')) {
+    $pdf->Image('../admin/logos2.jpg', $signatureX, $signatureY, 100);
 }
 
+$pdf->Cell(150, 10, 'Subtotal:', 1, 0, 'R');
+$pdf->Cell(40, 10, '$' . number_format($subtotal, 2), 1, 1, 'C');
+
+$pdf->Cell(150, 10, 'IVA:', 1, 0, 'R');
+$pdf->Cell(40, 10, '$' . number_format($ivaTotal, 2), 1, 1, 'C');
+
+$pdf->Cell(150, 10, 'Total:', 1, 0, 'R');
+$pdf->Cell(40, 10, '$' . number_format($total, 2), 1, 1, 'C');
+
 $pdf->Output();
+?>
+

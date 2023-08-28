@@ -1,4 +1,14 @@
 <?php
+session_start();
+
+if (!isset($_SESSION['usuario'])) {
+    header('Location: ../sesion/inicio_usuario.php');
+    exit;
+}
+?>
+
+
+<?php
 include 'config.php';
 include 'cone.php';
 include 'carrito.php';

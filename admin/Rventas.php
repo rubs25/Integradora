@@ -50,7 +50,8 @@ while ($row = $resultado->fetch_assoc()) {
 }
 
 $pdf->SetFont('Arial','B',12);
-$pdf->Cell(0,10,'Total general: ' . $totalGeneral,0,1,'R');
+$pdf->Cell(0,10,'Total general: $' . number_format($totalGeneral, 2),0,1,'R'); // Agregado el símbolo de pesos y formato decimal
 
 $pdf->Output();
 ?>
+
