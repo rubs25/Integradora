@@ -1,7 +1,8 @@
 <?php
 include '../basedatos/conexion.php';
-session_start();
 require('fpdf/fpdf.php');
+
+session_start();
 
 $pdf = new FPDF();
 $pdf->AddPage();
