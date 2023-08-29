@@ -157,12 +157,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                 <!-- Campos del formulario -->
                                 <label for="nombre">NOMBRE:</label>
                                 <input id="nombre" name="nombre" class="form-control" type="text" placeholder="Por favor escribe tu nombre" required>
+                                
+                                <label for="apellido_paterno">APELLIDO PATERNO:</label>
+                                <input id="apellido_paterno" name="apellido_paterno" class="form-control" type="text" placeholder="Por favor escribe tu apellido paterno" required>
 
                                 <label for="apellido_materno">APELLIDO MATERNO:</label>
                                 <input id="apellido_materno" name="apellido_materno" class="form-control" type="text" placeholder="Por favor escribe tu apellido materno" required>
-
-                                <label for="apellido_paterno">APELLIDO PATERNO:</label>
-                                <input id="apellido_paterno" name="apellido_paterno" class="form-control" type="text" placeholder="Por favor escribe tu apellido paterno" required>
 
                                 <label for="telefono">NUMERO DE TELEFONO:</label>
                                 <input id="telefono" name="telefono" class="form-control" type="text" placeholder="Por favor escribe tu numero de telefono" required>

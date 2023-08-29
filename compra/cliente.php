@@ -53,50 +53,41 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['btnAccion']) && $_POS
         $clienteId = $conn->lastInsertId();
         $_SESSION['cliente_id']=$clienteId;
         // Calcular los valores para la inserción en la tabla "ventas"
-        $total = 0;
-        foreach ($_SESSION['CARRITO'] as $producto) {
-            $total += ($producto['PRECIO'] * $producto['CANTIDAD']);
-        }
-        $subtotal = $total / 1.16;
-        $iva = ($total / 1.16) * 0.16;
-        $metodoPago = 'PayPal';
+        // Calcular los valores para la inserción en la tabla "ventas"
+$total = 0;
+foreach ($_SESSION['CARRITO'] as $producto) {
+    $total += ($producto['PRECIO'] * $producto['CANTIDAD']);
+}
+$subtotal = $total / 1.16;
+$iva = ($total / 1.16) * 0.16;
+$metodoPago = 'PayPal';
 
-        // Inserción de la venta en la tabla "ventas"
-     // Inserción de la venta en la tabla "ventas"
-$sqlVenta = "INSERT INTO ventas (id_cliente, fecha_venta, hora_venta, total, id_sucursal, id_producto) 
-VALUES (?, CURDATE(), CURTIME(), ?, ?, ?)";
-
+// Inserción de la venta en la tabla "ventas"
+$sqlVenta = "INSERT INTO ventas (id_cliente, fecha_venta, hora_venta, total, id_sucursal) 
+VALUES (?, CURDATE(), CURTIME(), ?, ?)";
 $stmtVenta = $conn->prepare($sqlVenta);
 $stmtVenta->bindParam(1, $clienteId);
 $stmtVenta->bindParam(2, $total);
 // Asigna el ID de la sucursal según tus necesidades
 $idSucursal = 1;  // Esto es un ejemplo, reemplázalo con el valor correcto
 $stmtVenta->bindParam(3, $idSucursal);
+$stmtVenta->execute();
 
-// Realiza una inserción por cada producto en el carrito
+// Actualiza las cantidades de productos en el inventario
 foreach ($_SESSION['CARRITO'] as $producto) {
     $productoId = $producto['ID'];
-    $stmtVenta->bindParam(4, $productoId);
-    $stmtVenta->execute();
+    $cantidadComprada = $producto['CANTIDAD'];
+
+    // Actualiza la cantidad en la tabla "inventario"
+    $sqlUpdateInventario = "UPDATE inventario SET pr_CantidadExistentes = pr_CantidadExistentes - ? WHERE id_producto = ?";
+    $stmtUpdateInventario = $conn->prepare($sqlUpdateInventario);
+    $stmtUpdateInventario->bindParam(1, $cantidadComprada);
+    $stmtUpdateInventario->bindParam(2, $productoId);
+    $stmtUpdateInventario->execute();
 }
 
-        //hacer un update del carrito
-        
-        // Actualiza las cantidades de productos en el inventario
-        foreach ($_SESSION['CARRITO'] as $producto) {
-            $productoId = $producto['ID'];
-            $cantidadComprada = $producto['CANTIDAD'];
-
-            // Actualiza la cantidad en la tabla "inventario"
-            $sqlUpdateInventario = "UPDATE inventario SET pr_CantidadExistentes = pr_CantidadExistentes - ? WHERE id_producto = ?";
-            $stmtUpdateInventario = $conn->prepare($sqlUpdateInventario);
-            $stmtUpdateInventario->bindParam(1, $cantidadComprada);
-            $stmtUpdateInventario->bindParam(2, $productoId);
-            $stmtUpdateInventario->execute();
-        }
-
-        // Limpia el carrito después de la compra exitosa
-        unset($_SESSION['CARRITO']);
+// Limpia el carrito después de la compra exitosa
+unset($_SESSION['CARRITO']);
 
         // Resto del código...
     } catch (PDOException $e) {

@@ -99,6 +99,7 @@ $pdf->Cell(40, 10, 'Precios', 1, 0, 'C', 1);
 $pdf->Cell(30, 10, 'Fecha', 1, 0, 'C', 1);
 $pdf->Cell(40, 10, 'Subtotal', 1, 1, 'C', 1);
 
+
 // ...
 
 $pdf->SetFont('Arial', '', 12);
