@@ -61,28 +61,44 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['btnAccion']) && $_POS
     $subtotal = $total / 1.16;
     $iva = ($total / 1.16) * 0.16;
     $metodoPago = 'PayPal';
-
-// Inserción de la venta en la tabla "ventas"
-    $sqlVenta = "INSERT INTO ventas (id_cliente, fecha_venta, hora_venta, total, id_sucursal) 
-    VALUES (?, CURDATE(), CURTIME(), ?, ?)";
-    $stmtVenta = $conn->prepare($sqlVenta);
-    $stmtVenta->bindParam(1, $clienteId);
-    $stmtVenta->bindParam(2, $total);
-    $idSucursal = 1;  
+    
+$sqlVenta = "INSERT INTO ventas (id_cliente, fecha_venta, hora_venta, total, id_sucursal) 
+VALUES (?, CURDATE(), CURTIME(), ?, ?)";
+$stmtVenta = $conn->prepare($sqlVenta);
+$stmtVenta->bindParam(1, $clienteId);
+$stmtVenta->bindParam(2, $total);
+$idSucursal = 1;  
 $stmtVenta->bindParam(3, $idSucursal);
 $stmtVenta->execute();
 
+// Obtener el ID de la venta recién insertada
+$ventaId = $conn->lastInsertId();
+
+// Inserción de los productos comprados en la tabla "ventas_detalle"
 foreach ($_SESSION['CARRITO'] as $producto) {
     $productoId = $producto['ID'];
     $cantidadComprada = $producto['CANTIDAD'];
+
+    // Inserta el producto en la tabla "ventas_detalle"
+    $sqlProductoVenta = "INSERT INTO ventas_detalle (id_venta, id_producto, cantidad) 
+    VALUES (?, ?, ?)";
+    $stmtProductoVenta = $conn->prepare($sqlProductoVenta);
+    $stmtProductoVenta->bindParam(1, $ventaId); // Usar el ID de la venta
+    $stmtProductoVenta->bindParam(2, $productoId);
+    $stmtProductoVenta->bindParam(3, $cantidadComprada);
+    $stmtProductoVenta->execute();
 
     // Actualiza la cantidad en la tabla "inventario"
     $sqlUpdateInventario = "UPDATE inventario SET pr_CantidadExistentes = pr_CantidadExistentes - ? WHERE id_producto = ?";
     $stmtUpdateInventario = $conn->prepare($sqlUpdateInventario);
     $stmtUpdateInventario->bindParam(1, $cantidadComprada);
-    $stmtUpdateInventario->bindParam(2, $productoId); // Usando el productoId aquí
+    $stmtUpdateInventario->bindParam(2, $productoId);
     $stmtUpdateInventario->execute();
 }
+
+unset($_SESSION['CARRITO']);
+
+// Resto del código...
 
 
 unset($_SESSION['CARRITO']);
